@@ -28,13 +28,8 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
-    Route::get('getUser', [AuthController::class, 'userData']);
-    // ------Email-Verification------
-    Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail']);
-    Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
-
     // --------user---------
-    Route::get('user', [UserController::class, 'index']);
+    Route::get('read-user', [UserController::class, 'read']);
 });
 
 

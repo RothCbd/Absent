@@ -3,18 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\User\userData;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index(){
-
-        // $users = User::with('role')->select(['users.name', 'users.email'])->get();
-        return User::select('name', 'email', 'profile')->with(['role'])->get();
-
-        return response()->json([
-            'data' => $users
-        ]);
+    public function read(){
+        return new userData(User::with('role')->orderBy('id', 'DESC')->get());
     }
 }
