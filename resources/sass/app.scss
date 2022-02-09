@@ -1,0 +1,49 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+.v-app-bar {
+    background-color: #3a9dca !important;
+    border-color: #3a9dca !important;
+}
+
+.v-main{
+    // background-color: #f1f2f6 !important;
+}
+
+
+#main-app .theme--light.v-list {
+    color: #3a9dca !important;
+}
+
+#main-app .v-icon.v-icon{
+    font-size: 26px !important;
+}
+
+#main-app .theme--light.v-card{
+    background-color: #3a9dca !important;
+}
+
+#main-app .v-sheet.v-card {
+    background-color: '#3a9dca' !important;
+    padding: 10px !important;
+    border-radius: 0px !important;
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    -ms-border-radius: 0px !important;
+    -o-border-radius: 0px !important;
+}
+
+#main-app.v-application .cyan.darken-2 {
+    background-color: #3a9dca !important;
+    border-color: #3a9dca !important;
+}
