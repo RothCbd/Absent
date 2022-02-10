@@ -21,6 +21,7 @@ class userData extends ResourceCollection
                     'name' => $user->name,
                     'email' => $user->email,
                     'profile' => $user->profile,
+                    'phone' => $user->phone_number,
                     'role' => $user->role->role
                 ];
             })

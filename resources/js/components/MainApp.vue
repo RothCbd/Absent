@@ -1,7 +1,7 @@
 <template>
   <v-app id="main-app">
     <v-navigation-drawer color="grey lighten-5" app v-model="drawer">
-      <v-card flat>
+      <v-card flat class="menu-card">
         <v-list class="profile">
           <v-list-item link class="text-center p-0">
             <v-list-item-content>
@@ -61,10 +61,19 @@
 
         <v-list-item link to="/report">
           <v-list-item-action>
-            <v-icon>mdi-account-details</v-icon>
+            <v-icon>mdi-chart-bar</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Report</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link to="/account">
+          <v-list-item-action>
+            <v-icon>mdi-account-cog</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Account</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -97,13 +106,13 @@
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
+
+      <v-btn text icon>
+        <v-icon color="#2e86de">mdi-bell</v-icon>
+      </v-btn>
+
       <v-toolbar-title class="white--text">
-        <v-img
-          max-width="110"
-          max-height="110"
-          class="mt-7"
-          :src="'/icons/5e53775506160.png'"
-        >
+        <v-img max-width="90" max-height="90" :src="'/icons/5e53775506160.png'">
         </v-img>
       </v-toolbar-title>
     </v-app-bar>
@@ -125,8 +134,6 @@ export default {
     };
   },
 
-  mounted() {
-    console.log("Component mounted.");
-  },
+  mounted() {},
 };
 </script>

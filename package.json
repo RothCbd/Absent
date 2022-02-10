@@ -28,6 +28,7 @@
     "dependencies": {
         "@mdi/font": "^6.5.95",
         "cross-env": "^7.0.3",
+        "v-viewer": "^1.6.4",
         "vue-router": "^3.5.3",
         "vuetify": "^2.6.3",
         "vuetify-loader": "^1.7.3"
