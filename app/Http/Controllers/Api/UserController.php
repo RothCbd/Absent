@@ -101,7 +101,6 @@ class UserController extends Controller
         return response()->json(['message' => 'User updated successfully.'], 200);
     }
 
-
     public function delete($id)
     {
         if(auth('sanctum')->user()->role->role != 'admin')

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AbsentController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EmailVerificationController;
 use App\Http\Controllers\Api\EmployeeController;
@@ -40,6 +41,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('create-employee', [EmployeeController::class, 'create']);
     Route::post('update-employee/{id}', [EmployeeController::class, 'update']);
     Route::delete('delete-employee/{id}', [EmployeeController::class, 'delete']);
+
+    // --------Absent----------
+    Route::get('read-absent', [AbsentController::class, 'read']);
+    Route::post('create-absent', [AbsentController::class, 'create']);
+    Route::post('update-absent/{id}', [AbsentController::class, 'update']);
+    Route::delete('delete-absent/{id}', [AbsentController::class, 'delete']);
 });
 
 
