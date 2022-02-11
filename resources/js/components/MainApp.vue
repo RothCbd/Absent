@@ -1,7 +1,7 @@
 <template>
   <v-app id="main-app">
     <v-navigation-drawer color="grey lighten-5" app v-model="drawer">
-      <v-card flat class="menu-card">
+      <v-card flat color="indigo" class="menu-card">
         <v-list class="profile">
           <v-list-item link class="text-center p-0">
             <v-list-item-content>
@@ -22,7 +22,7 @@
 
       <!-- <v-divider></v-divider> -->
       <!-- ------list------ -->
-      <v-list dense>
+      <v-list dense class="menu-icon">
         <v-list-item link to="/dashboard">
           <v-list-item-action>
             <v-icon>mdi-view-dashboard</v-icon>
@@ -101,14 +101,14 @@
         color="blue-grey darken-3"
       ></v-app-bar-nav-icon>
 
-      <v-toolbar-title class="light-blue--text text--darken-3 font-weight-bold">
+      <v-toolbar-title class="indigo--text font-weight-bold">
         Absent Managerment
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
       <v-btn text icon>
-        <v-icon color="#2e86de">mdi-bell</v-icon>
+        <v-icon color="indigo">mdi-bell</v-icon>
       </v-btn>
 
       <v-toolbar-title class="white--text">

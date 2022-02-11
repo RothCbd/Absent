@@ -32,12 +32,8 @@
     color: #4b6584 !important;
 }
 
-#main-app .v-icon.v-icon{
+#main-app .menu-icon .v-icon.v-icon{
     font-size: 26px !important;
-}
-
-#main-app .menu-card{
-    background-color: #3a9dca !important;
 }
 
 #main-app .v-sheet.v-card {
@@ -55,10 +51,6 @@
 }
 
 // ===============user================
-#user .add-user{
-    background-color: #2090c3 !important;
-}
-
 #user .table-card{
     box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
 }
@@ -72,6 +64,14 @@
 }
 
 #user .v-chip.v-size--small{
-    height: 20px;
-    padding: 7px;
+    height: 18px;
+    padding: 5px;
+}
+
+.v-input .v-label {
+    font-size: 14px !important;
+}
+
+.user-form .v-text-field{
+    padding-top: 5px !important;
 }

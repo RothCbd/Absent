@@ -1,5 +1,6 @@
 window.Vue = require('vue').default;
 window.axios = require('axios');
+Vue.config.productionTip = false;
 import Vuetify from '../plugins/vuetify';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
@@ -7,6 +8,9 @@ Vue.use(VueRouter);
 import 'viewerjs/dist/viewer.css';
 import Viewer from 'v-viewer';
 Vue.use(Viewer)
+
+import { Form } from 'vform';
+window.Form = Form;
 
 import Vue from 'vue';
 import Dashboard from './components/Dashboard';
