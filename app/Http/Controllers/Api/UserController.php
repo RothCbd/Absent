@@ -77,7 +77,6 @@ class UserController extends Controller
             'role_id' => 'required|integer|max:2|min:1',
             'name' => 'required|string|min:2|max:100',
             'email' => 'required|email|max:255|regex:/(.*)\.com/i|unique:users,email,'.$id,
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'role_id.required' => 'The user role is required number 1:admin and 2:User.',
             'role_id.min' => 'The role number must be at least 1.',
@@ -97,6 +96,10 @@ class UserController extends Controller
         $slug = Str::slug($request->name, '-');
         if($request->hasfile('image'))
         {
+            $this->validate($request, [
+                'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+
             $url = public_path('profiles/'.$user->profile);
             if (file_exists($url)){
                 unlink(public_path('profiles/'.$user->profile));

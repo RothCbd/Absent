@@ -102,7 +102,9 @@
             <v-icon x-small class="mr-2" @click="editUser(item)"
               >mdi-pencil</v-icon
             >
-            <v-icon x-small class="mr-2">mdi-delete</v-icon>
+            <v-icon x-small class="mr-2" @click="deleteUser(item.id, item.name)"
+              >mdi-delete</v-icon
+            >
           </template>
         </v-data-table>
       </v-card>
@@ -236,6 +238,15 @@
                       :src="preview_profile"
                       class="img-fluid rounded-sm"
                     ></v-img>
+
+                    <v-img
+                      v-if="
+                        preview_profile_edit &&
+                        preview_profile_edit != 'default.png'
+                      "
+                      :src="'/profiles/' + preview_profile_edit"
+                      class="img-fluid rounded-sm"
+                    ></v-img>
                   </v-list-item-avatar>
                   <v-file-input
                     show-size
@@ -280,6 +291,45 @@
           </v-btn>
         </template>
       </v-snackbar>
+
+      <!-- ----------dialogDelete------------ -->
+      <v-dialog v-model="dialogDelete" max-width="330px">
+        <v-card>
+          <div class="text-center">
+            <v-sheet class="px-7 pt-7 pb-4 mx-auto text-center d-inline-block">
+              <v-icon class="text-center pb-3" x-large color="red lighten-2"
+                >mdi-alert</v-icon
+              >
+              <div class="grey--text text--darken-3 text-body-2 mb-4">
+                Are you sure to delete
+                <b class="red--text tex--lighten-2">{{ userNameDelete }}</b> ?
+              </div>
+
+              <v-btn
+                :disabled="btnLoading"
+                class="ma-1"
+                depressed
+                small
+                @click="dialogDelete = false"
+              >
+                Cancel
+              </v-btn>
+
+              <v-btn
+                :loading="btnLoading"
+                class="ma-1"
+                dark
+                color="red"
+                small
+                depressed
+                @click="submitDelete"
+              >
+                Delete
+              </v-btn>
+            </v-sheet>
+          </div>
+        </v-card>
+      </v-dialog>
     </div>
   </div>
 </template>
@@ -340,6 +390,7 @@ export default {
       userCount: "",
       userForm: false,
       form: new Form({
+        id: "",
         role_id: "",
         name: "",
         email: "",
@@ -354,10 +405,14 @@ export default {
         { text: "User", value: 2 },
       ],
       preview_profile: null,
+      preview_profile_edit: null,
       btnSaveLoading: false,
+      btnLoading: false,
       image_validation: "",
       alertSnackbarMsg: "",
       errorsMessage: "",
+      dialogDelete: false,
+      userNameDelete: "",
     };
   },
 
@@ -377,7 +432,7 @@ export default {
         .get("http://127.0.0.1:8000/api/read-user", {
           headers: {
             Authorization:
-              "Bearer " + "1|CRLpxKnDG2dZRnT26m2lUMdw09BiLv5If4YgEuLv",
+              "Bearer " + "3|0sgWurjPC0veVBPSbxO63eTcNEBpSIJDOnQnGGRg",
           },
         })
         .then((response) => {
@@ -402,6 +457,7 @@ export default {
       this.form.phone_number = [{ phone: "" }];
       this.form.image = null;
       this.preview_profile = null;
+      this.preview_profile_edit = null;
       this.form.password = "";
       this.form.password_confirmation = "";
       this.tableLoading = false;
@@ -445,14 +501,12 @@ export default {
         .post("api/create-user", {
           headers: {
             Authorization:
-              "Bearer " + "1|CRLpxKnDG2dZRnT26m2lUMdw09BiLv5If4YgEuLv",
+              "Bearer " + "3|0sgWurjPC0veVBPSbxO63eTcNEBpSIJDOnQnGGRg",
           },
         })
         .then((response) => {
           this.ReadUser();
           this.closeDialog();
-          this.image_validation = false;
-          this.preview_profile = null;
           this.alertSnackbarMsg = response.data.message;
           this.snackbar = true;
           this.btnSaveLoading = false;
@@ -468,6 +522,7 @@ export default {
     editUser(user) {
       this.editMode = true;
       console.log(user);
+      this.form.id = user.id;
       if (user.role == "admin") {
         this.form.role_id = 1;
       } else if (user.role == "user") {
@@ -476,8 +531,65 @@ export default {
       this.form.name = user.name;
       this.form.email = user.email;
       this.form.phone_number = user.phone;
-
+      this.preview_profile_edit = user.profile;
       this.userForm = true;
+    },
+
+    async updatePost() {
+      this.btnSaveLoading = true;
+      this.tableLoading = true;
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      this.form
+        .post("/api/update-user/" + this.form.id, {
+          headers: {
+            Authorization:
+              "Bearer " + "3|0sgWurjPC0veVBPSbxO63eTcNEBpSIJDOnQnGGRg",
+          },
+        })
+        .then((response) => {
+          this.ReadUser();
+          this.closeDialog();
+          this.alertSnackbarMsg = response.data.message;
+          this.snackbar = true;
+          this.btnSaveLoading = false;
+          this.tableLoading = false;
+        })
+        .catch((errors) => {
+          this.errorsMessage = errors.response.data.errors;
+          this.btnSaveLoading = false;
+          this.tableLoading = false;
+        });
+    },
+
+    deleteUser(user, name) {
+      this.form.id = user;
+      this.userNameDelete = name;
+      this.dialogDelete = true;
+    },
+
+    async submitDelete() {
+      this.btnLoading = true;
+      this.tableLoading = true;
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      axios
+        .delete("/api/delete-user/" + this.form.id, {
+          headers: {
+            Authorization:
+              "Bearer " + "3|0sgWurjPC0veVBPSbxO63eTcNEBpSIJDOnQnGGRg",
+          },
+        })
+        .then((response) => {
+          this.ReadUser();
+          this.dialogDelete = false;
+          this.alertSnackbarMsg = response.data.message;
+          this.snackbar = true;
+          this.btnLoading = false;
+          this.tableLoading = false;
+        })
+        .catch((error) => {
+          this.btnLoading = false;
+          this.tableLoading = false;
+        });
     },
   },
 };
