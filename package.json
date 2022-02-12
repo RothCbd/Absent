@@ -28,10 +28,12 @@
     "dependencies": {
         "@mdi/font": "^6.5.95",
         "cross-env": "^7.0.3",
+        "v-mask": "^2.3.0",
         "v-viewer": "^1.6.4",
         "vform": "^2.1.2",
         "vue-router": "^3.5.3",
         "vuetify": "^2.6.3",
-        "vuetify-loader": "^1.7.3"
+        "vuetify-loader": "^1.7.3",
+        "vuetify-multiple-draggable-dialogs": "^1.1.4"
     }
 }

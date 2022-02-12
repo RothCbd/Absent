@@ -9,6 +9,12 @@ import 'viewerjs/dist/viewer.css';
 import Viewer from 'v-viewer';
 Vue.use(Viewer)
 
+import VueMask from 'v-mask'
+Vue.use(VueMask);
+
+import mixins from 'vuetify-multiple-draggable-dialogs';
+Vue.mixin(mixins);
+
 import { Form } from 'vform';
 window.Form = Form;
 

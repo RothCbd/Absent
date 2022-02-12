@@ -81,6 +81,23 @@
             </v-chip>
           </template>
 
+          <template v-slot:[`item.phone`]="{ item }">
+            <span v-for="number in item.phone" :key="number.id">
+              <v-chip
+                small
+                class="ma-1 user-phone-number"
+                v-if="number.phone != null"
+                label
+                color="grey lighten-3"
+              >
+                <v-avatar left>
+                  <v-icon>mdi-phone</v-icon>
+                </v-avatar>
+                {{ number.phone }}
+              </v-chip>
+            </span>
+          </template>
+
           <template v-slot:[`item.actions`]="{ item }">
             <v-icon x-small class="mr-2">mdi-pencil</v-icon>
             <v-icon x-small class="mr-2">mdi-delete</v-icon>
@@ -91,7 +108,12 @@
       <!-- --------User-Insert-Form------ -->
       <v-dialog v-model="userForm" width="550" persistent overlay-opacity="0">
         <v-card>
-          <v-toolbar dense flat color="indigo lighten-1">
+          <v-toolbar
+            dense
+            flat
+            color="indigo lighten-1"
+            class="user-form-dialog"
+          >
             <span v-if="editMode === false" class="white--text">
               <v-icon left color="white">mdi-account-plus</v-icon>
               {{ formTitle }}
@@ -135,18 +157,45 @@
                   ></v-text-field>
 
                   <!-- ==================================== -->
-                  <!-- v-model="form.phone_number" -->
-                  <div
-                    v-for="(number, index) in form.phone_number"
-                    :key="index"
-                  >
-                    <v-text-field
-                      v-model="number.phone"
-                      label="Phone Number"
-                      prepend-icon="mdi-cellphone"
-                    ></v-text-field>
-                  </div>
-                  <v-btn x-small @click="addPhone">add</v-btn>
+                  <v-row>
+                    <v-col sm="11">
+                      <span
+                        v-for="(number, index) in form.phone_number"
+                        :key="index"
+                      >
+                        <v-text-field
+                          v-model="number.phone"
+                          label="Phone Number"
+                          prepend-icon="mdi-phone"
+                          v-mask="'###-###-####'"
+                        ></v-text-field>
+                        <small v-if="index !== 0" class="btn-remove-phoneNum">
+                          <v-btn
+                            fab
+                            depressed
+                            x-small
+                            color="red"
+                            dark
+                            @click="removePhone(index)"
+                            ><v-icon>mdi-close</v-icon></v-btn
+                          >
+                        </small>
+                      </span>
+                    </v-col>
+                    <v-col sm="1">
+                      <v-btn
+                        fab
+                        depressed
+                        x-small
+                        @click="addPhone"
+                        color="teal"
+                        class="btn-add-phoneNum"
+                      >
+                        <v-icon small class="white--text">mdi-plus</v-icon>
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+
                   <!-- ==================================== -->
 
                   <v-text-field
@@ -188,35 +237,19 @@
                       class="img-fluid rounded-sm"
                     ></v-img>
                   </v-list-item-avatar>
-                  <small class="red--text">{{ image_validation }}</small>
                   <!-- -btn-select-image -->
-                  <div class="file-input ml-5">
-                    <input
-                      type="file"
-                      name="file-input"
-                      id="file-input"
-                      class="file-input__input form-control-file"
-                      @change="previewImage"
-                    />
-                    <label class="file-input__label" for="file-input">
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        data-prefix="fas"
-                        data-icon="upload"
-                        class="svg-inline--fa fa-upload fa-w-16"
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"
-                        ></path>
-                      </svg>
-                      <span>Select Profile</span></label
-                    >
-                  </div>
+                  <!-- --- -->
+
+                  <v-file-input
+                    show-size
+                    v-model="form.image"
+                    @change="onFileChange"
+                    prepend-icon="mdi-camera"
+                    label="profile image"
+                    @click:clear="clearImage()"
+                  />
+
+                  <!------ -->
                 </v-col>
               </v-row>
             </v-card-text>
@@ -343,6 +376,7 @@ export default {
   },
   mounted() {
     this.ReadUser();
+    this.activateMultipleDraggableDialogs();
   },
 
   methods: {
@@ -373,34 +407,41 @@ export default {
       this.form.role_id = "";
       this.form.name = "";
       this.form.email = "";
-      this.form.phone_number = "";
-      this.form.profile = null;
+      this.form.phone_number = [{ phone: "" }];
+      this.form.image = null;
       this.preview_profile = null;
-      this.password = "";
-      this.password_confirmation = "";
+      this.form.password = "";
+      this.form.password_confirmation = "";
       this.tableLoading = false;
       this.errorsMessage = "";
       this.btnSaveLoading = false;
     },
 
-    previewImage: function (event) {
-      var input = event.target;
-      if (input.files && input.files[0].size / (1024 * 1024) < 2) {
-        var reader = new FileReader();
-        reader.onload = (e) => {
-          this.preview_profile = e.target.result;
-        };
-        this.form.image = input.files[0];
-        reader.readAsDataURL(input.files[0]);
-        this.image_validation = "";
-      } else {
-        this.image_validation = "Image must smaller then 2MB";
-      }
-    },
-
     addPhone: function () {
       this.form.phone_number.push({ phone: "" });
     },
+
+    // ---------------------------------
+    createImage(file) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        this.preview_profile = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
+    onFileChange(file) {
+      if (!file) {
+        return;
+      }
+      this.createImage(file);
+    },
+
+    clearImage() {
+      this.preview_profile = null;
+      this.form.image = null;
+    },
+    // ---------------------------------
 
     createPost() {
       this.btnSaveLoading = true;
@@ -419,9 +460,13 @@ export default {
           this.preview_profile = null;
           this.alertSnackbarMsg = response.data.message;
           this.snackbar = true;
+          this.btnSaveLoading = false;
+          this.tableLoading = false;
         })
         .catch((errors) => {
           this.errorsMessage = errors.response.data.errors;
+          this.btnSaveLoading = false;
+          this.tableLoading = false;
         });
     },
   },

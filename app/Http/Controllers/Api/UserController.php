@@ -25,7 +25,6 @@ class UserController extends Controller
             'role_id' => 'required|integer|max:2|min:1',
             'name' => 'required|string|min:2|max:100',
             'email' => 'required|email|max:255|regex:/(.*)\.com/i|unique:users,email',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'password' => 'required|confirmed|min:6'
         ], [
             'role_id.required' => 'The user role is required number1(admin), number2(user).',
@@ -47,6 +46,10 @@ class UserController extends Controller
         $slug = Str::slug($request->name, '-');
         if($request->hasfile('image'))
         {
+            $this->validate($request, [
+                'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+
             $name = $slug.'-'.time().'-'.$request->image->getClientOriginalName();
             \Image::make($request->image)->save(public_path('profiles/').$name);
             $user->profile = $name;
