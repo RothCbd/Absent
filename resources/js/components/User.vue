@@ -99,7 +99,9 @@
           </template>
 
           <template v-slot:[`item.actions`]="{ item }">
-            <v-icon x-small class="mr-2">mdi-pencil</v-icon>
+            <v-icon x-small class="mr-2" @click="editUser(item)"
+              >mdi-pencil</v-icon
+            >
             <v-icon x-small class="mr-2">mdi-delete</v-icon>
           </template>
         </v-data-table>
@@ -118,8 +120,8 @@
               <v-icon left color="white">mdi-account-plus</v-icon>
               {{ formTitle }}
             </span>
-            <span v-else
-              ><v-icon left>mdi-file-edit-outline</v-icon>{{ formTitle }}</span
+            <span v-else class="white--text"
+              ><v-icon left dark>mdi-account-edit</v-icon>{{ formTitle }}</span
             >
           </v-toolbar>
 
@@ -201,7 +203,6 @@
                   <v-text-field
                     v-model="form.password"
                     :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="[rules.required, rules.min]"
                     :type="showPassword ? 'text' : 'password'"
                     label="Password"
                     hint="At least 8 characters"
@@ -214,7 +215,6 @@
                     :append-icon="
                       showPasswordConfirm ? 'mdi-eye' : 'mdi-eye-off'
                     "
-                    :rules="[rules.required, rules.min]"
                     :type="showPasswordConfirm ? 'text' : 'password'"
                     label="Password Confirmation"
                     hint="At least 8 characters"
@@ -237,9 +237,6 @@
                       class="img-fluid rounded-sm"
                     ></v-img>
                   </v-list-item-avatar>
-                  <!-- -btn-select-image -->
-                  <!-- --- -->
-
                   <v-file-input
                     show-size
                     v-model="form.image"
@@ -247,9 +244,8 @@
                     prepend-icon="mdi-camera"
                     label="profile image"
                     @click:clear="clearImage()"
+                    :error-messages="errorsMessage.image"
                   />
-
-                  <!------ -->
                 </v-col>
               </v-row>
             </v-card-text>
@@ -339,11 +335,7 @@ export default {
         { text: "Phone", value: "phone" },
         { text: "Action", sortable: false, align: "center", value: "actions" },
       ],
-      rules: {
-        required: (value) => !!value || "Required.",
-        min: (v) => v.length >= 8 || "Min 8 characters",
-        emailMatch: () => `The email and password you entered don't match`,
-      },
+
       userData: [],
       userCount: "",
       userForm: false,
@@ -421,6 +413,9 @@ export default {
       this.form.phone_number.push({ phone: "" });
     },
 
+    removePhone(index) {
+      this.form.phone_number.splice(index, 1);
+    },
     // ---------------------------------
     createImage(file) {
       const reader = new FileReader();
@@ -468,6 +463,17 @@ export default {
           this.btnSaveLoading = false;
           this.tableLoading = false;
         });
+    },
+
+    editUser(user) {
+      this.editMode = true;
+      console.log(user);
+      if (user.role == "admin") {
+        this.form.role_id = 1;
+      } else if (user.role == "user") {
+        this.form.role_id = 2;
+      }
+      this.userForm = true;
     },
   },
 };

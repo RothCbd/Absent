@@ -2664,10 +2664,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     var _ref;
@@ -2697,17 +2693,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       sortable: false,
       align: "center",
       value: "actions"
-    }]), _defineProperty(_ref, "rules", {
-      required: function required(value) {
-        return !!value || "Required.";
-      },
-      min: function min(v) {
-        return v.length >= 8 || "Min 8 characters";
-      },
-      emailMatch: function emailMatch() {
-        return "The email and password you entered don't match";
-      }
-    }), _defineProperty(_ref, "userData", []), _defineProperty(_ref, "userCount", ""), _defineProperty(_ref, "userForm", false), _defineProperty(_ref, "form", new Form({
+    }]), _defineProperty(_ref, "userData", []), _defineProperty(_ref, "userCount", ""), _defineProperty(_ref, "userForm", false), _defineProperty(_ref, "form", new Form({
       role_id: "",
       name: "",
       email: "",
@@ -2774,6 +2760,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         phone: ""
       });
     },
+    removePhone: function removePhone(index) {
+      this.form.phone_number.splice(index, 1);
+    },
     // ---------------------------------
     createImage: function createImage(file) {
       var _this2 = this;
@@ -2823,6 +2812,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this3.btnSaveLoading = false;
         _this3.tableLoading = false;
       });
+    },
+    editUser: function editUser(user) {
+      this.editMode = true;
+      console.log(user);
+
+      if (user.role == "admin") {
+        this.form.role_id = 1;
+      } else if (user.role == "user") {
+        this.form.role_id = 2;
+      }
+
+      this.userForm = true;
     }
   }
 });
@@ -11860,7 +11861,15 @@ var render = function () {
                       return [
                         _c(
                           "v-icon",
-                          { staticClass: "mr-2", attrs: { "x-small": "" } },
+                          {
+                            staticClass: "mr-2",
+                            attrs: { "x-small": "" },
+                            on: {
+                              click: function ($event) {
+                                return _vm.editUser(item)
+                              },
+                            },
+                          },
                           [_vm._v("mdi-pencil")]
                         ),
                         _vm._v(" "),
@@ -11924,9 +11933,10 @@ var render = function () {
                         )
                       : _c(
                           "span",
+                          { staticClass: "white--text" },
                           [
-                            _c("v-icon", { attrs: { left: "" } }, [
-                              _vm._v("mdi-file-edit-outline"),
+                            _c("v-icon", { attrs: { left: "", dark: "" } }, [
+                              _vm._v("mdi-account-edit"),
                             ]),
                             _vm._v(_vm._s(_vm.formTitle)),
                           ],
@@ -12133,7 +12143,6 @@ var render = function () {
                                     "append-icon": _vm.showPassword
                                       ? "mdi-eye"
                                       : "mdi-eye-off",
-                                    rules: [_vm.rules.required, _vm.rules.min],
                                     type: _vm.showPassword
                                       ? "text"
                                       : "password",
@@ -12160,7 +12169,6 @@ var render = function () {
                                     "append-icon": _vm.showPasswordConfirm
                                       ? "mdi-eye"
                                       : "mdi-eye-off",
-                                    rules: [_vm.rules.required, _vm.rules.min],
                                     type: _vm.showPasswordConfirm
                                       ? "text"
                                       : "password",
@@ -12223,6 +12231,7 @@ var render = function () {
                                     "show-size": "",
                                     "prepend-icon": "mdi-camera",
                                     label: "profile image",
+                                    "error-messages": _vm.errorsMessage.image,
                                   },
                                   on: {
                                     change: _vm.onFileChange,
