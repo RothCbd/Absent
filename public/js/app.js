@@ -2823,6 +2823,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.form.role_id = 2;
       }
 
+      this.form.name = user.name;
+      this.form.email = user.email;
+      this.form.phone_number = user.phone;
       this.userForm = true;
     }
   }
