@@ -15,7 +15,7 @@
           <v-btn
             small
             color="indigo"
-            class="add-user white--text"
+            class="add-user white--text font-weight-regular"
             @click="openDialog"
             ><v-icon left>mdi-plus</v-icon> Add User</v-btn
           >

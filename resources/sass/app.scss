@@ -107,3 +107,32 @@
 .v-file-input__text{
     font-size: 13px;
 }
+
+// ===============employee============
+#employee .table-card{
+    box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+}
+
+#employee .v-chip.v-size--small {
+    border-radius: 10px;
+    font-size: 11px;
+    height: 20px;
+}
+
+.employee-name{
+    font-size: 90%;
+}
+
+.start-date{
+    font-size: 12px !important;
+}
+
+.card-action{
+    border-top: 1.5px groove #ffffff73;
+}
+
+.icon-add-phone{
+    position: absolute;
+    margin-left: -20px;
+    margin-top: 20px;
+}

@@ -20,7 +20,6 @@ class EmployeeController extends Controller
         $this->validate($request, [
             'name' => 'required|string|min:2|max:100',
             'email' => 'required|email|max:255|regex:/(.*)\.com/i|unique:employees,email',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'gender' => 'required',
             'position' => 'required',
             'start_date' => 'required',
@@ -37,6 +36,10 @@ class EmployeeController extends Controller
         $slug = Str::slug($request->name, '-');
         if($request->hasfile('image'))
         {
+            $this->validate($request, [
+                'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+
             $name = $slug.'-'.time().'-'.$request->image->getClientOriginalName();
             \Image::make($request->image)->save(public_path('employees/').$name);
             $employee->pic = $name;
@@ -68,6 +71,10 @@ class EmployeeController extends Controller
         $slug = Str::slug($request->name, '-');
         if($request->hasfile('image'))
         {
+            $this->validate($request, [
+                'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+
             $url = public_path('employees/'.$employee->pic);
             if (file_exists($url)){
                 unlink(public_path('employees/'.$employee->pic));
