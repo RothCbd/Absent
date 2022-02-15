@@ -5,7 +5,7 @@
 @import 'variables';
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';
 
 ::-webkit-scrollbar {
     width: 0px;
@@ -66,6 +66,10 @@
 #user .v-chip.v-size--small{
     height: 18px;
     padding: 5px;
+}
+
+.user-name{
+    font-size: 13px;
 }
 
 .v-input .v-label {
@@ -135,4 +139,24 @@
     position: absolute;
     margin-left: -20px;
     margin-top: 20px;
+}
+
+.gender-chip{
+    border-radius: 5px !important;
+    height: 16px !important;
+    padding: 0 5px !important;
+    -webkit-border-radius: 5px !important;
+    -moz-border-radius: 5px !important;
+    -ms-border-radius: 5px !important;
+    -o-border-radius: 5px !important;
+}
+
+// -----------------absnet-------------------------
+#absent .table-card{
+    box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+}
+
+.absent-day-chip{
+    height: 18px !important;
+    padding: 0 8px !important;
 }

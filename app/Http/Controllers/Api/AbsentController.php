@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Absent\absentData;
 use App\Models\Absent;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 
 class AbsentController extends Controller
@@ -18,11 +20,18 @@ class AbsentController extends Controller
         $this->validate($request, [
             'employee_id' => 'required|integer',
             'date' => 'required'
+        ], [
+            'employee_id.required' => 'select employee.',
         ]);
 
         $absent = new Absent();
         $absent->employee_id = $request->employee_id;
+
         $absent->date = $request->date;
+        $date = $request->date;
+        $day = new DateTime($date);
+        $absent->day = $day->format('l');
+
         $absent->description = $request->description;
         $absent->save();
         return response()->json(['message' => 'Absent save successfully.'], 200);

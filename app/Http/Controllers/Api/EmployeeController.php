@@ -32,7 +32,16 @@ class EmployeeController extends Controller
         $employee->email = $request->email;
         $employee->position = $request->position;
         $employee->start_date = $request->start_date;
-        $employee->phone_number = $request->phone_number;
+
+        $phoneEmpty = array(['phone' => null]);
+        foreach($request->phone_number as $phoneNum){
+            if($phoneNum['phone'] != null){
+                $employee->phone_number = $request->phone_number;
+            }else{
+                $employee->phone_number = $phoneEmpty;
+            }
+        }
+
         $slug = Str::slug($request->name, '-');
         if($request->hasfile('image'))
         {
@@ -54,7 +63,6 @@ class EmployeeController extends Controller
         $this->validate($request, [
             'name' => 'required|string|min:2|max:100',
             'email' => 'required|email|max:255|regex:/(.*)\.com/i|unique:employees,email,'.$id,
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'gender' => 'required',
             'position' => 'required',
             'start_date' => 'required',
@@ -67,7 +75,16 @@ class EmployeeController extends Controller
         $employee->email = $request->email;
         $employee->position = $request->position;
         $employee->start_date = $request->start_date;
-        $employee->phone_number = $request->phone_number;
+
+        $phoneEmpty = array(['phone' => null]);
+        foreach($request->phone_number as $phoneNum){
+            if($phoneNum['phone'] != null){
+                $employee->phone_number = $request->phone_number;
+            }else{
+                $employee->phone_number = $phoneEmpty;
+            }
+        }
+
         $slug = Str::slug($request->name, '-');
         if($request->hasfile('image'))
         {

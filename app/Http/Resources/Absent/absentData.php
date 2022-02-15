@@ -18,12 +18,14 @@ class absentData extends ResourceCollection
             'data' => $this->collection->transform(function($absent){
                 return[
                     'id' => $absent->id,
+                    'day' => $absent->day,
                     'date' => $absent->date,
                     'desription' => $absent->description,
                     'employee' => [
                         'name' => $absent->employee->name,
                         'gender' => $absent->employee->gender,
                         'image' => $absent->employee->pic,
+                        'position' => $absent->employee->position
                     ]
                 ];
             })

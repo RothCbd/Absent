@@ -3,13 +3,13 @@
     <div>
       <v-row>
         <v-col cols="sm-8">
-          <h5 class="grey--text text--darken-2">
+          <h3 class="grey--text text--darken-2">
             <v-icon class="mb-1" color="grey darken-2">mdi-account-tie</v-icon>
             <span class="text-decoration-underline">Employees List</span>
             <v-chip color="grey lighten-2 grey--text text--darken-3">{{
               employeeCount
             }}</v-chip>
-          </h5>
+          </h3>
         </v-col>
         <v-col cols="sm-4" class="text-right">
           <v-btn
@@ -19,6 +19,15 @@
             @click="openDialog"
             ><v-icon left>mdi-plus</v-icon> Add employee</v-btn
           >
+
+          <v-text-field
+            hide-details
+            class="mb-2 p-0"
+            v-model="searchEmployee"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+          ></v-text-field>
         </v-col>
       </v-row>
 
@@ -27,7 +36,7 @@
         <v-data-table
           :headers="headers"
           :items="employeeData"
-          :search="search"
+          :search="searchEmployee"
           :loading="tableLoading"
           loading-text="Loading users data"
         >
@@ -38,7 +47,7 @@
           <template v-slot:[`item.name`]="{ item }">
             <v-avatar
               size="40"
-              class="ma-2"
+              class="ma-1"
               left
               v-if="item.image == 'default.png'"
             >
@@ -64,12 +73,12 @@
             <v-chip
               v-if="item.gender == 'male'"
               color="primary"
-              class="text-capitalize p-2"
+              class="p-2 gender-chip"
               small
             >
               {{ item.gender }}
             </v-chip>
-            <v-chip v-else color="pink" dark class="text-capitalize p-2" small>
+            <v-chip v-else color="pink" dark class="p-2 gender-chip" small>
               {{ item.gender }}
             </v-chip>
           </template>
@@ -97,13 +106,39 @@
               <v-avatar left class="mr-0">
                 <v-icon x-small>mdi-calendar-month</v-icon>
               </v-avatar>
-              {{ item.start_date }}
+              {{ formatDate(item.start_date) }}
             </v-chip>
           </template>
 
+          <template v-slot:[`item.phone_number`]="{ item }">
+            <span v-for="number in item.phone_number" :key="number.id">
+              <v-chip
+                v-if="number.phone != null"
+                class="p-1 start-date"
+                small
+                color="grey lighten-2"
+                text-color="blue-grey darken-3"
+                label
+              >
+                {{ number.phone }}
+                <v-avatar class="mr-0">
+                  <v-icon x-small>mdi-phone</v-icon>
+                </v-avatar>
+              </v-chip>
+              <br />
+            </span>
+          </template>
+
           <template v-slot:[`item.actions`]="{ item }">
-            <v-icon small class="mr-2">mdi-pencil</v-icon>
-            <v-icon small class="mr-2">mdi-delete</v-icon>
+            <v-icon small class="mr-2" @click="editUser(item)"
+              >mdi-pencil</v-icon
+            >
+            <v-icon
+              small
+              class="mr-2"
+              @click="deleteEployee(item.id, item.name)"
+              >mdi-delete</v-icon
+            >
           </template>
         </v-data-table>
       </v-card>
@@ -173,13 +208,28 @@
                     :error-messages="errorsMessage.position"
                   ></v-text-field>
 
-                  <v-text-field
-                    v-model="form.start_date"
-                    v-mask="'##-##-####'"
-                    label="Start Date"
-                    prepend-icon="mdi-calendar-range"
-                    :error-messages="errorsMessage.position"
-                  ></v-text-field>
+                  <!-- ----------- -->
+                  <v-menu
+                    v-model="absentDateChoose"
+                    :close-on-content-click="false"
+                    max-width="290"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        label="Start Date"
+                        :value="computedDateFormattedMomentjs"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="form.start_date"
+                      @input="absentDateChoose = false"
+                    ></v-date-picker>
+                  </v-menu>
+
                   <!-- ==================================== -->
                   <v-row>
                     <v-col sm="11">
@@ -225,7 +275,7 @@
                         preview_profile_edit &&
                         preview_profile_edit != 'default.png'
                       "
-                      :src="'/profiles/' + preview_profile_edit"
+                      :src="'/employees/' + preview_profile_edit"
                       class="img-fluid rounded-sm"
                     ></v-img>
                   </v-list-item-avatar>
@@ -275,19 +325,60 @@
           </v-btn>
         </template>
       </v-snackbar>
+
+      <!-- ----------dialogDelete------------ -->
+      <v-dialog v-model="dialogDelete" max-width="330px">
+        <v-card>
+          <div class="text-center">
+            <v-sheet class="px-7 pt-7 pb-4 mx-auto text-center d-inline-block">
+              <v-icon class="text-center pb-3" x-large color="red lighten-2"
+                >mdi-alert</v-icon
+              >
+              <div class="grey--text text--darken-3 text-body-2 mb-4">
+                Are you sure to delete
+                <b class="red--text tex--lighten-2">{{ userNameDelete }}</b> ?
+              </div>
+
+              <v-btn
+                :disabled="btnLoading"
+                class="ma-1"
+                depressed
+                small
+                @click="dialogDelete = false"
+              >
+                Cancel
+              </v-btn>
+
+              <v-btn
+                :loading="btnLoading"
+                class="ma-1"
+                dark
+                color="red"
+                small
+                depressed
+                @click="submitDelete"
+              >
+                Delete
+              </v-btn>
+            </v-sheet>
+          </div>
+        </v-card>
+      </v-dialog>
     </div>
   </div>
 </template>
 
 <script>
+import moment from "moment";
 export default {
   data() {
     return {
       editMode: false,
-      search: "",
+      searchEmployee: "",
       snackbar: false,
       editMode: false,
       tableLoading: true,
+      absentDateChoose: false,
       headers: [
         {
           text: "No.",
@@ -299,7 +390,7 @@ export default {
         { text: "Email", value: "email" },
         { text: "Position", value: "position" },
         { text: "Start Date", value: "start_date" },
-        { text: "Phone", value: "phone" },
+        { text: "Phone", value: "phone_number" },
         { text: "Action", sortable: false, align: "center", value: "actions" },
       ],
       employeeData: [],
@@ -331,6 +422,11 @@ export default {
     formTitle() {
       return this.editMode === false ? "Add Employee" : "Edit Employee";
     },
+    computedDateFormattedMomentjs() {
+      return this.form.start_date
+        ? moment(this.form.start_date).format("DD-MM-YYYY")
+        : "";
+    },
   },
   mounted() {
     this.ReadEmployee();
@@ -356,6 +452,10 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+
+    formatDate(value) {
+      return moment(value).format("DD-MM-YYYY");
     },
 
     addPhone: function () {
@@ -438,6 +538,81 @@ export default {
         .catch((errors) => {
           this.errorsMessage = errors.response.data.errors;
           this.btnSaveLoading = false;
+          this.tableLoading = false;
+        });
+    },
+
+    editUser(employee) {
+      this.editMode = true;
+      console.log(employee);
+      this.form.id = employee.id;
+      if (employee.gender == "male") {
+        this.form.gender = "male";
+      } else if (employee.gender == "female") {
+        this.form.gender = "female";
+      }
+      this.form.name = employee.name;
+      this.form.email = employee.email;
+      this.form.phone_number = employee.phone_number;
+      this.preview_profile_edit = employee.image;
+      this.form.position = employee.position;
+      this.form.start_date = employee.start_date;
+      this.employeeForm = true;
+    },
+
+    async updatePost() {
+      this.btnSaveLoading = true;
+      this.tableLoading = true;
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      this.form
+        .post("/api/update-employee/" + this.form.id, {
+          headers: {
+            Authorization:
+              "Bearer " + "3|0sgWurjPC0veVBPSbxO63eTcNEBpSIJDOnQnGGRg",
+          },
+        })
+        .then((response) => {
+          this.ReadEmployee();
+          this.closeDialog();
+          this.alertSnackbarMsg = response.data.message;
+          this.snackbar = true;
+          this.btnSaveLoading = false;
+          this.tableLoading = false;
+        })
+        .catch((errors) => {
+          this.errorsMessage = errors.response.data.errors;
+          this.btnSaveLoading = false;
+          this.tableLoading = false;
+        });
+    },
+
+    deleteEployee(user, name) {
+      this.form.id = user;
+      this.userNameDelete = name;
+      this.dialogDelete = true;
+    },
+
+    async submitDelete() {
+      this.btnLoading = true;
+      this.tableLoading = true;
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      axios
+        .delete("/api/delete-employee/" + this.form.id, {
+          headers: {
+            Authorization:
+              "Bearer " + "3|0sgWurjPC0veVBPSbxO63eTcNEBpSIJDOnQnGGRg",
+          },
+        })
+        .then((response) => {
+          this.ReadEmployee();
+          this.dialogDelete = false;
+          this.alertSnackbarMsg = response.data.message;
+          this.snackbar = true;
+          this.btnLoading = false;
+          this.tableLoading = false;
+        })
+        .catch((error) => {
+          this.btnLoading = false;
           this.tableLoading = false;
         });
     },

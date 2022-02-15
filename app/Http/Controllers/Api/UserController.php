@@ -92,7 +92,16 @@ class UserController extends Controller
         $user->role_id = $request->role_id;
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->phone_number = $request->phone_number;
+
+        $phoneEmpty = array(['phone' => null]);
+        foreach($request->phone_number as $phoneNum){
+            if($phoneNum['phone'] != null){
+                $user->phone_number = $request->phone_number;
+            }else{
+                $user->phone_number = $phoneEmpty;
+            }
+        }
+
         $slug = Str::slug($request->name, '-');
         if($request->hasfile('image'))
         {

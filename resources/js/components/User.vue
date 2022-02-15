@@ -53,6 +53,7 @@
                 font-weight-medium
                 blue-grey--text
                 text--darken-3 text-capitalize
+                user-name
               "
             >
               {{ item.name }}
