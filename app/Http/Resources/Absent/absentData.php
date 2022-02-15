@@ -22,6 +22,7 @@ class absentData extends ResourceCollection
                     'date' => $absent->date,
                     'desription' => $absent->description,
                     'employee' => [
+                        'id' => $absent->employee->id,
                         'name' => $absent->employee->name,
                         'gender' => $absent->employee->gender,
                         'image' => $absent->employee->pic,

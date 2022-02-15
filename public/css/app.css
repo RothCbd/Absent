@@ -141,3 +141,8 @@
   height: 18px !important;
   padding: 0 8px !important;
 }
+
+#report .v-card {
+  padding: 30px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}

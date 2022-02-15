@@ -222,6 +222,7 @@
                         readonly
                         v-bind="attrs"
                         v-on="on"
+                        :error-messages="errorsMessage.start_date"
                       ></v-text-field>
                     </template>
                     <v-date-picker

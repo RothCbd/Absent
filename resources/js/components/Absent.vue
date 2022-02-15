@@ -5,7 +5,9 @@
         <h3 class="grey--text text--darken-2">
           <v-icon class="mb-1" color="grey darken-2">mdi-account-cancel</v-icon>
           <span class="text-decoration-underline">Absent List</span>
-          <v-chip color="grey lighten-2 grey--text text--darken-3">35</v-chip>
+          <v-chip color="grey lighten-2 grey--text text--darken-3">{{
+            absentCount
+          }}</v-chip>
         </h3>
       </v-col>
       <v-col cols="sm-4" class="text-right">
@@ -37,6 +39,10 @@
         :loading="tableLoading"
         loading-text="Loading users data"
       >
+        <template v-slot:[`item.id`]="item">
+          {{ item.index + 1 }}
+        </template>
+
         <template v-slot:[`item.employee.name`]="{ item }">
           <v-avatar
             size="40"
@@ -89,8 +95,15 @@
         </template>
 
         <template v-slot:[`item.actions`]="{ item }">
-          <v-icon small class="mr-2">mdi-pencil</v-icon>
-          <v-icon small class="mr-2">mdi-delete</v-icon>
+          <v-icon small class="mr-2" @click="editAbsent(item)"
+            >mdi-pencil</v-icon
+          >
+          <v-icon
+            small
+            class="mr-2"
+            @click="deleteAbsent(item.id, item.employee.name)"
+            >mdi-delete</v-icon
+          >
         </template>
       </v-data-table>
     </v-card>
@@ -109,20 +122,21 @@
         </v-toolbar>
 
         <form
-          @submit.prevent="editMode ? updatePost() : createAbsent()"
+          @submit.prevent="editMode ? updateAbsent() : createAbsent()"
           enctype="multipart/form-data"
         >
           <v-card-text>
             <!-- ================= -->
             <v-autocomplete
               v-model="form.employee_id"
-              :items="employeeDate"
+              :items="employeeData"
               :item-text="(item) => item.name"
               item-value="id"
               clearable
               label="Select Employee"
               prepend-inner-icon="mdi-account-tie"
               outlined
+              :error-messages="errorsMessage.employee_id"
             >
               <template v-slot:selection="data">
                 <v-chip
@@ -182,6 +196,7 @@
                   v-bind="attrs"
                   v-on="on"
                   outlined
+                  :error-messages="errorsMessage.date"
                 ></v-text-field>
               </template>
               <v-date-picker
@@ -216,6 +231,56 @@
         </form>
       </v-card>
     </v-dialog>
+
+    <!-- ---------------Snacbar--------------- -->
+    <v-snackbar v-model="snackbar" color="indigo lighten-1" dark>
+      {{ alertSnackbarMsg }}
+      <template v-slot:action="{ attrs }">
+        <v-btn dark text v-bind="attrs" @click="snackbar = false" small>
+          close
+        </v-btn>
+      </template>
+    </v-snackbar>
+
+    <!-- ----------dialogDelete------------ -->
+    <v-dialog v-model="dialogDelete" max-width="330px">
+      <v-card>
+        <div class="text-center">
+          <v-sheet class="px-7 pt-7 pb-4 mx-auto text-center d-inline-block">
+            <v-icon class="text-center pb-3" x-large color="red lighten-2"
+              >mdi-alert</v-icon
+            >
+            <div class="grey--text text--darken-3 text-body-2 mb-4">
+              Are you sure delete
+              <b class="red--text tex--lighten-2">{{ employeeName }}</b> absent
+              ?
+            </div>
+
+            <v-btn
+              :disabled="btnLoading"
+              class="ma-1"
+              depressed
+              small
+              @click="dialogDelete = false"
+            >
+              Cancel
+            </v-btn>
+
+            <v-btn
+              :loading="btnLoading"
+              class="ma-1"
+              dark
+              color="red"
+              small
+              depressed
+              @click="submitDelete"
+            >
+              Delete
+            </v-btn>
+          </v-sheet>
+        </div>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -243,7 +308,7 @@ export default {
         { text: "Action", sortable: false, align: "center", value: "actions" },
       ],
       absentData: [],
-      employeeDate: [],
+      employeeData: [],
       absentCount: "",
       absentForm: false,
       form: new Form({
@@ -259,6 +324,7 @@ export default {
       alertSnackbarMsg: "",
       errorsMessage: "",
       dialogDelete: false,
+      employeeName: "",
     };
   },
   computed: {
@@ -305,7 +371,7 @@ export default {
           },
         })
         .then((response) => {
-          this.employeeDate = response.data.data;
+          this.employeeData = response.data.data;
         })
         .catch((error) => {
           console.log(error);
@@ -340,34 +406,6 @@ export default {
       this.btnSaveLoading = false;
     },
 
-    addPhone: function () {
-      this.form.phone_number.push({ phone: "" });
-    },
-
-    removePhone(index) {
-      this.form.phone_number.splice(index, 1);
-    },
-    // -------------image--------------------
-    createImage(file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.preview_profile = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    },
-    onFileChange(file) {
-      if (!file) {
-        return;
-      }
-      this.createImage(file);
-    },
-
-    clearImage() {
-      this.preview_profile = null;
-      this.form.image = null;
-    },
-    // ---------------------------------
-
     createAbsent() {
       this.btnSaveLoading = true;
       this.tableLoading = true;
@@ -393,30 +431,22 @@ export default {
         });
     },
 
-    editUser(employee) {
+    editAbsent(absent) {
       this.editMode = true;
-      console.log(employee);
-      this.form.id = employee.id;
-      if (employee.gender == "male") {
-        this.form.gender = "male";
-      } else if (employee.gender == "female") {
-        this.form.gender = "female";
-      }
-      this.form.name = employee.name;
-      this.form.email = employee.email;
-      this.form.phone_number = employee.phone_number;
-      this.preview_profile_edit = employee.image;
-      this.form.position = employee.position;
-      this.form.start_date = employee.start_date;
+      this.form.id = absent.id;
+      this.form.employee_id = absent.employee.id;
+      this.form.day = absent.day;
+      this.form.date = absent.date;
+      this.form.description = absent.desription;
       this.absentForm = true;
     },
 
-    async updatePost() {
+    async updateAbsent() {
       this.btnSaveLoading = true;
       this.tableLoading = true;
       await new Promise((resolve) => setTimeout(resolve, 1000));
       this.form
-        .post("/api/update-employee/" + this.form.id, {
+        .post("/api/update-absent/" + this.form.id, {
           headers: {
             Authorization:
               "Bearer " + "3|0sgWurjPC0veVBPSbxO63eTcNEBpSIJDOnQnGGRg",
@@ -437,9 +467,9 @@ export default {
         });
     },
 
-    deleteEployee(user, name) {
-      this.form.id = user;
-      this.userNameDelete = name;
+    deleteAbsent(absent, name) {
+      this.form.id = absent;
+      this.employeeName = name;
       this.dialogDelete = true;
     },
 
@@ -448,7 +478,7 @@ export default {
       this.tableLoading = true;
       await new Promise((resolve) => setTimeout(resolve, 1000));
       axios
-        .delete("/api/delete-employee/" + this.form.id, {
+        .delete("/api/delete-absent/" + this.form.id, {
           headers: {
             Authorization:
               "Bearer " + "3|0sgWurjPC0veVBPSbxO63eTcNEBpSIJDOnQnGGRg",
