@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AbsentController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EmailVerificationController;
 use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('create-absent', [AbsentController::class, 'create']);
     Route::post('update-absent/{id}', [AbsentController::class, 'update']);
     Route::delete('delete-absent/{id}', [AbsentController::class, 'delete']);
+
+    // -------Report------------
+    Route::post('read-report', [ReportController::class, 'report']);
 });
 
 

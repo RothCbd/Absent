@@ -44,28 +44,20 @@
         </template>
 
         <template v-slot:[`item.employee.name`]="{ item }">
-          <v-avatar
-            size="40"
-            class="ma-1"
-            left
-            v-if="item.employee.image == 'default.png'"
+          <v-chip
+            class="font-weight-medium absent-employee-name"
+            small
+            label
+            color="grey lighten-4"
           >
-            <v-img :src="'/image/default.png'" />
-          </v-avatar>
-          <v-avatar size="40" class="ma-1" left v-else>
-            <v-img :src="'/employees/' + item.employee.image" />
-          </v-avatar>
-
-          <small
-            class="
-              font-weight-medium
-              blue-grey--text
-              text--darken-3 text-capitalize
-              employee-name
-            "
-          >
+            <v-avatar left v-if="item.employee.image == 'default.png'">
+              <v-img :src="'/image/default.png'" />
+            </v-avatar>
+            <v-avatar left v-else>
+              <v-img :src="'/employees/' + item.employee.image" />
+            </v-avatar>
             {{ item.employee.name }}
-          </small>
+          </v-chip>
         </template>
 
         <template v-slot:[`item.day`]="{ item }">

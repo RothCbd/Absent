@@ -2366,14 +2366,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -3590,14 +3582,82 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       tableLoading: false,
       menu2: false,
+      btnSaveLoading: false,
       headers: [{
-        text: "No.",
         align: "start",
         value: "id"
       }, {
@@ -3615,6 +3675,7 @@ __webpack_require__.r(__webpack_exports__);
       }],
       reportData: [],
       employeeData: [],
+      countReport: "",
       form: new Form({
         employee_id: "",
         dates: []
@@ -3649,6 +3710,27 @@ __webpack_require__.r(__webpack_exports__);
     remove: function remove(item) {
       var index = this.form.employee_id.indexOf(item.id);
       if (index >= 0) this.form.employee_id.splice(index, 1);
+    },
+    getReport: function getReport() {
+      var _this2 = this;
+
+      this.btnSaveLoading = true;
+      this.tableLoading = true;
+      this.form.post("/api/read-report/", {
+        headers: {
+          Authorization: "Bearer " + "3|0sgWurjPC0veVBPSbxO63eTcNEBpSIJDOnQnGGRg"
+        }
+      }).then(function (response) {
+        _this2.reportData = response.data.data;
+        _this2.countReport = response.data.data.length;
+        _this2.btnSaveLoading = false;
+        _this2.tableLoading = false;
+      })["catch"](function (errors) {
+        console.log(errors);
+      });
+    },
+    formatDate: function formatDate(value) {
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).format("DD-MM-YYYY");
     }
   }
 });
@@ -35482,49 +35564,48 @@ var render = function () {
                   fn: function (ref) {
                     var item = ref.item
                     return [
-                      item.employee.image == "default.png"
-                        ? _c(
-                            "v-avatar",
-                            {
-                              staticClass: "ma-1",
-                              attrs: { size: "40", left: "" },
-                            },
-                            [
-                              _c("v-img", {
-                                attrs: { src: "/image/default.png" },
-                              }),
-                            ],
-                            1
-                          )
-                        : _c(
-                            "v-avatar",
-                            {
-                              staticClass: "ma-1",
-                              attrs: { size: "40", left: "" },
-                            },
-                            [
-                              _c("v-img", {
-                                attrs: {
-                                  src: "/employees/" + item.employee.image,
-                                },
-                              }),
-                            ],
-                            1
-                          ),
-                      _vm._v(" "),
                       _c(
-                        "small",
+                        "v-chip",
                         {
                           staticClass:
-                            "\n            font-weight-medium\n            blue-grey--text\n            text--darken-3 text-capitalize\n            employee-name\n          ",
+                            "font-weight-medium absent-employee-name",
+                          attrs: {
+                            small: "",
+                            label: "",
+                            color: "grey lighten-4",
+                          },
                         },
                         [
+                          item.employee.image == "default.png"
+                            ? _c(
+                                "v-avatar",
+                                { attrs: { left: "" } },
+                                [
+                                  _c("v-img", {
+                                    attrs: { src: "/image/default.png" },
+                                  }),
+                                ],
+                                1
+                              )
+                            : _c(
+                                "v-avatar",
+                                { attrs: { left: "" } },
+                                [
+                                  _c("v-img", {
+                                    attrs: {
+                                      src: "/employees/" + item.employee.image,
+                                    },
+                                  }),
+                                ],
+                                1
+                              ),
                           _vm._v(
                             "\n          " +
                               _vm._s(item.employee.name) +
                               "\n        "
                           ),
-                        ]
+                        ],
+                        1
                       ),
                     ]
                   },
@@ -37505,7 +37586,7 @@ var render = function () {
           ),
           _vm._v(" "),
           _c("span", { staticClass: "text-decoration-underline" }, [
-            _vm._v("Report"),
+            _vm._v("Report " + _vm._s(_vm.countReport)),
           ]),
         ],
         1
@@ -37513,250 +37594,435 @@ var render = function () {
       _vm._v(" "),
       _c(
         "v-row",
+        { staticClass: "flex-row-reverse" },
         [
           _c(
             "v-col",
-            {
-              staticClass: "justify-center",
-              attrs: { cols: "12", sm: "12", md: "4" },
-            },
+            { attrs: { cols: "12", sm: "12", md: "4" } },
             [
-              _c(
-                "v-card",
-                [
-                  _c(
-                    "v-menu",
-                    {
+              _c("v-card", { staticClass: "pa-5" }, [
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function ($event) {
+                        $event.preventDefault()
+                        return _vm.getReport()
+                      },
+                    },
+                  },
+                  [
+                    _c(
+                      "v-menu",
+                      {
+                        attrs: {
+                          "close-on-content-click": false,
+                          "nudge-right": 40,
+                          "nudge-top": 40,
+                          transition: "scale-transition",
+                          "offset-y": "",
+                          "min-width": "auto",
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "activator",
+                            fn: function (ref) {
+                              var on = ref.on
+                              var attrs = ref.attrs
+                              return [
+                                _c(
+                                  "v-text-field",
+                                  _vm._g(
+                                    _vm._b(
+                                      {
+                                        attrs: {
+                                          value: _vm.dateRangeText,
+                                          label: "Choose Date",
+                                          "prepend-inner-icon": "mdi-calendar",
+                                          readonly: "",
+                                          outlined: "",
+                                          clearable: "",
+                                        },
+                                        on: {
+                                          "click:clear": function ($event) {
+                                            _vm.form.dates = []
+                                          },
+                                        },
+                                      },
+                                      "v-text-field",
+                                      attrs,
+                                      false
+                                    ),
+                                    on
+                                  )
+                                ),
+                              ]
+                            },
+                          },
+                        ]),
+                        model: {
+                          value: _vm.menu2,
+                          callback: function ($$v) {
+                            _vm.menu2 = $$v
+                          },
+                          expression: "menu2",
+                        },
+                      },
+                      [
+                        _vm._v(" "),
+                        _c("v-date-picker", {
+                          attrs: { range: "" },
+                          on: {
+                            input: function ($event) {
+                              _vm.menu2 = true
+                            },
+                          },
+                          model: {
+                            value: _vm.form.dates,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.form, "dates", $$v)
+                            },
+                            expression: "form.dates",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("v-autocomplete", {
                       attrs: {
-                        "close-on-content-click": false,
-                        "nudge-right": 40,
-                        "nudge-top": 40,
-                        transition: "scale-transition",
-                        "offset-y": "",
-                        "min-width": "auto",
+                        items: _vm.employeeData,
+                        "item-text": function (item) {
+                          return item.name
+                        },
+                        "item-value": "id",
+                        clearable: "",
+                        label: "Select Employee",
+                        "prepend-inner-icon": "mdi-account-tie",
+                        outlined: "",
+                        multiple: "",
                       },
                       scopedSlots: _vm._u([
                         {
-                          key: "activator",
-                          fn: function (ref) {
-                            var on = ref.on
-                            var attrs = ref.attrs
+                          key: "selection",
+                          fn: function (data) {
                             return [
                               _c(
-                                "v-text-field",
-                                _vm._g(
-                                  _vm._b(
-                                    {
-                                      attrs: {
-                                        value:
-                                          _vm.computedDateFormattedMomentjs,
-                                        label: "Choose Date",
-                                        "prepend-inner-icon": "mdi-calendar",
-                                        readonly: "",
-                                        outlined: "",
-                                      },
-                                      model: {
-                                        value: _vm.dateRangeText,
-                                        callback: function ($$v) {
-                                          _vm.dateRangeText = $$v
-                                        },
-                                        expression: "dateRangeText",
+                                "v-chip",
+                                _vm._b(
+                                  {
+                                    staticClass: "mb-1",
+                                    attrs: {
+                                      "input-value": data.selected,
+                                      close: "",
+                                    },
+                                    on: {
+                                      click: data.select,
+                                      "click:close": function ($event) {
+                                        return _vm.remove(data.item)
                                       },
                                     },
-                                    "v-text-field",
-                                    attrs,
-                                    false
+                                  },
+                                  "v-chip",
+                                  data.attrs,
+                                  false
+                                ),
+                                [
+                                  _c(
+                                    "v-avatar",
+                                    { attrs: { left: "" } },
+                                    [
+                                      data.item.image == "default.png"
+                                        ? _c("v-img", {
+                                            attrs: {
+                                              src: "/image/default.png",
+                                              sizes: "40",
+                                            },
+                                          })
+                                        : _c("v-img", {
+                                            attrs: {
+                                              src:
+                                                "/employees/" + data.item.image,
+                                              sizes: "40",
+                                            },
+                                          }),
+                                    ],
+                                    1
                                   ),
-                                  on
-                                )
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(data.item.name) +
+                                      "\n              "
+                                  ),
+                                ],
+                                1
+                              ),
+                            ]
+                          },
+                        },
+                        {
+                          key: "item",
+                          fn: function (data) {
+                            return [
+                              _c(
+                                "v-list-item-avatar",
+                                [
+                                  data.item.image == "default.png"
+                                    ? _c("v-img", {
+                                        attrs: {
+                                          src: "/image/default.png",
+                                          sizes: "40",
+                                        },
+                                      })
+                                    : _c("v-img", {
+                                        attrs: {
+                                          src: "/employees/" + data.item.image,
+                                          sizes: "40",
+                                        },
+                                      }),
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-list-item-content",
+                                [
+                                  _c(
+                                    "v-list-item-title",
+                                    [
+                                      _vm._v(
+                                        "\n                  " +
+                                          _vm._s(data.item.name) +
+                                          " -\n                  "
+                                      ),
+                                      _c(
+                                        "v-chip",
+                                        { attrs: { small: "", label: "" } },
+                                        [
+                                          _vm._v(
+                                            " " +
+                                              _vm._s(data.item.position) +
+                                              " "
+                                          ),
+                                        ]
+                                      ),
+                                    ],
+                                    1
+                                  ),
+                                ],
+                                1
                               ),
                             ]
                           },
                         },
                       ]),
                       model: {
-                        value: _vm.menu2,
+                        value: _vm.form.employee_id,
                         callback: function ($$v) {
-                          _vm.menu2 = $$v
+                          _vm.$set(_vm.form, "employee_id", $$v)
                         },
-                        expression: "menu2",
+                        expression: "form.employee_id",
                       },
-                    },
-                    [
-                      _vm._v(" "),
-                      _c("v-date-picker", {
-                        attrs: { range: "" },
-                        on: {
-                          input: function ($event) {
-                            _vm.menu2 = true
-                          },
-                        },
-                        model: {
-                          value: _vm.form.dates,
-                          callback: function ($$v) {
-                            _vm.$set(_vm.form, "dates", $$v)
-                          },
-                          expression: "form.dates",
-                        },
-                      }),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-autocomplete", {
-                    attrs: {
-                      items: _vm.employeeData,
-                      "item-text": function (item) {
-                        return item.name
-                      },
-                      "item-value": "id",
-                      clearable: "",
-                      label: "Select Employee",
-                      "prepend-inner-icon": "mdi-account-tie",
-                      outlined: "",
-                      multiple: "",
-                    },
-                    scopedSlots: _vm._u([
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "v-btn",
                       {
-                        key: "selection",
-                        fn: function (data) {
-                          return [
-                            _c(
-                              "v-chip",
-                              _vm._b(
-                                {
-                                  staticClass: "mb-1",
-                                  attrs: {
-                                    "input-value": data.selected,
-                                    close: "",
-                                  },
-                                  on: {
-                                    click: data.select,
-                                    "click:close": function ($event) {
-                                      return _vm.remove(data.item)
-                                    },
-                                  },
-                                },
-                                "v-chip",
-                                data.attrs,
-                                false
-                              ),
-                              [
-                                _c(
-                                  "v-avatar",
-                                  { attrs: { left: "" } },
-                                  [
-                                    data.item.image == "default.png"
-                                      ? _c("v-img", {
-                                          attrs: {
-                                            src: "/image/default.png",
-                                            sizes: "40",
-                                          },
-                                        })
-                                      : _c("v-img", {
-                                          attrs: {
-                                            src:
-                                              "/employees/" + data.item.image,
-                                            sizes: "40",
-                                          },
-                                        }),
-                                  ],
-                                  1
-                                ),
-                                _vm._v(
-                                  "\n              " +
-                                    _vm._s(data.item.name) +
-                                    "\n            "
-                                ),
-                              ],
-                              1
-                            ),
-                          ]
+                        attrs: {
+                          color: "primary",
+                          small: "",
+                          type: "submit",
+                          loading: _vm.btnSaveLoading,
+                          block: "",
                         },
                       },
-                      {
-                        key: "item",
-                        fn: function (data) {
-                          return [
-                            _c(
-                              "v-list-item-avatar",
-                              [
-                                data.item.image == "default.png"
-                                  ? _c("v-img", {
-                                      attrs: {
-                                        src: "/image/default.png",
-                                        sizes: "40",
-                                      },
-                                    })
-                                  : _c("v-img", {
-                                      attrs: {
-                                        src: "/employees/" + data.item.image,
-                                        sizes: "40",
-                                      },
-                                    }),
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-list-item-content",
-                              [
-                                _c(
-                                  "v-list-item-title",
-                                  [
-                                    _vm._v(
-                                      "\n                " +
-                                        _vm._s(data.item.name) +
-                                        " -\n                "
-                                    ),
-                                    _c(
-                                      "v-chip",
-                                      { attrs: { small: "", label: "" } },
-                                      [
-                                        _vm._v(
-                                          " " + _vm._s(data.item.position) + " "
-                                        ),
-                                      ]
-                                    ),
-                                  ],
-                                  1
-                                ),
-                              ],
-                              1
-                            ),
-                          ]
-                        },
-                      },
-                    ]),
-                    model: {
-                      value: _vm.form.employee_id,
-                      callback: function ($$v) {
-                        _vm.$set(_vm.form, "employee_id", $$v)
-                      },
-                      expression: "form.employee_id",
-                    },
-                  }),
-                ],
-                1
-              ),
+                      [
+                        _c("v-icon", { attrs: { left: "" } }, [
+                          _vm._v(" mdi-chart-bar "),
+                        ]),
+                        _vm._v("\n            report\n          "),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+              ]),
             ],
             1
           ),
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "12", sm: "12", md: "8" } },
+            {
+              staticClass: "justify-center",
+              attrs: { cols: "12", sm: "12", md: "8" },
+            },
             [
               _c(
                 "v-card",
+                { staticClass: "pa-2" },
                 [
                   _c("v-data-table", {
                     attrs: {
                       headers: _vm.headers,
                       items: _vm.reportData,
                       loading: _vm.tableLoading,
-                      "loading-text": "Loading users data",
+                      "loading-text": "Loading Report data",
+                      dense: "",
+                      "group-by": "employee.name",
                     },
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "group.header",
+                          fn: function (ref) {
+                            var group = ref.group
+                            var headers = ref.headers
+                            var toggle = ref.toggle
+                            var isOpen = ref.isOpen
+                            var items = ref.items
+                            return [
+                              _c(
+                                "td",
+                                {
+                                  staticClass: "group-header",
+                                  attrs: { colspan: headers.length },
+                                },
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      ref: group,
+                                      attrs: {
+                                        small: "",
+                                        icon: "",
+                                        "data-open": isOpen,
+                                      },
+                                      on: { click: toggle },
+                                    },
+                                    [
+                                      isOpen
+                                        ? _c("v-icon", [
+                                            _vm._v("mdi-chevron-up"),
+                                          ])
+                                        : _c("v-icon", [
+                                            _vm._v("mdi-chevron-down"),
+                                          ]),
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-chip",
+                                    {
+                                      staticClass: "ma-1 font-weight-medium",
+                                      attrs: { small: "" },
+                                    },
+                                    [
+                                      items[0].employee.image == "default.png"
+                                        ? _c(
+                                            "v-avatar",
+                                            { attrs: { left: "" } },
+                                            [
+                                              _c("v-img", {
+                                                attrs: {
+                                                  src: "/image/default.png",
+                                                },
+                                              }),
+                                            ],
+                                            1
+                                          )
+                                        : _c(
+                                            "v-avatar",
+                                            { attrs: { left: "" } },
+                                            [
+                                              _c("v-img", {
+                                                attrs: {
+                                                  src:
+                                                    "/employees/" +
+                                                    items[0].employee.image,
+                                                },
+                                              }),
+                                            ],
+                                            1
+                                          ),
+                                      _vm._v(
+                                        "\n                " +
+                                          _vm._s(group) +
+                                          " :\n                "
+                                      ),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "red--text font-weight-bold ml-1",
+                                        },
+                                        [_vm._v(_vm._s(items.length))]
+                                      ),
+                                    ],
+                                    1
+                                  ),
+                                ],
+                                1
+                              ),
+                            ]
+                          },
+                        },
+                        {
+                          key: "item.day",
+                          fn: function (ref) {
+                            var item = ref.item
+                            return [
+                              _c("span", { staticClass: "text-lowercase" }, [
+                                _vm._v(" " + _vm._s(item.day)),
+                              ]),
+                            ]
+                          },
+                        },
+                        {
+                          key: "item.date",
+                          fn: function (ref) {
+                            var item = ref.item
+                            return [
+                              _c(
+                                "v-chip",
+                                {
+                                  attrs: {
+                                    "text-color": "blue-grey darken-2",
+                                    label: "",
+                                    color: "white",
+                                  },
+                                },
+                                [
+                                  _c(
+                                    "v-avatar",
+                                    {
+                                      staticClass: "mr-0",
+                                      attrs: { left: "" },
+                                    },
+                                    [
+                                      _c("v-icon", { attrs: { small: "" } }, [
+                                        _vm._v("mdi-calendar-month"),
+                                      ]),
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(
+                                    "\n              " +
+                                      _vm._s(_vm.formatDate(item.date)) +
+                                      "\n            "
+                                  ),
+                                ],
+                                1
+                              ),
+                            ]
+                          },
+                        },
+                      ],
+                      null,
+                      true
+                    ),
                   }),
                 ],
                 1
@@ -54302,18 +54568,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var vuetify_lib_components_VAutocomplete__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuetify/lib/components/VAutocomplete */ "./node_modules/vuetify/lib/components/VAutocomplete/VAutocomplete.js");
 /* harmony import */ var vuetify_lib_components_VAvatar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuetify/lib/components/VAvatar */ "./node_modules/vuetify/lib/components/VAvatar/VAvatar.js");
-/* harmony import */ var vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuetify/lib/components/VCard */ "./node_modules/vuetify/lib/components/VCard/VCard.js");
-/* harmony import */ var vuetify_lib_components_VChip__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuetify/lib/components/VChip */ "./node_modules/vuetify/lib/components/VChip/VChip.js");
-/* harmony import */ var vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuetify/lib/components/VGrid */ "./node_modules/vuetify/lib/components/VGrid/VCol.js");
-/* harmony import */ var vuetify_lib_components_VDataTable__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuetify/lib/components/VDataTable */ "./node_modules/vuetify/lib/components/VDataTable/VDataTable.js");
-/* harmony import */ var vuetify_lib_components_VDatePicker__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuetify/lib/components/VDatePicker */ "./node_modules/vuetify/lib/components/VDatePicker/VDatePicker.js");
-/* harmony import */ var vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vuetify/lib/components/VIcon */ "./node_modules/vuetify/lib/components/VIcon/VIcon.js");
-/* harmony import */ var vuetify_lib_components_VImg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vuetify/lib/components/VImg */ "./node_modules/vuetify/lib/components/VImg/VImg.js");
-/* harmony import */ var vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vuetify/lib/components/VList */ "./node_modules/vuetify/lib/components/VList/VListItemAvatar.js");
-/* harmony import */ var vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vuetify/lib/components/VList */ "./node_modules/vuetify/lib/components/VList/index.js");
-/* harmony import */ var vuetify_lib_components_VMenu__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vuetify/lib/components/VMenu */ "./node_modules/vuetify/lib/components/VMenu/VMenu.js");
-/* harmony import */ var vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! vuetify/lib/components/VGrid */ "./node_modules/vuetify/lib/components/VGrid/VRow.js");
-/* harmony import */ var vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! vuetify/lib/components/VTextField */ "./node_modules/vuetify/lib/components/VTextField/VTextField.js");
+/* harmony import */ var vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuetify/lib/components/VBtn */ "./node_modules/vuetify/lib/components/VBtn/VBtn.js");
+/* harmony import */ var vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuetify/lib/components/VCard */ "./node_modules/vuetify/lib/components/VCard/VCard.js");
+/* harmony import */ var vuetify_lib_components_VChip__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuetify/lib/components/VChip */ "./node_modules/vuetify/lib/components/VChip/VChip.js");
+/* harmony import */ var vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuetify/lib/components/VGrid */ "./node_modules/vuetify/lib/components/VGrid/VCol.js");
+/* harmony import */ var vuetify_lib_components_VDataTable__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuetify/lib/components/VDataTable */ "./node_modules/vuetify/lib/components/VDataTable/VDataTable.js");
+/* harmony import */ var vuetify_lib_components_VDatePicker__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vuetify/lib/components/VDatePicker */ "./node_modules/vuetify/lib/components/VDatePicker/VDatePicker.js");
+/* harmony import */ var vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vuetify/lib/components/VIcon */ "./node_modules/vuetify/lib/components/VIcon/VIcon.js");
+/* harmony import */ var vuetify_lib_components_VImg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vuetify/lib/components/VImg */ "./node_modules/vuetify/lib/components/VImg/VImg.js");
+/* harmony import */ var vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vuetify/lib/components/VList */ "./node_modules/vuetify/lib/components/VList/VListItemAvatar.js");
+/* harmony import */ var vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vuetify/lib/components/VList */ "./node_modules/vuetify/lib/components/VList/index.js");
+/* harmony import */ var vuetify_lib_components_VMenu__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! vuetify/lib/components/VMenu */ "./node_modules/vuetify/lib/components/VMenu/VMenu.js");
+/* harmony import */ var vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! vuetify/lib/components/VGrid */ "./node_modules/vuetify/lib/components/VGrid/VRow.js");
+/* harmony import */ var vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! vuetify/lib/components/VTextField */ "./node_modules/vuetify/lib/components/VTextField/VTextField.js");
 
 
 
@@ -54349,7 +54616,8 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 
 
-_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VAutocomplete: vuetify_lib_components_VAutocomplete__WEBPACK_IMPORTED_MODULE_4__["default"],VAvatar: vuetify_lib_components_VAvatar__WEBPACK_IMPORTED_MODULE_5__["default"],VCard: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_6__["default"],VChip: vuetify_lib_components_VChip__WEBPACK_IMPORTED_MODULE_7__["default"],VCol: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_8__["default"],VDataTable: vuetify_lib_components_VDataTable__WEBPACK_IMPORTED_MODULE_9__["default"],VDatePicker: vuetify_lib_components_VDatePicker__WEBPACK_IMPORTED_MODULE_10__["default"],VIcon: vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_11__["default"],VImg: vuetify_lib_components_VImg__WEBPACK_IMPORTED_MODULE_12__["default"],VListItemAvatar: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_13__["default"],VListItemContent: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_14__.VListItemContent,VListItemTitle: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_14__.VListItemTitle,VMenu: vuetify_lib_components_VMenu__WEBPACK_IMPORTED_MODULE_15__["default"],VRow: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_16__["default"],VTextField: vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_17__["default"]})
+
+_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VAutocomplete: vuetify_lib_components_VAutocomplete__WEBPACK_IMPORTED_MODULE_4__["default"],VAvatar: vuetify_lib_components_VAvatar__WEBPACK_IMPORTED_MODULE_5__["default"],VBtn: vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_6__["default"],VCard: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_7__["default"],VChip: vuetify_lib_components_VChip__WEBPACK_IMPORTED_MODULE_8__["default"],VCol: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_9__["default"],VDataTable: vuetify_lib_components_VDataTable__WEBPACK_IMPORTED_MODULE_10__["default"],VDatePicker: vuetify_lib_components_VDatePicker__WEBPACK_IMPORTED_MODULE_11__["default"],VIcon: vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_12__["default"],VImg: vuetify_lib_components_VImg__WEBPACK_IMPORTED_MODULE_13__["default"],VListItemAvatar: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_14__["default"],VListItemContent: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_15__.VListItemContent,VListItemTitle: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_15__.VListItemTitle,VMenu: vuetify_lib_components_VMenu__WEBPACK_IMPORTED_MODULE_16__["default"],VRow: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_17__["default"],VTextField: vuetify_lib_components_VTextField__WEBPACK_IMPORTED_MODULE_18__["default"]})
 
 
 /* hot reload */
