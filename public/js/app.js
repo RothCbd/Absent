@@ -3650,6 +3650,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -3677,7 +3687,7 @@ __webpack_require__.r(__webpack_exports__);
       employeeData: [],
       countReport: "",
       form: new Form({
-        employee_id: "",
+        employee_id: [],
         dates: []
       })
     };
@@ -3721,8 +3731,13 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + "3|0sgWurjPC0veVBPSbxO63eTcNEBpSIJDOnQnGGRg"
         }
       }).then(function (response) {
-        _this2.reportData = response.data.data;
-        _this2.countReport = response.data.data.length;
+        console.log(response);
+
+        if (response.data) {
+          _this2.reportData = response.data;
+          _this2.countReport = response.data.length;
+        }
+
         _this2.btnSaveLoading = false;
         _this2.tableLoading = false;
       })["catch"](function (errors) {
@@ -3731,6 +3746,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     formatDate: function formatDate(value) {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).format("DD-MM-YYYY");
+    },
+    clearDate: function clearDate() {
+      this.form.dates = [];
+      this.reportData = [];
     }
   }
 });
@@ -37645,7 +37664,7 @@ var render = function () {
                                         },
                                         on: {
                                           "click:clear": function ($event) {
-                                            _vm.form.dates = []
+                                            return _vm.clearDate()
                                           },
                                         },
                                       },

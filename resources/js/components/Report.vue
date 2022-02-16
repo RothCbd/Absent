@@ -6,7 +6,6 @@
     </h3>
 
     <v-row class="flex-row-reverse">
-      <!-- class="d-flex justify-center" -->
       <v-col cols="12" sm="12" md="4">
         <v-card class="pa-5">
           <form @submit.prevent="getReport()">
@@ -29,8 +28,9 @@
                   v-on="on"
                   outlined
                   clearable
-                  @click:clear="form.dates = []"
+                  @click:clear="clearDate()"
                 ></v-text-field>
+                <!-- @click:clear="form.dates = []" -->
               </template>
               <v-date-picker
                 v-model="form.dates"
@@ -113,6 +113,16 @@
 
       <v-col cols="12" sm="12" md="8" class="justify-center">
         <v-card class="pa-2">
+          <!-- ------------- -->
+          <!-- <v-data-table
+            :headers="headers"
+            :items="reportData"
+            :loading="tableLoading"
+            loading-text="Loading Report data"
+            dense
+          ></v-data-table> -->
+          <!-- --------------- -->
+
           <v-data-table
             :headers="headers"
             :items="reportData"
@@ -201,7 +211,7 @@ export default {
       employeeData: [],
       countReport: "",
       form: new Form({
-        employee_id: "",
+        employee_id: [],
         dates: [],
       }),
     };
@@ -253,8 +263,12 @@ export default {
           },
         })
         .then((response) => {
-          this.reportData = response.data.data;
-          this.countReport = response.data.data.length;
+          console.log(response);
+
+          if (response.data) {
+            this.reportData = response.data;
+            this.countReport = response.data.length;
+          }
           this.btnSaveLoading = false;
           this.tableLoading = false;
         })
@@ -265,6 +279,11 @@ export default {
 
     formatDate(value) {
       return moment(value).format("DD-MM-YYYY");
+    },
+
+    clearDate() {
+      this.form.dates = [];
+      this.reportData = [];
     },
   },
 };
