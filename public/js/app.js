@@ -3657,9 +3657,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -37939,7 +37936,7 @@ var render = function () {
                                       attrs: { small: "" },
                                     },
                                     [
-                                      items[0].employee.image == "default.png"
+                                      items[0].employee.pic == "default.png"
                                         ? _c(
                                             "v-avatar",
                                             { attrs: { left: "" } },
@@ -37960,7 +37957,7 @@ var render = function () {
                                                 attrs: {
                                                   src:
                                                     "/employees/" +
-                                                    items[0].employee.image,
+                                                    items[0].employee.pic,
                                                 },
                                               }),
                                             ],

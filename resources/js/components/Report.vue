@@ -153,14 +153,11 @@
                 </v-btn>
 
                 <v-chip class="ma-1 font-weight-medium" small>
-                  <v-avatar
-                    left
-                    v-if="items[0].employee.image == 'default.png'"
-                  >
+                  <v-avatar left v-if="items[0].employee.pic == 'default.png'">
                     <v-img :src="'/image/default.png'" />
                   </v-avatar>
                   <v-avatar left v-else>
-                    <v-img :src="'/employees/' + items[0].employee.image" />
+                    <v-img :src="'/employees/' + items[0].employee.pic" />
                   </v-avatar>
                   {{ group }} :
                   <span class="red--text font-weight-bold ml-1">{{
