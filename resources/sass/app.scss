@@ -175,3 +175,20 @@
     // padding: 30px;
     box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
 }
+
+.alert-report-message{
+    font-size: 0.8rem !important;
+}
+
+#report .v-alert__icon.v-icon{
+    font-size: 25px;
+}
+
+#report .v-alert--prominent .v-alert__icon{
+    height: 28px;
+    min-width: 28px;
+}
+
+.count-absent-chip{
+    padding: 0 5px !important;
+}

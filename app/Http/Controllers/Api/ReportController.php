@@ -15,7 +15,6 @@ class ReportController extends Controller
     {
         $dates = $request->dates;
         $employee_id = $request->employee_id;
-
         $getData = array();
         $report = array();
 
@@ -118,7 +117,7 @@ class ReportController extends Controller
             }
 
         }else{
-            return 'no input data';
+            return response()->json(['message' => 'Please select any Date or Employee to get report.']);
         }
 
 

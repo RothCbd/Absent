@@ -8,6 +8,17 @@
     <v-row class="flex-row-reverse">
       <v-col cols="12" sm="12" md="4">
         <v-card class="pa-5">
+          <v-alert
+            v-model="alert"
+            class="alert-report-message"
+            text
+            prominent
+            type="error"
+            icon="mdi-cloud-alert"
+          >
+            {{ alertMessageText }}
+          </v-alert>
+
           <form @submit.prevent="getReport()">
             <v-menu
               v-model="menu2"
@@ -30,7 +41,6 @@
                   clearable
                   @click:clear="clearDate()"
                 ></v-text-field>
-                <!-- @click:clear="form.dates = []" -->
               </template>
               <v-date-picker
                 v-model="form.dates"
@@ -49,6 +59,7 @@
               prepend-inner-icon="mdi-account-tie"
               outlined
               multiple
+              @click:clear="clearEmployee()"
             >
               <template v-slot:selection="data">
                 <v-chip
@@ -113,16 +124,6 @@
 
       <v-col cols="12" sm="12" md="8" class="justify-center">
         <v-card class="pa-2">
-          <!-- ------------- -->
-          <!-- <v-data-table
-            :headers="headers"
-            :items="reportData"
-            :loading="tableLoading"
-            loading-text="Loading Report data"
-            dense
-          ></v-data-table> -->
-          <!-- --------------- -->
-
           <v-data-table
             :headers="headers"
             :items="reportData"
@@ -167,6 +168,17 @@
               </td>
             </template>
 
+            <template v-slot:[`item.id`]="item">
+              <v-chip
+                x-small
+                color="grey darken-1"
+                class="count-absent-chip"
+                dark
+              >
+                {{ item.index + 1 }}
+              </v-chip>
+            </template>
+
             <template v-slot:[`item.day`]="{ item }">
               <span class="text-lowercase"> {{ item.day }}</span>
             </template>
@@ -193,6 +205,8 @@ export default {
     return {
       tableLoading: false,
       menu2: false,
+      alert: false,
+      alertMessageText: "",
       btnSaveLoading: false,
       headers: [
         {
@@ -260,12 +274,15 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
-
-          if (response.data) {
+          if (response.data.length > 0) {
             this.reportData = response.data;
             this.countReport = response.data.length;
+            this.alert = false;
+          } else {
+            this.alertMessageText = response.data.message;
+            this.alert = true;
           }
+
           this.btnSaveLoading = false;
           this.tableLoading = false;
         })
@@ -281,6 +298,12 @@ export default {
     clearDate() {
       this.form.dates = [];
       this.reportData = [];
+      this.countReport = "";
+    },
+    clearEmployee() {
+      this.form.employee_id = [];
+      this.reportData = [];
+      this.countReport = "";
     },
   },
 };
