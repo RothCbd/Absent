@@ -192,3 +192,56 @@
 .count-absent-chip{
     padding: 0 5px !important;
 }
+
+// ============PDF============
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+#pdf-content{
+    margin: 30px;
+    font-family: 'Roboto', sans-serif;
+}
+#pdf-content thead{
+    background-color: #3a9dca;
+}
+
+#pdf-content thead th{
+    color: whitesmoke;
+    text-align: left;
+}
+
+#pdf-content .title-hearder{
+    padding: 20px 0;
+    color: #3a9dca;
+}
+
+#pdf-content .title-hearder .v-icon{
+    color: #3a9dca;
+}
+
+#pdf-content .count-absent-employee{
+    margin-left: 5px;
+    color: rgb(207, 9, 9);
+}
+
+#pdf-content .empoyee-name{
+    font-size: 14px;
+}
+
+#pdf-content .report-date{
+    font-size: 12px;
+    padding: 5px 0;
+}
+
+#pdf-content .report-date-time{
+    text-align: right;
+    padding: 5px 0;
+    font-size: 14px;
+    color: #424242;
+}
+
+#pdf-content .report-date-time .v-icon{
+    color: #424242;
+}
+
+#pdf-content .border-bottom{
+    border-bottom: 1px solid rgba(196, 196, 196, 0.932);
+}

@@ -15,6 +15,9 @@ Vue.use(VueMask);
 import mixins from 'vuetify-multiple-draggable-dialogs';
 Vue.mixin(mixins);
 
+import VueHtml2pdf from 'vue-html2pdf'
+Vue.use(VueHtml2pdf)
+
 import { Form } from 'vform';
 window.Form = Form;
 

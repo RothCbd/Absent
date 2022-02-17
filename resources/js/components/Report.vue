@@ -192,6 +192,99 @@
               </v-chip>
             </template>
           </v-data-table>
+
+          <!-- ==============PDF==================== -->
+          <v-btn
+            small
+            color="blue-grey"
+            class="ma-2"
+            dark
+            depressed
+            @click="generatePDF"
+          >
+            pdf
+          </v-btn>
+
+          <vue-html2pdf
+            :show-layout="false"
+            :float-layout="true"
+            :enable-download="false"
+            :preview-modal="true"
+            :paginate-elements-by-height="1400"
+            filename="flavourmap.pdf"
+            :pdf-quality="9"
+            :manual-pagination="false"
+            pdf-format="a4"
+            pdf-orientation="portrait"
+            pdf-content-width="800px"
+            ref="html2Pdf"
+          >
+            <section slot="pdf-content">
+              <!-- PDF Content Here -->
+              <section class="pdf-item" id="pdf-content">
+                <h1 class="title-hearder">
+                  <v-icon>mdi-file-document-outline</v-icon> Absent Report
+                </h1>
+                <p class="report-date" v-if="form.dates[0]">
+                  Date : [{{ formatDate(form.dates[0]) }}]
+                  <span v-if="form.dates[1]">
+                    To Date : [{{ formatDate(form.dates[1]) }}]</span
+                  >
+                </p>
+
+                <div class="report-date-time">
+                  <p>
+                    Report Date:
+                    <v-icon small>mdi-calendar-month</v-icon>
+                    {{
+                      formatDate(
+                        new Date().toJSON().slice(0, 10).replace(/-/g, "-")
+                      )
+                    }}
+                  </p>
+                </div>
+
+                <div>
+                  <v-data-table
+                    :headers="headers"
+                    :items="reportData"
+                    :loading="tableLoading"
+                    loading-text="Loading Report data"
+                    dense
+                    :hide-default-footer="true"
+                    group-by="employee.name"
+                  >
+                    <template
+                      v-slot:[`group.header`]="{ group, headers, items }"
+                    >
+                      <td :colspan="headers.length" class="group-header">
+                        {{ group }} :
+                        <span class="count-absent-employee">{{
+                          items.length
+                        }}</span>
+                      </td>
+                    </template>
+
+                    <template v-slot:[`item.id`]="item">
+                      {{ item.index + 1 }}
+                    </template>
+
+                    <template v-slot:[`item.day`]="{ item }">
+                      <span class="text-lowercase"> {{ item.day }}</span>
+                    </template>
+
+                    <template v-slot:[`item.date`]="{ item }">
+                      <span class="date-formate">{{
+                        formatDate(item.date)
+                      }}</span>
+                    </template>
+                  </v-data-table>
+                  <div class="border-bottom"></div>
+                </div>
+              </section>
+            </section>
+          </vue-html2pdf>
+          <!-- --------- -->
         </v-card>
       </v-col>
     </v-row>
@@ -225,6 +318,34 @@ export default {
         employee_id: [],
         dates: [],
       }),
+
+      // ==============pdf=testing=======
+      desserts: [
+        {
+          name: "Frozen Yogurt",
+          calories: 159,
+        },
+        {
+          name: "Ice cream sandwich",
+          calories: 237,
+        },
+        {
+          name: "Eclair",
+          calories: 262,
+        },
+        {
+          name: "Cupcake",
+          calories: 305,
+        },
+        {
+          name: "Gingerbread",
+          calories: 356,
+        },
+        {
+          name: "Jelly bean",
+          calories: 375,
+        },
+      ],
     };
   },
   computed: {
@@ -304,6 +425,10 @@ export default {
       this.form.employee_id = [];
       this.reportData = [];
       this.countReport = "";
+    },
+
+    generatePDF() {
+      this.$refs.html2Pdf.generatePdf();
     },
   },
 };
