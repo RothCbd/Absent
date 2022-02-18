@@ -9,6 +9,14 @@
   border-color: #3a9dca !important;
 }
 
+.v-main {
+  background-color: #f1f2f6 !important;
+}
+
+.theme--light.v-app-bar.v-toolbar.v-sheet {
+  background-color: #f1f2f6 !important;
+}
+
 .theme--light.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
   color: #4b6584 !important;
 }
@@ -116,6 +124,10 @@
   border-radius: 10px;
   font-size: 11px;
   height: 20px;
+}
+
+.employee-radio {
+  margin-top: 0px !important;
 }
 
 .employee-name {
@@ -246,4 +258,34 @@
 
 .employee-name-report {
   font-weight: 500;
+}
+
+#account .theme--light.v-tabs > .v-tabs-bar {
+  background-color: transparent;
+}
+
+#account .theme--light.v-tabs-items {
+  background-color: transparent;
+}
+
+#account .theme--light.v-card {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+#account-setting .profile-img .v-input__icon {
+  position: absolute;
+  margin-top: -40px;
+  margin-left: 55px;
+}
+
+#account-setting .profile-img .v-icon {
+  background-color: #f1f2f6;
+  font-size: 18px;
+  padding: 3px;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  -ms-border-radius: 100%;
+  -o-border-radius: 100%;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
 }

@@ -207,14 +207,10 @@
                     v-model="form.gender"
                     row
                     :error-messages="errorsMessage.gender"
-                    class="p-0 m-0 ml-5"
+                    class="p-0 m-0 ml-5 employee-radio"
                   >
-                    <v-chip class="p-1" small>
-                      <v-radio label="Male" value="male"></v-radio>
-                    </v-chip>
-                    <v-chip class="ml-2 p-1" small>
-                      <v-radio label="Female" value="female"></v-radio>
-                    </v-chip>
+                    <v-radio label="Male" value="male"></v-radio>
+                    <v-radio label="Female" value="female"></v-radio>
                   </v-radio-group>
 
                   <v-text-field
