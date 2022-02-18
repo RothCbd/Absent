@@ -3,6 +3,19 @@
     <h3 class="grey--text text--darken-2">
       <v-icon class="mb-1" color="grey darken-2">mdi-chart-bar</v-icon>
       <span class="text-decoration-underline">Report {{ countReport }}</span>
+
+      <v-btn
+        v-if="reportData.length > 0"
+        small
+        color="pink accent-4"
+        class="ma-2"
+        dark
+        @click="generatePDF"
+        text
+        fab
+      >
+        <v-icon large>mdi-file-pdf-box</v-icon>
+      </v-btn>
     </h3>
 
     <v-row class="flex-row-reverse">
@@ -194,16 +207,6 @@
           </v-data-table>
 
           <!-- ==============PDF==================== -->
-          <v-btn
-            small
-            color="blue-grey"
-            class="ma-2"
-            dark
-            depressed
-            @click="generatePDF"
-          >
-            pdf
-          </v-btn>
 
           <vue-html2pdf
             :show-layout="false"
@@ -226,9 +229,9 @@
                   <v-icon>mdi-file-document-outline</v-icon> Absent Report
                 </h1>
                 <p class="report-date" v-if="form.dates[0]">
-                  Date : [{{ formatDate(form.dates[0]) }}]
+                  Date : {{ formatDate(form.dates[0]) }}
                   <span v-if="form.dates[1]">
-                    To Date : [{{ formatDate(form.dates[1]) }}]</span
+                    To Date : {{ formatDate(form.dates[1]) }}</span
                   >
                 </p>
 
@@ -258,10 +261,14 @@
                       v-slot:[`group.header`]="{ group, headers, items }"
                     >
                       <td :colspan="headers.length" class="group-header">
-                        {{ group }} :
-                        <span class="count-absent-employee">{{
-                          items.length
-                        }}</span>
+                        <span class="employee-name-report">{{ group }}</span> :
+                        <v-chip
+                          x-small
+                          color="grey darken-1"
+                          class="count-absent-chip-report"
+                        >
+                          {{ items.length }}</v-chip
+                        >
                       </td>
                     </template>
 
@@ -299,6 +306,7 @@ export default {
       tableLoading: false,
       menu2: false,
       alert: false,
+      btnPDF: false,
       alertMessageText: "",
       btnSaveLoading: false,
       headers: [
@@ -398,6 +406,7 @@ export default {
           if (response.data.length > 0) {
             this.reportData = response.data;
             this.countReport = response.data.length;
+            this.btnPDF = true;
             this.alert = false;
           } else {
             this.alertMessageText = response.data.message;

@@ -78,7 +78,7 @@
         </v-list-item>
       </v-list>
 
-      <template v-slot:append>
+      <!-- <template v-slot:append>
         <div class="pa-2">
           <v-btn
             block
@@ -91,11 +91,11 @@
             <v-icon small>mdi-login-variant</v-icon>
           </v-btn>
         </div>
-      </template>
+      </template> -->
     </v-navigation-drawer>
 
     <!-- app-bar -->
-    <v-app-bar color="white" app flat dense>
+    <v-app-bar color="white" app flat dense elevate-on-scroll elevation="3">
       <v-app-bar-nav-icon
         @click.stop="drawer = !drawer"
         color="blue-grey darken-3"
@@ -108,13 +108,18 @@
       <v-spacer></v-spacer>
 
       <v-btn text icon>
-        <v-icon color="indigo">mdi-bell</v-icon>
+        <v-icon color="grey darken-1">mdi-bell</v-icon>
       </v-btn>
 
-      <v-toolbar-title class="white--text">
+      <v-btn text color="grey darken-1">
+        sign out
+        <v-icon>mdi-login-variant</v-icon>
+      </v-btn>
+
+      <!-- <v-toolbar-title class="white--text">
         <v-img max-width="90" max-height="90" :src="'/icons/5e53775506160.png'">
         </v-img>
-      </v-toolbar-title>
+      </v-toolbar-title> -->
     </v-app-bar>
 
     <!-- content -->

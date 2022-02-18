@@ -28,6 +28,10 @@
 //     background-color: #3a9cca98;
 // }
 
+.txt-search{
+    margin-top: -19px !important;
+}
+
 #main-app .theme--light.v-list {
     color: #4b6584 !important;
 }
@@ -57,6 +61,9 @@
 
 .theme--light.v-data-table > .v-data-table__wrapper > table > thead > tr:last-child > th{
     font-size: 0.8rem;
+    background-color: #f1f2f6;
+    height: 40px;
+    border-top: 1.5px solid #cfcfcfcc;
 }
 
 #user .table-card .v-icon.v-icon{
@@ -66,6 +73,11 @@
 #user .v-chip.v-size--small{
     height: 18px;
     padding: 5px;
+}
+
+#user .role-chip{
+    font-size: 12px;
+    height: 22px !important;
 }
 
 .user-name{
@@ -142,13 +154,8 @@
 }
 
 .gender-chip{
-    border-radius: 5px !important;
     height: 16px !important;
     padding: 0 5px !important;
-    -webkit-border-radius: 5px !important;
-    -moz-border-radius: 5px !important;
-    -ms-border-radius: 5px !important;
-    -o-border-radius: 5px !important;
 }
 
 // -----------------absnet-------------------------
@@ -195,6 +202,11 @@
 
 // ============PDF============
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+.vue-html2pdf .pdf-preview button[data-v-1fd3ad26]{
+    background-color: #3f51b5 !important;
+}
+
 #pdf-content{
     margin: 30px;
     font-family: 'Roboto', sans-serif;
@@ -204,8 +216,10 @@
 }
 
 #pdf-content thead th{
-    color: whitesmoke;
+    background-color: #3a9dca;
+    color: rgba(255, 255, 255, 0.89);
     text-align: left;
+    border: none;
 }
 
 #pdf-content .title-hearder{
@@ -244,4 +258,14 @@
 
 #pdf-content .border-bottom{
     border-bottom: 1px solid rgba(196, 196, 196, 0.932);
+}
+
+#pdf-content .count-absent-chip-report{
+    color: rgb(207, 9, 9);
+    padding: 0 5px !important;
+    font-size: 13px !important;
+}
+
+.employee-name-report{
+    font-weight: 500;
 }

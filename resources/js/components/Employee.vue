@@ -2,16 +2,32 @@
   <div id="employee">
     <div>
       <v-row>
-        <v-col cols="sm-8">
-          <h3 class="grey--text text--darken-2">
-            <v-icon class="mb-1" color="grey darken-2">mdi-account-tie</v-icon>
-            <span class="text-decoration-underline">Employees List</span>
-            <v-chip color="grey lighten-2 grey--text text--darken-3">{{
-              employeeCount
-            }}</v-chip>
-          </h3>
+        <v-col cols="12" sm="6">
+          <v-row>
+            <v-col cols="12" sm="12" md="5">
+              <h3 class="grey--text text--darken-2">
+                <v-icon class="mb-1" color="grey darken-2"
+                  >mdi-account-tie</v-icon
+                >
+                <span class="text-decoration-underline">Employees List</span>
+                <v-chip color="grey lighten-2 grey--text text--darken-3">{{
+                  employeeCount
+                }}</v-chip>
+              </h3>
+            </v-col>
+            <v-col cols="12" sm="12" md="6">
+              <v-text-field
+                class="txt-search"
+                v-model="searchEmployee"
+                append-icon="mdi-magnify"
+                label="Search"
+                single-line
+              ></v-text-field>
+            </v-col>
+          </v-row>
         </v-col>
-        <v-col cols="sm-4" class="text-right">
+
+        <v-col cols="12" sm="6" class="text-end">
           <v-btn
             small
             color="indigo"
@@ -19,15 +35,6 @@
             @click="openDialog"
             ><v-icon left>mdi-plus</v-icon> Add employee</v-btn
           >
-
-          <v-text-field
-            hide-details
-            class="mb-2 p-0"
-            v-model="searchEmployee"
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-          ></v-text-field>
         </v-col>
       </v-row>
 
@@ -72,13 +79,29 @@
           <template v-slot:[`item.gender`]="{ item }">
             <v-chip
               v-if="item.gender == 'male'"
-              color="primary"
-              class="p-2 gender-chip"
+              class="p-1 gender-chip"
               small
+              color="indigo"
+              text-color="white"
+              label
             >
+              <v-avatar left class="mr-0">
+                <v-icon x-small>mdi-gender-male</v-icon>
+              </v-avatar>
               {{ item.gender }}
             </v-chip>
-            <v-chip v-else color="pink" dark class="p-2 gender-chip" small>
+
+            <v-chip
+              v-else
+              class="p-1 gender-chip"
+              small
+              color="pink"
+              text-color="white"
+              label
+            >
+              <v-avatar left class="mr-0">
+                <v-icon x-small>mdi-gender-female</v-icon>
+              </v-avatar>
               {{ item.gender }}
             </v-chip>
           </template>
@@ -444,8 +467,6 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
-
           this.employeeData = response.data.data;
           this.employeeCount = response.data.data.length;
           this.tableLoading = false;
@@ -545,7 +566,6 @@ export default {
 
     editUser(employee) {
       this.editMode = true;
-      console.log(employee);
       this.form.id = employee.id;
       if (employee.gender == "male") {
         this.form.gender = "male";

@@ -1,16 +1,32 @@
 <template>
   <div id="absent">
     <v-row>
-      <v-col cols="sm-8">
-        <h3 class="grey--text text--darken-2">
-          <v-icon class="mb-1" color="grey darken-2">mdi-account-cancel</v-icon>
-          <span class="text-decoration-underline">Absent List</span>
-          <v-chip color="grey lighten-2 grey--text text--darken-3">{{
-            absentCount
-          }}</v-chip>
-        </h3>
+      <v-col cols="12" sm="6">
+        <v-row>
+          <v-col cols="12" sm="12" md="4">
+            <h3 class="grey--text text--darken-2">
+              <v-icon class="mb-1" color="grey darken-2"
+                >mdi-account-cancel</v-icon
+              >
+              <span class="text-decoration-underline">Absent List</span>
+              <v-chip color="grey lighten-2 grey--text text--darken-3">{{
+                absentCount
+              }}</v-chip>
+            </h3>
+          </v-col>
+          <v-col cols="12" sm="12" md="6">
+            <v-text-field
+              v-model="searchAbsent"
+              append-icon="mdi-magnify"
+              class="txt-search"
+              label="Search"
+              single-line
+            ></v-text-field>
+          </v-col>
+        </v-row>
       </v-col>
-      <v-col cols="sm-4" class="text-right">
+
+      <v-col cols="12" sm="6" class="text-end">
         <v-btn
           small
           color="indigo"
@@ -18,15 +34,6 @@
           @click="openDialog"
           ><v-icon left>mdi-plus</v-icon> Add Absent</v-btn
         >
-
-        <v-text-field
-          v-model="searchAbsent"
-          hide-details
-          class="mb-2 p-0"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-        ></v-text-field>
       </v-col>
     </v-row>
 

@@ -1,15 +1,17 @@
 <template>
   <div id="user">
     <div>
-      <v-row>
+      <v-row class="mb-1">
         <v-col cols="sm-8">
-          <h5 class="grey--text text--darken-2">
-            <v-icon left color="grey darken-2">mdi-account-multiple</v-icon>User
-            List
+          <h3 class="grey--text text--darken-2">
+            <v-icon class="mb-1" color="grey darken-2"
+              >mdi-account-multiple</v-icon
+            >
+            <span class="text-decoration-underline">User List</span>
             <v-chip color="grey lighten-2 grey--text text--darken-3">{{
               userCount
             }}</v-chip>
-          </h5>
+          </h3>
         </v-col>
         <v-col cols="sm-4" class="text-right">
           <v-btn
@@ -63,22 +65,26 @@
           <template v-slot:[`item.role`]="{ item }">
             <v-chip
               v-if="item.role == 'admin'"
-              small
-              label
-              class="text-capitalize"
-              color="indigo"
-              dark
-              >{{ item.role }}
+              class="ma-2 text-capitalize role-chip"
+              color="blue darken-2"
+              text-color="white"
+            >
+              <v-avatar left>
+                <v-icon>mdi-account-star</v-icon>
+              </v-avatar>
+              {{ item.role }}
             </v-chip>
 
             <v-chip
               v-else
-              small
-              label
-              class="text-capitalize"
-              color="orange"
-              dark
-              >{{ item.role }}
+              class="ma-2 text-capitalize role-chip"
+              color="orange darken-2"
+              text-color="white"
+            >
+              <v-avatar left>
+                <v-icon>mdi-account-star</v-icon>
+              </v-avatar>
+              {{ item.role }}
             </v-chip>
           </template>
 
