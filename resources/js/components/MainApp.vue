@@ -32,24 +32,6 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link to="/user">
-          <v-list-item-action>
-            <v-icon>mdi-account-multiple</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Users</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-list-item link to="/employee">
-          <v-list-item-action>
-            <v-icon>mdi-account-tie</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Employees</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
         <v-list-item link to="/absent">
           <v-list-item-action>
             <v-icon>mdi-account-cancel</v-icon>
@@ -68,6 +50,24 @@
           </v-list-item-content>
         </v-list-item>
 
+        <v-list-item link to="/employee">
+          <v-list-item-action>
+            <v-icon>mdi-account-tie</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Employees</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link to="/user">
+          <v-list-item-action>
+            <v-icon>mdi-account-multiple</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Users</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
         <v-list-item link to="/account">
           <v-list-item-action>
             <v-icon>mdi-account-cog</v-icon>
@@ -77,21 +77,6 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-
-      <!-- <template v-slot:append>
-        <div class="pa-2">
-          <v-btn
-            block
-            depressed
-            small
-            tile
-            color="grey lighten-2 grey--text text--darken-2"
-          >
-            sign out
-            <v-icon small>mdi-login-variant</v-icon>
-          </v-btn>
-        </div>
-      </template> -->
     </v-navigation-drawer>
 
     <!-- app-bar -->

@@ -18,6 +18,10 @@ Vue.mixin(mixins);
 import VueHtml2pdf from 'vue-html2pdf'
 Vue.use(VueHtml2pdf)
 
+import "chart.js";
+import "hchs-vue-charts";
+Vue.use(window.VueCharts);
+
 import { Form } from 'vform';
 window.Form = Form;
 

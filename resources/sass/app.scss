@@ -58,6 +58,19 @@
     border-color: #3a9dca !important;
 }
 
+// =============widget-card==========
+@import url('https://fonts.googleapis.com/css2?family=Redressed&family=Roboto&display=swap');
+#dashboard .widget-card{
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+#dashboard .widget-card h1 {
+    font-family: 'Roboto', sans-serif;
+}
+
+#dashboard .widget-card h2{
+    font-family: 'Roboto', sans-serif;
+}
 // ===============user================
 #user .table-card{
     box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;

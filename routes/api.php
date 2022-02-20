@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AbsentController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\EmailVerificationController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\ReportController;
@@ -30,6 +31,9 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+
+    // --------Dashboard----------
+    Route::get('dashboard-data', [DashboardController::class, 'read']);
 
     // --------user---------
     Route::get('read-user', [UserController::class, 'read']);
