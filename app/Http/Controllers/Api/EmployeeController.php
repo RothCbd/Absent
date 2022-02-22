@@ -30,7 +30,7 @@ class EmployeeController extends Controller
         $employee->name = $request->name;
         $employee->gender = $request->gender;
         $employee->email = $request->email;
-        $employee->position = $request->position;
+        $employee->position = Str::title($request->position);
         $employee->start_date = $request->start_date;
 
         $phoneEmpty = array(['phone' => null]);
@@ -73,7 +73,7 @@ class EmployeeController extends Controller
         $employee->name = $request->name;
         $employee->gender = $request->gender;
         $employee->email = $request->email;
-        $employee->position = $request->position;
+        $employee->position = Str::title($request->position);
         $employee->start_date = $request->start_date;
 
         $phoneEmpty = array(['phone' => null]);

@@ -58,7 +58,7 @@
     border-color: #3a9dca !important;
 }
 
-// =============widget-card==========
+// =============Dashboard==========
 @import url('https://fonts.googleapis.com/css2?family=Redressed&family=Roboto&display=swap');
 #dashboard .widget-card{
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -70,6 +70,37 @@
 
 #dashboard .widget-card h2{
     font-family: 'Roboto', sans-serif;
+}
+
+.dashboard-card .v-icon{
+    -webkit-filter: drop-shadow(0 3px 2px hsla(0,0%,0%,.25));
+}
+
+#dashboard .v-card{
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+#dashboard .v-card h4, h2{
+    font-weight: 500;
+}
+
+.v-skeleton-loader__card-heading .v-skeleton-loader__heading{
+    margin: 0px !important;
+}
+
+.v-skeleton-loader--is-loading{
+    float: right;
+}
+
+.v-skeleton-loader__table-heading{
+    padding: 0 !important;
+}
+.v-skeleton-loader__list-item-three-line{
+    margin-top: -20px;
+}
+
+.v-skeleton-loader__paragraph{
+    margin-top: 20px;
 }
 // ===============user================
 #user .table-card{

@@ -60,6 +60,38 @@
   font-family: "Roboto", sans-serif;
 }
 
+.dashboard-card .v-icon {
+  -webkit-filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.25));
+}
+
+#dashboard .v-card {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+#dashboard .v-card h4, h2 {
+  font-weight: 500;
+}
+
+.v-skeleton-loader__card-heading .v-skeleton-loader__heading {
+  margin: 0px !important;
+}
+
+.v-skeleton-loader--is-loading {
+  float: right;
+}
+
+.v-skeleton-loader__table-heading {
+  padding: 0 !important;
+}
+
+.v-skeleton-loader__list-item-three-line {
+  margin-top: -20px;
+}
+
+.v-skeleton-loader__paragraph {
+  margin-top: 20px;
+}
+
 #user .table-card {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
