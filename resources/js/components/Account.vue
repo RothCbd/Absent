@@ -39,16 +39,17 @@
             <v-card-text>
               <v-text-field
                 label="User Name"
-                prepend-icon="mdi-account"
+                outlined
+                prepend-inner-icon="mdi-account"
               ></v-text-field>
 
               <v-text-field
+                v-model="user.email"
                 label="Email"
-                prepend-icon="mdi-email"
+                outlined
+                prepend-inner-icon="mdi-email"
               ></v-text-field>
-            </v-card-text>
 
-            <v-card-actions class="ma-3">
               <v-btn
                 depressed
                 small
@@ -59,7 +60,7 @@
                 dark
                 >save</v-btn
               >
-            </v-card-actions>
+            </v-card-text>
           </v-form>
         </v-card>
       </v-tab-item>
@@ -91,9 +92,9 @@
                 label="New Password "
                 @click:append="newPassword = !newPassword"
               ></v-text-field>
-            </v-card-text>
 
-            <v-card-actions class="ma-3">
+              <p>Forgot password ?</p>
+
               <v-btn
                 depressed
                 small
@@ -104,7 +105,7 @@
                 dark
                 >save</v-btn
               >
-            </v-card-actions>
+            </v-card-text>
           </v-form>
         </v-card>
       </v-tab-item>
@@ -121,11 +122,18 @@ export default {
       password: false,
       confirmPassword: false,
       newPassword: false,
+
+      user: {
+        email: "",
+        password: "",
+      },
     };
   },
 
   methods: {
-    UpdateProfile() {},
+    UpdateProfile() {
+      //   this.$store.commit("setUser", this.user.email);
+    },
   },
 };
 </script>

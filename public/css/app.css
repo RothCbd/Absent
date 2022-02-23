@@ -48,6 +48,15 @@
   border-color: #3a9dca !important;
 }
 
+#login .v-alert--prominent .v-alert__icon.v-icon {
+  font-size: 22px !important;
+}
+
+#login .v-alert--prominent .v-alert__icon {
+  height: 24px !important;
+  min-width: 24px !important;
+}
+
 #dashboard .widget-card {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }

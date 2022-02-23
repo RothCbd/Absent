@@ -58,6 +58,15 @@
     border-color: #3a9dca !important;
 }
 
+// =============login==============
+#login .v-alert--prominent .v-alert__icon.v-icon {
+    font-size: 22px !important;
+  }
+#login .v-alert--prominent .v-alert__icon {
+    height: 24px !important;
+    min-width: 24px !important;
+  }
+
 // =============Dashboard==========
 @import url('https://fonts.googleapis.com/css2?family=Redressed&family=Roboto&display=swap');
 #dashboard .widget-card{

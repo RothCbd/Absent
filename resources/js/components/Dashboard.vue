@@ -499,8 +499,7 @@ export default {
       axios
         .get("/api/dashboard-data/", {
           headers: {
-            Authorization:
-              "Bearer " + "3|0sgWurjPC0veVBPSbxO63eTcNEBpSIJDOnQnGGRg",
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
           },
         })
         .then((response) => {

@@ -23,8 +23,6 @@ class AuthController extends Controller
         $user->save();
         $token = $user->createToken('myapptoken')->plainTextToken;
 
-        // event(new Registered($user));
-
         $responese = [
             'user' => $user,
             'token' => $token
@@ -36,8 +34,7 @@ class AuthController extends Controller
     public function login(Request $request){
 
         $this->validate($request, [
-            'email' => 'required|string|email|',
-            'password' => 'required|string|min:6'
+            'email' => 'required|string|email',
         ]);
 
         $user = User::where('email', $request->email)->first();
@@ -58,6 +55,12 @@ class AuthController extends Controller
         return response($responese, 201);
     }
 
+    public function logout(Request $request){
+        $request->user()->tokens->each(function ($token, $key) {
+            $token->delete();
+        });
+        return response()->json('Logged out successfully', 200);
+    }
 
     public function userData(){
         return response()->json([

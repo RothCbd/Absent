@@ -438,8 +438,7 @@ export default {
       axios
         .get("http://127.0.0.1:8000/api/read-user", {
           headers: {
-            Authorization:
-              "Bearer " + "3|0sgWurjPC0veVBPSbxO63eTcNEBpSIJDOnQnGGRg",
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
           },
         })
         .then((response) => {
@@ -507,8 +506,7 @@ export default {
       this.form
         .post("api/create-user", {
           headers: {
-            Authorization:
-              "Bearer " + "3|0sgWurjPC0veVBPSbxO63eTcNEBpSIJDOnQnGGRg",
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
           },
         })
         .then((response) => {
@@ -549,8 +547,7 @@ export default {
       this.form
         .post("/api/update-user/" + this.form.id, {
           headers: {
-            Authorization:
-              "Bearer " + "3|0sgWurjPC0veVBPSbxO63eTcNEBpSIJDOnQnGGRg",
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
           },
         })
         .then((response) => {
@@ -581,8 +578,7 @@ export default {
       axios
         .delete("/api/delete-user/" + this.form.id, {
           headers: {
-            Authorization:
-              "Bearer " + "3|0sgWurjPC0veVBPSbxO63eTcNEBpSIJDOnQnGGRg",
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
           },
         })
         .then((response) => {
