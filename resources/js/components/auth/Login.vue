@@ -13,7 +13,6 @@
             <v-card-text>
               <p>Sign in with your email and password:</p>
               <v-alert
-                v-if="this.$store.state.credentials"
                 text
                 prominent
                 type="error"

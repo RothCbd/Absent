@@ -1,6 +1,94 @@
 <template>
   <div>
-    <v-app id="main-app" v-if="loggedIn">
+    <v-app v-if="!loggedIn">
+      <v-container class="login-container" fill-height fluid>
+        <v-row align="center" justify="center">
+          <v-col cols="12" md="6">
+            <v-card class="pa-5 card-background">
+              <v-card height="400" class="mt-3">
+                <v-progress-linear
+                  absolute
+                  top
+                  color="blue"
+                  :active="cardLoading"
+                  :indeterminate="cardLoading"
+                ></v-progress-linear>
+
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="5"
+                    class="d-flex justify-center align-center"
+                  >
+                    <v-img
+                      max-height="300"
+                      max-width="100%"
+                      :src="'/image/41291-human-resources-approval-animation.gif'"
+                    ></v-img>
+                  </v-col>
+                  <v-col cols="12" sm="7" class="pa-0">
+                    <v-card elevation="0" class="ma-5">
+                      <span class="title blue--text">ABSENT MANAGERMENT</span>
+                      <v-card-text class="mt-2 pb-0">
+                        <p>Sign in with your email and password:</p>
+
+                        <v-alert
+                          v-if="this.$store.state.credentials"
+                          text
+                          prominent
+                          type="error"
+                          icon="mdi-alert-circle"
+                          class="pa-2"
+                        >
+                          <h5>{{ this.$store.state.credentials }}</h5>
+                        </v-alert>
+
+                        <v-text-field
+                          v-model="email"
+                          label="Email"
+                          type="text"
+                          outlined
+                          prepend-inner-icon="mdi-email"
+                          :error-messages="errorsMessage.email"
+                        ></v-text-field>
+
+                        <v-text-field
+                          v-model="password"
+                          :append-icon="
+                            showPassword ? 'mdi-eye' : 'mdi-eye-off'
+                          "
+                          :type="showPassword ? 'text' : 'password'"
+                          label="Password"
+                          prepend-inner-icon="mdi-lock"
+                          outlined
+                          @click:append="showPassword = !showPassword"
+                          :error-messages="errorsMessage.password"
+                        ></v-text-field>
+                      </v-card-text>
+                      <v-card-actions class="ml-3">
+                        <v-btn
+                          color="info"
+                          depressed
+                          :loading="btnLoading"
+                          @click="login"
+                        >
+                          <v-icon left>mdi-lock</v-icon>
+                          Login
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <p class="subtitle-2 blue--text">Forgot password?</p>
+                      </v-card-actions>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-app>
+
+    <v-app v-else id="main-app">
       <v-navigation-drawer color="grey lighten-5" app v-model="drawer">
         <v-card flat color="indigo" class="menu-card">
           <v-list class="profile">
@@ -21,10 +109,9 @@
           </v-list>
         </v-card>
 
-        <!-- <v-divider></v-divider> -->
         <!-- ------list------ -->
         <v-list dense class="menu-icon">
-          <v-list-item link to="/dashboard">
+          <v-list-item link to="/">
             <v-list-item-action>
               <v-icon>mdi-view-dashboard</v-icon>
             </v-list-item-action>
@@ -110,10 +197,6 @@
         </v-container>
       </v-main>
     </v-app>
-
-    <v-app v-if="!loggedIn">
-      <router-view />
-    </v-app>
   </div>
 </template>
 
@@ -122,6 +205,15 @@ export default {
   data() {
     return {
       drawer: null,
+      btnLoading: false,
+      cardLoading: false,
+      showPassword: false,
+      email: "",
+      password: "",
+      errorsMessage: {
+        email: "",
+        password: "",
+      },
     };
   },
 
@@ -132,6 +224,26 @@ export default {
   },
 
   methods: {
+    login() {
+      if (this.email.length == 0 || this.password.length == 0) {
+        this.errorsMessage.email = "The email field is required.";
+        this.errorsMessage.password = "The password field is required.";
+      } else {
+        this.btnLoading = true;
+        this.cardLoading = true;
+        this.$store
+          .dispatch("token", {
+            email: this.email,
+            password: this.password,
+          })
+          .then((response) => {
+            console.log(response);
+            this.btnLoading = false;
+            this.cardLoading = false;
+          });
+      }
+    },
+
     logout() {
       this.$store.dispatch("destroyToken");
     },
