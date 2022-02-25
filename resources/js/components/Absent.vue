@@ -207,7 +207,7 @@
             <v-textarea
               v-model="form.description"
               outlined
-              label="Outlined textarea"
+              label="Descriptions"
               rows="3"
             ></v-textarea>
           </v-card-text>

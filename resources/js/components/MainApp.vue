@@ -19,6 +19,7 @@
                     cols="12"
                     sm="5"
                     class="d-flex justify-center align-center"
+                    data-aos="fade-right"
                   >
                     <v-img
                       max-height="300"
@@ -26,7 +27,13 @@
                       :src="'/image/41291-human-resources-approval-animation.gif'"
                     ></v-img>
                   </v-col>
-                  <v-col cols="12" sm="7" class="pa-0">
+                  <v-col
+                    cols="12"
+                    sm="7"
+                    class="pa-0"
+                    data-aos="fade-up"
+                    data-aos-anchor-placement="top-bottom"
+                  >
                     <v-card elevation="0" class="ma-5">
                       <span class="title blue--text">ABSENT MANAGERMENT</span>
                       <v-card-text class="mt-2 pb-0">
@@ -34,6 +41,7 @@
 
                         <v-alert
                           v-if="this.$store.state.credentials"
+                          data-aos="zoom-in"
                           text
                           prominent
                           type="error"
@@ -95,15 +103,42 @@
             <v-list-item link class="text-center p-0">
               <v-list-item-content>
                 <v-list-item-title>
-                  <v-avatar color="grey lighten-5">
-                    <span class="grey--text headline">A</span>
-                  </v-avatar>
+                  <v-avatar color="grey lighten-5" size="50">
+                    <span
+                      v-if="auth.profile == 'default.png'"
+                      class="
+                        blue--text
+                        text--lighten-1
+                        headline-1
+                        font-weight-medium
+                      "
+                      >{{
+                        auth.name
+                          .split(" ")
+                          .map((x) => x[0].toUpperCase())
+                          .join("")
+                      }}</span
+                    >
 
-                  <h6 class="mt-2 mb-0 white--text text--darken-1">AMIN</h6>
+                    <v-img v-else :src="'/profiles/' + auth.profile" />
+                  </v-avatar>
+                  <h5
+                    class="
+                      mt-2
+                      mb-0
+                      white--text
+                      text--darken-1
+                      font-weight-regular
+                    "
+                  >
+                    {{ auth.name }}
+                  </h5>
                 </v-list-item-title>
-                <v-list-item-subtitle class="white--text text--darken-1"
-                  >admin@admin.com</v-list-item-subtitle
-                >
+                <v-list-item-subtitle class="white--text text--darken-1">{{
+                  auth.email
+                }}</v-list-item-subtitle>
+
+                <!-- <p class="white--text">{{ auth.name }}</p> -->
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -200,7 +235,16 @@
   </div>
 </template>
 
+<style scoped>
+.v-text-field--outlined >>> fieldset {
+  border-color: rgba(177, 177, 177, 0.644);
+}
+</style>
+
 <script>
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init();
 export default {
   data() {
     return {
@@ -214,6 +258,8 @@ export default {
         email: "",
         password: "",
       },
+      authData: "",
+      authName: "",
     };
   },
 
@@ -221,6 +267,22 @@ export default {
     loggedIn() {
       return this.$store.getters.loggedIn;
     },
+
+    auth() {
+      return this.$store.state.auth;
+    },
+  },
+
+  mounted() {
+    if (JSON.parse(localStorage.getItem("auth"))) {
+      this.authData = JSON.parse(localStorage.getItem("auth"));
+      if (this.authData) {
+        this.authName = this.authData.name
+          .split(" ")
+          .map((x) => x[0].toUpperCase())
+          .join("");
+      }
+    }
   },
 
   methods: {
@@ -237,15 +299,21 @@ export default {
             password: this.password,
           })
           .then((response) => {
-            console.log(response);
             this.btnLoading = false;
             this.cardLoading = false;
+
+            this.authData = response.data.user;
+            this.authName = this.authData.name
+              .split(" ")
+              .map((x) => x[0].toUpperCase())
+              .join("");
           });
       }
     },
 
     logout() {
       this.$store.dispatch("destroyToken");
+      //   window.location.reload();
     },
   },
 };

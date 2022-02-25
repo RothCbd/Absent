@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('read-report', [ReportController::class, 'report']);
 
 
+    Route::post('update-profile/{id}', [AuthController::class, 'update']);
     Route::post('logout', [AuthController::class, 'logout']);
 });
 

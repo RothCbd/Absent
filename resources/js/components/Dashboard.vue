@@ -503,8 +503,6 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
-
           // ----------absent---------
           this.absent.all = response.data.absent.absentCount;
           this.absent.weekCount = response.data.absent.absentWeekCount;
