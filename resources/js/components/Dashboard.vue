@@ -5,7 +5,7 @@
       <span class="text-decoration-underline">Dashboard</span>
     </h3>
 
-    <!-- =========================skeleton============================== -->
+    <!-- ===========skeleton=============== -->
     <v-row v-show="skeletonLoading">
       <v-col cols="12" sm="12" md="4">
         <v-card class="dashboard-card" elevation="1">
@@ -84,7 +84,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <!-- =========================/skeleton============================== -->
+    <!-- ===========/skeleton=============== -->
 
     <!-- ================Card=============== -->
     <v-row v-show="!skeletonLoading">
@@ -241,8 +241,14 @@
                       <v-avatar
                         left
                         v-if="items[0].employee.pic == 'default.png'"
+                        color="cyan darken-2 white--text"
                       >
-                        <v-img :src="'/image/default.png'" />
+                        {{
+                          items[0].employee.name
+                            .split(" ")
+                            .map((x) => x[0].toUpperCase())
+                            .join("")
+                        }}
                       </v-avatar>
                       <v-avatar left v-else>
                         <v-img :src="'/employees/' + items[0].employee.pic" />
@@ -327,8 +333,14 @@
                       <v-avatar
                         left
                         v-if="items[0].employee.pic == 'default.png'"
+                        color="cyan darken-2 white--text"
                       >
-                        <v-img :src="'/image/default.png'" />
+                        {{
+                          items[0].employee.name
+                            .split(" ")
+                            .map((x) => x[0].toUpperCase())
+                            .join("")
+                        }}
                       </v-avatar>
                       <v-avatar left v-else>
                         <v-img :src="'/employees/' + items[0].employee.pic" />
@@ -412,8 +424,14 @@
                       <v-avatar
                         left
                         v-if="items[0].employee.pic == 'default.png'"
+                        color="cyan darken-2 white--text"
                       >
-                        <v-img :src="'/image/default.png'" />
+                        {{
+                          items[0].employee.name
+                            .split(" ")
+                            .map((x) => x[0].toUpperCase())
+                            .join("")
+                        }}
                       </v-avatar>
                       <v-avatar left v-else>
                         <v-img :src="'/employees/' + items[0].employee.pic" />

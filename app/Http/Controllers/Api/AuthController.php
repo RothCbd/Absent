@@ -72,7 +72,6 @@ class AuthController extends Controller
     // ============Profile UPdate================
     public function update(Request $request, $id)
     {
-
         $this->validate($request, [
             'name' => 'required|min:2|max:50',
             'email' => 'required|email|max:255|regex:/(.*)\.com/i|unique:users,email,'.$id,
@@ -115,5 +114,31 @@ class AuthController extends Controller
             'message' => "Profile updat succefully",
             'user' => $user
         ]);
+    }
+
+
+    public function password(Request $request, $id)
+    {
+        $this->validate($request,[
+            'old_password' => 'required',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        $user = User::findOrFail($id);
+        $hashedPassword = $user->password;
+        if(Hash::check($request->old_password, $hashedPassword))
+        {
+            if(!Hash::check($request->password, $hashedPassword))
+            {
+                $user = User::find($id);
+                $user->password = Hash::make($request->password);
+                $user->save();
+                return response()->json(['message' => 'Password update Success'], 200);
+            }else{
+                return response()->json(['message' => 'New password cannot be the same as old password'], 200);
+            }
+        }else{
+            return response()->json(['message' => 'Current password not match'], 200);
+        }
     }
 }

@@ -89,30 +89,56 @@
 
       <v-tab-item key="password">
         <v-card class="mx-auto ma-6" max-width="350" outlined>
+          <v-progress-linear
+            :active="loading"
+            :indeterminate="loading"
+            absolute
+            top
+            color="indigo"
+          ></v-progress-linear>
+
           <v-form
-            @submit.prevent="UpdateProfile()"
+            @submit.prevent="PasswordUpdate()"
             enctype="multipart/form-data"
           >
+            <v-card-title>Password</v-card-title>
             <v-card-text>
+              <v-alert
+                v-if="msgResponse"
+                text
+                prominent
+                type="error"
+                icon="mdi-alert-circle"
+                class="pa-2"
+              >
+                <h5>{{ msgResponse }}</h5>
+              </v-alert>
+
               <v-text-field
+                v-model="formPassword.old_password"
                 :append-icon="password ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="password ? 'text' : 'password'"
                 label="Password"
                 @click:append="password = !password"
+                :error-messages="errorsMessage.old_password"
               ></v-text-field>
 
               <v-text-field
+                v-model="formPassword.password"
                 :append-icon="confirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="confirmPassword ? 'text' : 'password'"
-                label="Confirm Password"
+                label="New Password"
                 @click:append="confirmPassword = !confirmPassword"
+                :error-messages="errorsMessage.password"
               ></v-text-field>
 
               <v-text-field
+                v-model="formPassword.password_confirmation"
                 :append-icon="newPassword ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="newPassword ? 'text' : 'password'"
-                label="New Password "
+                label="Confirm Password "
                 @click:append="newPassword = !newPassword"
+                :error-messages="errorsMessage.password_confirmation"
               ></v-text-field>
 
               <p>Forgot password ?</p>
@@ -159,11 +185,18 @@ export default {
       newPassword: false,
       preview_profile: null,
       errorsMessage: "",
+      msgResponse: "",
 
       form: new Form({
         name: "",
         email: "",
         profile: null,
+      }),
+
+      formPassword: new Form({
+        old_password: "",
+        password: "",
+        password_confirmation: "",
       }),
     };
   },
@@ -229,6 +262,35 @@ export default {
             }),
         3000
       );
+    },
+
+    PasswordUpdate() {
+      this.btnLoading = true;
+      this.loading = true;
+      this.formPassword
+        .post("api/update-password/" + this.authData.id, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
+          },
+        })
+        .then((response) => {
+          if (response.data.message !== "Password update Success") {
+            this.msgResponse = response.data.message;
+          } else {
+            this.alertSnackbarMsg = "Password Updated login again.";
+            this.snackbar = true;
+            setTimeout(() => this.$store.dispatch("destroyToken"), 3000);
+          }
+
+          this.btnLoading = false;
+          this.loading = false;
+        })
+        .catch((errors) => {
+          console.log(errors);
+          this.errorsMessage = errors.response.data.errors;
+          this.btnLoading = false;
+          this.loading = false;
+        });
     },
   },
 };

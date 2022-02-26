@@ -84,11 +84,17 @@
                   @click:close="remove(data.item)"
                 >
                   <v-avatar left>
-                    <v-img
+                    <v-avatar
                       v-if="data.item.image == 'default.png'"
-                      :src="'/image/default.png'"
-                      sizes="40"
-                    ></v-img>
+                      color="cyan darken-2 white--text"
+                    >
+                      {{
+                        data.item.name
+                          .split(" ")
+                          .map((x) => x[0].toUpperCase())
+                          .join("")
+                      }}
+                    </v-avatar>
                     <v-img
                       v-else
                       :src="'/employees/' + data.item.image"
@@ -101,11 +107,18 @@
 
               <template v-slot:item="data">
                 <v-list-item-avatar>
-                  <v-img
+                  <v-avatar
                     v-if="data.item.image == 'default.png'"
-                    :src="'/image/default.png'"
-                    sizes="40"
-                  ></v-img>
+                    color="cyan darken-2 white--text"
+                    size="40"
+                  >
+                    <span class="white--text">{{
+                      data.item.name
+                        .split(" ")
+                        .map((x) => x[0].toUpperCase())
+                        .join("")
+                    }}</span>
+                  </v-avatar>
                   <v-img
                     v-else
                     :src="'/employees/' + data.item.image"
@@ -167,8 +180,17 @@
                 </v-btn>
 
                 <v-chip class="ma-1 font-weight-medium" small>
-                  <v-avatar left v-if="items[0].employee.pic == 'default.png'">
-                    <v-img :src="'/image/default.png'" />
+                  <v-avatar
+                    left
+                    v-if="items[0].employee.pic == 'default.png'"
+                    color="cyan darken-2 white--text"
+                  >
+                    {{
+                      items[0].employee.name
+                        .split(" ")
+                        .map((x) => x[0].toUpperCase())
+                        .join("")
+                    }}
                   </v-avatar>
                   <v-avatar left v-else>
                     <v-img :src="'/employees/' + items[0].employee.pic" />

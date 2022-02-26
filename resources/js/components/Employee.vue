@@ -57,9 +57,16 @@
               class="ma-1"
               left
               v-if="item.image == 'default.png'"
+              color="cyan darken-2 white--text"
             >
-              <v-img :src="'/image/default.png'" />
+              {{
+                item.name
+                  .split(" ")
+                  .map((x) => x[0].toUpperCase())
+                  .join("")
+              }}
             </v-avatar>
+
             <v-avatar size="40" class="ma-2" left v-else>
               <v-img :src="'/employees/' + item.image" />
             </v-avatar>

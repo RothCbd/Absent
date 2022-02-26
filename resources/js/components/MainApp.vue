@@ -215,9 +215,9 @@
 
         <v-spacer></v-spacer>
 
-        <v-btn text icon>
-          <v-icon color="grey darken-1">mdi-bell</v-icon>
-        </v-btn>
+        <h4 class="mr-6 blue-grey--text text--darken-2">
+          {{ formatDate(new Date()) }}
+        </h4>
 
         <v-btn text color="grey darken-1" @click="logout">
           sign out
@@ -244,6 +244,7 @@
 <script>
 import AOS from "aos";
 import "aos/dist/aos.css";
+import moment from "moment";
 AOS.init();
 export default {
   data() {
@@ -286,6 +287,10 @@ export default {
   },
 
   methods: {
+    formatDate(value) {
+      return moment(value).format("D-MMMM-YYYY");
+    },
+
     login() {
       if (this.email.length == 0 || this.password.length == 0) {
         this.errorsMessage.email = "The email field is required.";

@@ -57,8 +57,17 @@
             label
             color="grey lighten-4"
           >
-            <v-avatar left v-if="item.employee.image == 'default.png'">
-              <v-img :src="'/image/default.png'" />
+            <v-avatar
+              left
+              v-if="item.employee.image == 'default.png'"
+              color="cyan darken-2 white--text"
+            >
+              {{
+                item.employee.name
+                  .split(" ")
+                  .map((x) => x[0].toUpperCase())
+                  .join("")
+              }}
             </v-avatar>
             <v-avatar left v-else>
               <v-img :src="'/employees/' + item.employee.image" />
@@ -144,11 +153,17 @@
                   class="mb-1"
                 >
                   <v-avatar left>
-                    <v-img
+                    <v-avatar
                       v-if="data.item.image == 'default.png'"
-                      :src="'/image/default.png'"
-                      sizes="40"
-                    ></v-img>
+                      color="cyan darken-2 white--text"
+                    >
+                      {{
+                        data.item.name
+                          .split(" ")
+                          .map((x) => x[0].toUpperCase())
+                          .join("")
+                      }}
+                    </v-avatar>
                     <v-img
                       v-else
                       :src="'/employees/' + data.item.image"
@@ -161,11 +176,19 @@
 
               <template v-slot:item="data">
                 <v-list-item-avatar>
-                  <v-img
+                  <v-avatar
                     v-if="data.item.image == 'default.png'"
-                    :src="'/image/default.png'"
-                    sizes="40"
-                  ></v-img>
+                    color="cyan darken-2 white--text"
+                    size="40"
+                  >
+                    <span class="white--text">{{
+                      data.item.name
+                        .split(" ")
+                        .map((x) => x[0].toUpperCase())
+                        .join("")
+                    }}</span>
+                  </v-avatar>
+
                   <v-img
                     v-else
                     :src="'/employees/' + data.item.image"
