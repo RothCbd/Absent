@@ -40,7 +40,6 @@ export default new Vuex.Store({
 
     actions: {
 
-        // ------------------------------------
         updateProfifle(context, data){
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
             return new Promise((resolve, reject) => {
@@ -62,8 +61,6 @@ export default new Vuex.Store({
                 })
             })
         },
-
-        // ------------------------------------
 
         token(context, credentials){
             return new Promise(( resolve, reject ) => {

@@ -182,7 +182,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item link to="/user">
+          <v-list-item link to="/user" v-if="auth.role_id == 1">
             <v-list-item-action>
               <v-icon>mdi-account-multiple</v-icon>
             </v-list-item-action>
@@ -215,7 +215,7 @@
 
         <v-spacer></v-spacer>
 
-        <h4 class="mr-6 blue-grey--text text--darken-2">
+        <h4 class="mr-6 grey--text text--darken-1 mt-1 font-weight-medium">
           {{ formatDate(new Date()) }}
         </h4>
 
@@ -288,7 +288,7 @@ export default {
 
   methods: {
     formatDate(value) {
-      return moment(value).format("D-MMMM-YYYY");
+      return moment(value).format("dddd, DD-MM-YYYY");
     },
 
     login() {
@@ -298,15 +298,17 @@ export default {
       } else {
         this.btnLoading = true;
         this.cardLoading = true;
+
+        setTimeout(
+          () => ((this.btnLoading = false), (this.cardLoading = false)),
+          3000
+        );
         this.$store
           .dispatch("token", {
             email: this.email,
             password: this.password,
           })
           .then((response) => {
-            this.btnLoading = false;
-            this.cardLoading = false;
-
             this.authData = response.data.user;
             this.authName = this.authData.name
               .split(" ")

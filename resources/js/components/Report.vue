@@ -388,29 +388,33 @@ export default {
     getReport() {
       this.btnSaveLoading = true;
       this.tableLoading = true;
-      this.form
-        .post("/api/read-report/", {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("access_token"),
-          },
-        })
-        .then((response) => {
-          if (response.data.length > 0) {
-            this.reportData = response.data;
-            this.countReport = response.data.length;
-            this.btnPDF = true;
-            this.alert = false;
-          } else {
-            this.alertMessageText = response.data.message;
-            this.alert = true;
-          }
 
-          this.btnSaveLoading = false;
-          this.tableLoading = false;
-        })
-        .catch((errors) => {
-          console.log(errors);
-        });
+      if (this.form.employee_id.length == 0 && this.form.dates.length == 0) {
+        this.alertMessageText = "Please choose any Date or Employee.";
+        this.alert = true;
+        this.btnSaveLoading = false;
+        this.tableLoading = false;
+      } else {
+        this.form
+          .post("/api/read-report/", {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("access_token"),
+            },
+          })
+          .then((response) => {
+            if (response.data.length > 0) {
+              this.reportData = response.data;
+              this.countReport = response.data.length;
+              this.btnPDF = true;
+              this.alert = false;
+            }
+            this.btnSaveLoading = false;
+            this.tableLoading = false;
+          })
+          .catch((errors) => {
+            console.log(errors);
+          });
+      }
     },
 
     formatDate(value) {
