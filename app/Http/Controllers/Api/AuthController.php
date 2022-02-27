@@ -78,6 +78,12 @@ class AuthController extends Controller
         ]);
 
         $user = User::findOrFail($id);
+
+        if(auth('sanctum')->user()->id != $user->id)
+        {
+            return response()->json(['message' => 'You not Authorized!'], 403);
+        }
+
         $user->name = $request->name;
         $user->email = $request->email;
 
@@ -125,6 +131,12 @@ class AuthController extends Controller
         ]);
 
         $user = User::findOrFail($id);
+
+        if(auth('sanctum')->user()->id != $user->id)
+        {
+            return response()->json(['message' => 'You not Authorized!'], 403);
+        }
+
         $hashedPassword = $user->password;
         if(Hash::check($request->old_password, $hashedPassword))
         {

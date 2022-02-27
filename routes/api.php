@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\EmailVerificationController;
 use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\ForgotPasswordController;
 use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -29,6 +30,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // ------Authencation------
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+Route::post('forgot-password', [ForgotPasswordController::class, 'forgot']);
+Route::post('/password/reset', [ForgotPasswordController::class, 'reset']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 

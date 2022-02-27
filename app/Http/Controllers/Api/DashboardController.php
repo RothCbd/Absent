@@ -15,20 +15,6 @@ class DashboardController extends Controller
 {
     public function read()
     {
-
-        // return Absent::with('employee')->select(['employee:name'])->orderBy('id')->get()->groupBy('employee_id');
-        // return DB::table('employees')
-        // ->join('absents', 'users.id', '=' ,'admin_notifications.from_user_id')
-        // ->select('users.name')
-        // ->where('admin_notifications.from_user_id', '=',  $item->from_user_id)
-        // ->get();
-
-        // return DB::table('absents')
-        //     ->join('employees', 'employees.id', '=', 'absents.employee_id')
-        //     ->select('employees.name')
-        //     ->groupBy('employees.name')
-        //     ->get();
-
         $empSenior = array();
         $empJunior = array();
         $employess = Employee::all();
@@ -48,7 +34,7 @@ class DashboardController extends Controller
         $weekStartDate = $now->startOfWeek()->format('Y-m-d');
         $weekEndDate = $now->endOfWeek()->format('Y-m-d');
 
-        $userCount = User::count();
+        $userCount = User::where('id', '!=', auth('sanctum')->user()->id)->count();
         $userRoleAdmin = User::where('role_id', 1)->count();
         $userRoleUser = User::where('role_id', 2)->count();
 
@@ -61,12 +47,6 @@ class DashboardController extends Controller
         $monthlyAbsentCount = Absent::with('employee')->whereMonth('date', Carbon::now()->month)->count();
         $yearAbsents = Absent::with('employee')->where('date', $year)->get();
         $yearAbsentCount = Absent::where('date', $year)->count();
-
-        // $monthNum = 12;
-        // $AbMonthlyOfYear = array();
-        // for($monthNum = 1;$monthNum<=12;$monthNum++){
-        //     $AbMonthlyOfYear[] = Absent::with('employee')->where('date', $year)->whereMonth('date', '=', $monthNum)->count();
-        // }
 
         return response()->json([
             'user' => [

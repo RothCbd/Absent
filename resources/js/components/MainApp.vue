@@ -319,8 +319,9 @@ export default {
     },
 
     logout() {
+      this.email = "";
+      this.password = "";
       this.$store.dispatch("destroyToken");
-      //   window.location.reload();
     },
   },
 };

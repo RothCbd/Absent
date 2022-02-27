@@ -96,6 +96,9 @@ export default new Vuex.Store({
                         localStorage.removeItem('auth');
                         context.commit('destroyToken');
                         context.commit('deleteAuth');
+
+                        context.commit('setCredentials', null);
+
                         resolve(response)
                     })
                     .catch(error => {

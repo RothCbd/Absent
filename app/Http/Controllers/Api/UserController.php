@@ -15,7 +15,10 @@ class UserController extends Controller
     // ==============READ==================
     public function read()
     {
-        return new userData(User::with('role')->orderBy('id', 'DESC')->get());
+        return new userData(User::with('role')
+            ->where('id', '!=', auth('sanctum')->user()->id)
+            ->orderBy('id', 'DESC')
+            ->get());
     }
 
     // =============CREATE=================
