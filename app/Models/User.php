@@ -49,10 +49,10 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id');
     }
 
-    public function sendPasswordResetNotification($token)
-    {
-        $url = 'test?token='.$token;
+    // public function sendPasswordResetNotification($token)
+    // {
+    //     $url = 'test?token='.$token;
 
-        $this->notify(new ResetPassword($url));
-    }
+    //     $this->notify(new ResetPassword($url));
+    // }
 }

@@ -29,6 +29,10 @@ import { Form } from 'vform';
 window.Form = Form;
 
 import Login from './components/auth/Login';
+import ForgotPassword from './components/ForgotPassword';
+
+import ResetPassword from './components/auth/ResetPassword'
+
 import Dashboard from './components/Dashboard';
 import User from './components/User';
 import Employee from './components/Employee';
@@ -45,6 +49,26 @@ let routes = [
             requiresVisitor: true
         }
     },
+
+    {
+        path: '/forgotPassword',
+        name:'forgotPassword',
+        component: ForgotPassword,
+        meta: {
+            requiresVisitor: true
+        }
+    },
+
+    // ---------------ResetPassword--------------------
+    {
+        path: '/reset-password',
+        name:'reset-password',
+        component: ResetPassword,
+        meta: {
+            requiresVisitor: true
+        }
+    },
+    // -----------------------------------------------
 
     {
         path: '/',
@@ -102,23 +126,23 @@ const router = new VueRouter({
     routes
 });
 
-// router.beforeEach((to, from, next) => {
-//     if (to.matched.some(record => record.meta.requiresAuth)) {
-//       if (!store.getters.loggedIn) {
-//         next({ name: 'login'})
-//       } else {
-//         next()
-//       }
-//     } if (to.matched.some(record => record.meta.requiresVisitor)) {
-//         if (store.getters.loggedIn) {
-//           next({ name: 'dashboard'})
-//         } else {
-//           next()
-//         }
-//       }else {
-//       next()
-//     }
-// })
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+      if (!store.getters.loggedIn) {
+        next({ name: 'login'})
+      } else {
+        next()
+      }
+    } if (to.matched.some(record => record.meta.requiresVisitor)) {
+        if (store.getters.loggedIn) {
+          next({ name: '/'})
+        } else {
+          next()
+        }
+      }else {
+      next()
+    }
+})
 
 Vue.component('main-component', require('./components/MainApp.vue').default);
 
