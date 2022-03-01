@@ -55,7 +55,6 @@ export default new Vuex.Store({
                     resolve(response)
                 })
                 .catch(error => {
-                    console.log(error)
                     reject(error)
                 })
             })
@@ -101,7 +100,6 @@ export default new Vuex.Store({
                         resolve(response)
                     })
                     .catch(error => {
-                        console.log(error)
                         reject(error)
                     })
                 })

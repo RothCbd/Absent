@@ -11,8 +11,26 @@ use Illuminate\Http\Request;
 
 class AbsentController extends Controller
 {
-    public function read(){
-        return new absentData(Absent::orderBy('id', 'DESC')->get());
+    public function read()
+    {
+        $absents = new absentData(Absent::with('employee')->get());
+        $absentData = array();
+        foreach ($absents->reverse() as $key => $absent){
+            $absentData[] = array(
+                'no' => $key + 1,
+                'id' => $absent->id,
+                'day' => $absent->day,
+                'date' => $absent->date,
+                'description' => $absent->description,
+                'employee' => [
+                    'id' => $absent->employee->id,
+                    'name' => $absent->employee->name,
+                    'image' => $absent->employee->pic
+                ],
+            );
+        }
+        return $absentData;
+        // return new absentData(Absent::orderBy('id', 'DESC')->get());
     }
 
     public function create(Request $request){

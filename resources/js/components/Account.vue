@@ -39,10 +39,10 @@
                     class="img-fluid rounded-sm"
                   ></v-img>
                   <v-img
-                    v-else-if="authData.profile == 'default.png'"
+                    v-else-if="authProfile == 'default.png'"
                     :src="'/image/default.png'"
                   />
-                  <v-img v-else :src="'/profiles/' + authData.profile" />
+                  <v-img v-else :src="'/profiles/' + authProfile" />
                 </v-avatar>
                 <v-file-input
                   v-model="form.profile"
@@ -141,8 +141,6 @@
                 :error-messages="errorsMessage.password_confirmation"
               ></v-text-field>
 
-              <p>Forgot password ?</p>
-
               <v-btn
                 depressed
                 small
@@ -184,6 +182,9 @@ export default {
       confirmPassword: false,
       newPassword: false,
       preview_profile: null,
+
+      authProfile: null,
+
       errorsMessage: "",
       msgResponse: "",
 
@@ -208,8 +209,11 @@ export default {
   },
 
   mounted() {
-    this.form.name = this.authData.name;
-    this.form.email = this.authData.email;
+    if (this.authData) {
+      this.form.name = this.authData.name;
+      this.form.email = this.authData.email;
+      this.authProfile = this.authData.profile;
+    }
   },
 
   methods: {
@@ -279,14 +283,15 @@ export default {
           } else {
             this.alertSnackbarMsg = "Password Updated login again.";
             this.snackbar = true;
-            setTimeout(() => this.$store.dispatch("destroyToken"), 3000);
+            this.$store.dispatch("destroyToken").then(() => {
+              this.$router.push({ name: "login" });
+            });
           }
 
           this.btnLoading = false;
           this.loading = false;
         })
         .catch((errors) => {
-          console.log(errors);
           this.errorsMessage = errors.response.data.errors;
           this.btnLoading = false;
           this.loading = false;

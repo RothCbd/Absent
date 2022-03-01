@@ -126,10 +126,12 @@
         <v-spacer></v-spacer>
 
         <h4 class="mr-6 grey--text text--darken-1 mt-1 font-weight-medium">
-          {{ formatDate(new Date()) }}
+          <v-chip label outlined color="indigo" small>
+            {{ formatDate(new Date()) }}
+          </v-chip>
         </h4>
 
-        <v-btn text color="grey darken-1" @click="logout">
+        <v-btn text color="grey darken-1" @click="logout" small>
           sign out
           <v-icon>mdi-login-variant</v-icon>
         </v-btn>

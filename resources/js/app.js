@@ -59,7 +59,6 @@ let routes = [
         }
     },
 
-    // ---------------ResetPassword--------------------
     {
         path: '/reset-password',
         name:'reset-password',
@@ -68,7 +67,6 @@ let routes = [
             requiresVisitor: true
         }
     },
-    // -----------------------------------------------
 
     {
         path: '/',

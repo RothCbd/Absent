@@ -40,7 +40,7 @@
           <template v-slot:[`item.name`]="{ item }">
             <v-avatar
               size="40"
-              class="ma-1"
+              class="m-1"
               left
               v-if="item.profile == 'default.png'"
               color="cyan darken-2 white--text"
@@ -141,7 +141,7 @@
           </v-toolbar>
 
           <form
-            @submit.prevent="editMode ? updatePost() : createPost()"
+            @submit.prevent="editMode ? updateUser() : createPost()"
             enctype="multipart/form-data"
             class="user-form"
           >
@@ -462,6 +462,7 @@ export default {
     },
 
     closeDialog() {
+      this.editMode = false;
       this.userForm = false;
       this.form.role_id = "";
       this.form.name = "";
@@ -546,7 +547,7 @@ export default {
       this.userForm = true;
     },
 
-    async updatePost() {
+    async updateUser() {
       this.btnSaveLoading = true;
       this.tableLoading = true;
       await new Promise((resolve) => setTimeout(resolve, 1000));

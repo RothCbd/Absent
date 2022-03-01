@@ -67,7 +67,7 @@
               }}
             </v-avatar>
 
-            <v-avatar size="40" class="ma-2" left v-else>
+            <v-avatar size="38" class="ma-2" left v-else>
               <v-img :src="'/employees/' + item.image" />
             </v-avatar>
 
@@ -160,7 +160,7 @@
           </template>
 
           <template v-slot:[`item.actions`]="{ item }">
-            <v-icon small class="mr-2" @click="editUser(item)"
+            <v-icon small class="mr-2" @click="editEmployee(item)"
               >mdi-pencil</v-icon
             >
             <v-icon
@@ -197,7 +197,7 @@
           </v-toolbar>
 
           <form
-            @submit.prevent="editMode ? updatePost() : createPost()"
+            @submit.prevent="editMode ? updateEmployee() : createEmployee()"
             enctype="multipart/form-data"
           >
             <v-card-text>
@@ -495,6 +495,7 @@ export default {
     },
 
     closeDialog() {
+      this.editMode = false;
       this.employeeForm = false;
       this.form.role_id = "";
       this.form.name = "";
@@ -541,7 +542,7 @@ export default {
     },
     // ---------------------------------
 
-    createPost() {
+    createEmployee() {
       this.btnSaveLoading = true;
       this.tableLoading = true;
       this.form
@@ -565,7 +566,7 @@ export default {
         });
     },
 
-    editUser(employee) {
+    editEmployee(employee) {
       this.editMode = true;
       this.form.id = employee.id;
       if (employee.gender == "male") {
@@ -582,7 +583,7 @@ export default {
       this.employeeForm = true;
     },
 
-    async updatePost() {
+    async updateEmployee() {
       this.btnSaveLoading = true;
       this.tableLoading = true;
       await new Promise((resolve) => setTimeout(resolve, 1000));

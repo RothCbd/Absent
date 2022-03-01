@@ -116,7 +116,7 @@
       </v-data-table>
     </v-card>
 
-    <!-- --------employee-Insert-Form------ -->
+    <!-- --------Absent-Insert-Form------ -->
     <v-dialog v-model="absentForm" width="500" persistent overlay-opacity="0">
       <v-card>
         <v-toolbar dense flat color="indigo lighten-1" class="user-form-dialog">
@@ -319,14 +319,14 @@ export default {
       tableLoading: true,
       headers: [
         {
-          text: "No.",
+          text: "#",
           align: "start",
-          value: "id",
+          value: "no",
         },
         { text: "Employee", value: "employee.name" },
         { text: "Day", value: "day" },
         { text: "Absent Date", value: "date" },
-        { text: "Description", value: "desription" },
+        { text: "Description", value: "description" },
         { text: "Action", sortable: false, align: "center", value: "actions" },
       ],
       absentData: [],
@@ -374,8 +374,8 @@ export default {
           },
         })
         .then((response) => {
-          this.absentData = response.data.data;
-          this.absentCount = response.data.data.length;
+          this.absentData = response.data;
+          this.absentCount = response.data.length;
           this.tableLoading = false;
         })
         .catch((error) => {
@@ -417,6 +417,7 @@ export default {
     },
 
     closeDialog() {
+      this.editMode = false;
       this.absentForm = false;
       this.form.employee_id = "";
       this.form.date = "";
@@ -456,7 +457,7 @@ export default {
       this.form.employee_id = absent.employee.id;
       this.form.day = absent.day;
       this.form.date = absent.date;
-      this.form.description = absent.desription;
+      this.form.description = absent.description;
       this.absentForm = true;
     },
 
