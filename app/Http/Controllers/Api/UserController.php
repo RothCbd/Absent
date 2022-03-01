@@ -30,7 +30,7 @@ class UserController extends Controller
             'email' => 'required|email|max:255|regex:/(.*)\.com/i|unique:users,email',
             'password' => 'required|confirmed|min:6'
         ], [
-            'role_id.required' => 'The user role is required number1(admin), number2(user).',
+            'role_id.required' => 'The user role is required.',
             'role_id.min' => 'The role number must be at least 1.',
             'role_id.max' => 'The role number must not be greater than 2.'
         ]);

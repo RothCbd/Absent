@@ -46,7 +46,8 @@ let routes = [
         name:'login',
         component: Login,
         meta: {
-            requiresVisitor: true
+            requiresVisitor: true,
+            title: 'Login'
         }
     },
 
@@ -55,7 +56,8 @@ let routes = [
         name:'forgotPassword',
         component: ForgotPassword,
         meta: {
-            requiresVisitor: true
+            requiresVisitor: true,
+            title: 'Forgot-Password'
         }
     },
 
@@ -64,7 +66,8 @@ let routes = [
         name:'reset-password',
         component: ResetPassword,
         meta: {
-            requiresVisitor: true
+            requiresVisitor: true,
+            title: 'Reset-Password'
         }
     },
 
@@ -73,7 +76,8 @@ let routes = [
         name:'dashboard',
         component: Dashboard,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            title: 'Dashboard',
         }
     },
     {
@@ -81,7 +85,8 @@ let routes = [
         name:'user',
         component: User,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            title: 'User'
         }
     },
     {
@@ -89,7 +94,8 @@ let routes = [
         name:'employee',
         component: Employee,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            title: 'Employee'
         }
     },
     {
@@ -97,7 +103,8 @@ let routes = [
         name:'absent',
         component: Absent,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            title: 'Absent'
         }
     },
     ,
@@ -106,7 +113,8 @@ let routes = [
         name:'report',
         component: Report,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            title: 'Report'
         }
     },
     {
@@ -114,7 +122,8 @@ let routes = [
         name:'account',
         component: Account,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            title: 'Account'
         }
     },
 ];
@@ -122,6 +131,12 @@ let routes = [
 const router = new VueRouter({
     // mode: 'history',
     routes
+});
+
+router.afterEach((to, from) => {
+    Vue.nextTick(() => {
+        document.title = to.meta.title;
+    });
 });
 
 router.beforeEach((to, from, next) => {

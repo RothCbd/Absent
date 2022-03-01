@@ -120,7 +120,7 @@
         ></v-app-bar-nav-icon>
 
         <v-toolbar-title class="indigo--text font-weight-bold">
-          Absent Managerment
+          <small>Absent Managerment</small>
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
