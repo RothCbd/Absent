@@ -158,8 +158,8 @@ export default {
         })
         .then((response) => {
           if (response.status == 200) {
+            this.responseMsg = "";
             this.isResetSuccess = true;
-
             this.btnLoading = false;
             this.cardLoading = false;
           }
