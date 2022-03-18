@@ -24,7 +24,9 @@ class employeeData extends ResourceCollection
                     'position' => $employee->position,
                     'start_date' => $employee->start_date,
                     'phone_number' => $employee->phone_number,
-                    'image' => $employee->pic
+                    'image' => $employee->pic,
+                    'profile_color' => $employee->profile_color,
+                    'is_inactived' => $employee->is_inactive
                 ];
             })
         ];

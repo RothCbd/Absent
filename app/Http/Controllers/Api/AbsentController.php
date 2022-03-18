@@ -19,13 +19,16 @@ class AbsentController extends Controller
             $absentData[] = array(
                 'no' => $key + 1,
                 'id' => $absent->id,
+                'absent' => $absent->absent,
+                'absent_time' => $absent->absent_time,
                 'day' => $absent->day,
                 'date' => $absent->date,
                 'description' => $absent->description,
                 'employee' => [
                     'id' => $absent->employee->id,
                     'name' => $absent->employee->name,
-                    'image' => $absent->employee->pic
+                    'image' => $absent->employee->pic,
+                    'profile_color' => $absent->employee->profile_color,
                 ],
             );
         }
@@ -33,14 +36,22 @@ class AbsentController extends Controller
         // return new absentData(Absent::orderBy('id', 'DESC')->get());
     }
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
 
         $this->validate($request, [
             'employee_id' => 'required|integer',
+            'absent' => 'in:fullday,halfday',
             'date' => 'required'
         ], [
             'employee_id.required' => 'select employee.',
         ]);
+
+        if($request->absent == 'halfday'){
+            $this->validate($request, [
+                'absent_time' => 'in:morning,afternoon'
+            ]);
+        }
 
         $absent = new Absent();
         $absent->employee_id = $request->employee_id;
@@ -50,6 +61,18 @@ class AbsentController extends Controller
         $day = new DateTime($date);
         $absent->day = $day->format('l');
 
+        if($request->absent == 'fullday')
+        {
+            $absent->number = 1;
+        }
+
+        if($request->absent == 'halfday')
+        {
+            $absent->number = 0.5;
+        }
+
+        $absent->absent_time = $request->absent_time;
+        $absent->absent = $request->absent;
         $absent->description = $request->description;
         $absent->save();
         return response()->json(['message' => 'Absent save successfully.'], 200);
@@ -59,10 +82,38 @@ class AbsentController extends Controller
 
         $this->validate($request, [
             'employee_id' => 'required|integer',
+            'absent' => 'in:fullday,halfday',
             'date' => 'required'
+        ], [
+            'employee_id.required' => 'select employee.',
         ]);
 
+        if($request->absent == 'halfday'){
+            $this->validate($request, [
+                'absent_time' => 'in:morning,afternoon'
+            ]);
+        }
+
         $absent = Absent::findOrFail($id);
+
+        $absent->date = $request->date;
+        $date = $request->date;
+        $day = new DateTime($date);
+        $absent->day = $day->format('l');
+
+        if($request->absent == 'fullday')
+        {
+            $absent->number = 1;
+            $absent->absent_time = null;
+        }
+
+        if($request->absent == 'halfday')
+        {
+            $absent->number = 0.5;
+            $absent->absent_time = $request->absent_time;
+        }
+
+        $absent->absent = $request->absent;
         $absent->employee_id = $request->employee_id;
         $absent->date = $request->date;
         $absent->description = $request->description;

@@ -17,15 +17,15 @@ class reportData extends ResourceCollection
         return [
             'data' => $this->collection->transform(function($report){
                 return[
-                    'day' => $report->day,
-                    'date' => $report->date,
-                    'desription' => $report->description,
-                    'employee' => [
-                        'name' => $report->employee->name,
-                        'gender' => $report->employee->gender,
-                        'image' => $report->employee->pic,
-                        'position' => $report->employee->position
-                    ]
+
+                    'id' => $report->id,
+                    'name' => $report->name,
+                    'pic' => $report->pic,
+                    'profile_color' => $report->profile_color,
+                    'absent_count' => $report->absent_count,
+                    'absent_total' => $report->absent_sum_number,
+                    'absents' => $report->absent
+
                 ];
             })
         ];

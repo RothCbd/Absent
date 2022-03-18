@@ -17,6 +17,9 @@ class CreateAbsentsTable extends Migration
             $table->increments('id');
             $table->integer('employee_id')->unsigned();
             $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
+            $table->string('absent');
+            $table->string('absent_time')->nullable();
+            $table->float('number');
             $table->string('day');
             $table->string('date');
             $table->string('description')->nullable();

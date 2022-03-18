@@ -1,5 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);
 @import url(https://fonts.googleapis.com/css2?family=Redressed&family=Roboto&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Fredoka&family=Roboto&display=swap);
 @import url(https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap);
 ::-webkit-scrollbar {
   width: 0px;
@@ -32,15 +33,6 @@
 
 #main-app .menu-icon .v-icon.v-icon {
   font-size: 26px !important;
-}
-
-#main-app .v-sheet.v-card {
-  background-color: "#3a9dca" !important;
-  border-radius: 0px !important;
-  -webkit-border-radius: 0px !important;
-  -moz-border-radius: 0px !important;
-  -ms-border-radius: 0px !important;
-  -o-border-radius: 0px !important;
 }
 
 #main-app.v-application .cyan.darken-2 {
@@ -89,11 +81,16 @@
 }
 
 #dashboard .v-card {
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
 }
 
 #dashboard .v-card h4, h2 {
   font-weight: 500;
+}
+
+#dashboard .theme--light.v-data-table > .v-data-table__wrapper > table > thead > tr:last-child > th {
+  height: 30px !important;
+  border-top: none !important;
 }
 
 .v-skeleton-loader__card-heading .v-skeleton-loader__heading {
@@ -114,6 +111,24 @@
 
 .v-skeleton-loader__paragraph {
   margin-top: 20px;
+}
+
+#dashboard .v-data-table__wrapper {
+  max-height: 300px;
+  overflow: scroll !important;
+}
+
+#dashboard .v-data-table__wrapper::-webkit-scrollbar {
+  width: 4px !important;
+}
+
+#dashboard .v-data-table__wrapper::-webkit-scrollbar-thumb {
+  background: rgba(124, 124, 124, 0.548);
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
 }
 
 #user .table-card {
@@ -189,10 +204,22 @@
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
+#employee .tab span {
+  font-family: "Roboto", sans-serif;
+}
+
+#employee .v-tab--active {
+  background-color: #f1f2f6;
+}
+
 #employee .v-chip.v-size--small {
   border-radius: 10px;
   font-size: 11px;
   height: 20px;
+}
+
+#employee .v-tab {
+  letter-spacing: 0 !important;
 }
 
 .employee-radio {
@@ -235,6 +262,23 @@
   height: 42px !important;
 }
 
+#absent-type {
+  padding: 8px;
+  margin-bottom: 30px;
+  border-radius: 4px;
+  border: 1px solid #9b9b9b;
+}
+
+#absent-type legend {
+  padding-left: 3px;
+  padding-right: 3px;
+  color: #616161;
+}
+
+#absent-type .v-radio {
+  margin-bottom: 5px;
+}
+
 .absent-employee-name {
   font-size: 13px !important;
   color: #585858 !important;
@@ -257,8 +301,29 @@
   min-width: 28px;
 }
 
-.count-absent-chip {
-  padding: 0 5px !important;
+#report .data-table .position-chip {
+  height: 17px !important;
+}
+
+#report .absent_total-chip {
+  height: 20px !important;
+}
+
+#report .absent_count_chip {
+  height: 20px !important;
+  padding: 0px 6px;
+}
+
+#report .date-chip {
+  height: 16px !important;
+}
+
+#report .simple-table-report th {
+  height: 30px !important;
+}
+
+#report .v-data-table__expanded__content {
+  background-color: #eaeaea;
 }
 
 .vue-html2pdf .pdf-preview button[data-v-1fd3ad26] {
@@ -286,6 +351,10 @@
   color: #3a9dca;
 }
 
+#pdf-table .simple-table-report .v-data-table > .v-data-table__wrapper > table > tbody > tr > td {
+  font-size: 0.7rem !important;
+}
+
 #pdf-content .title-hearder .v-icon {
   color: #3a9dca;
 }
@@ -311,6 +380,10 @@
   color: #424242;
 }
 
+#pdf-content .report-date-time p {
+  padding: 2px 0;
+}
+
 #pdf-content .report-date-time .v-icon {
   color: #424242;
 }
@@ -323,6 +396,14 @@
   color: #cf0909;
   padding: 0 5px !important;
   font-size: 13px !important;
+}
+
+.pdf-report-day {
+  text-transform: lowercase;
+}
+
+.pdf-employee-name {
+  color: #0078af;
 }
 
 .employee-name-report {

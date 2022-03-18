@@ -85,15 +85,18 @@
                 >
                   <v-avatar left>
                     <v-avatar
+                      class="white--text"
                       v-if="data.item.image == 'default.png'"
-                      color="cyan darken-2 white--text"
+                      :color="'#' + data.item.profile_color"
                     >
-                      {{
-                        data.item.name
-                          .split(" ")
-                          .map((x) => x[0].toUpperCase())
-                          .join("")
-                      }}
+                      <h6>
+                        {{
+                          data.item.name
+                            .split(" ")
+                            .map((x) => x[0].toUpperCase())
+                            .join("")
+                        }}
+                      </h6>
                     </v-avatar>
                     <v-img
                       v-else
@@ -109,7 +112,7 @@
                 <v-list-item-avatar>
                   <v-avatar
                     v-if="data.item.image == 'default.png'"
-                    color="cyan darken-2 white--text"
+                    :color="'#' + data.item.profile_color"
                     size="40"
                   >
                     <span class="white--text">{{
@@ -148,15 +151,242 @@
         </v-card>
       </v-col>
 
+      <!-- ============Table============== -->
       <v-col cols="12" sm="12" md="8" class="justify-center">
         <v-card class="pa-2">
           <v-data-table
             :headers="headers"
             :items="reportData"
+            :expanded.sync="expanded"
+            item-key="name"
+            show-expand
+            class="data-table"
+          >
+            <template v-slot:[`item.absent_count`]="item">
+              <v-chip
+                color="blue-grey"
+                dark
+                small
+                class="absent_count_chip white--text font-weight-medium"
+              >
+                {{ item.item.absent_count }}
+              </v-chip>
+            </template>
+
+            <template v-slot:[`item.name`]="item">
+              <v-avatar
+                size="32"
+                class="ma-1 white--text"
+                left
+                v-if="item.item.pic == 'default.png'"
+                :color="'#' + item.item.profile_color"
+              >
+                {{
+                  item.item.name
+                    .split(" ")
+                    .map((x) => x[0].toUpperCase())
+                    .join("")
+                }}
+              </v-avatar>
+
+              <v-avatar size="32" class="ma-1" left v-else>
+                <v-img :src="'/employees/' + item.item.pic" />
+              </v-avatar>
+
+              <span>{{ item.item.name }}</span>
+            </template>
+
+            <template v-slot:[`item.absent_total`]="item">
+              <v-chip
+                color="grey lighten-3"
+                small
+                class="
+                  font-weight-medium
+                  pa-2
+                  absent_total-chip
+                  orange--text
+                  text--darken-3
+                "
+              >
+                {{ item.item.absent_total }} day
+              </v-chip>
+            </template>
+
+            <template v-slot:[`item.position`]="item">
+              <v-chip
+                label
+                color="blue-grey darken-1"
+                small
+                class="pa-2 text-lowercase position-chip white--text"
+              >
+                {{ item.item.position }}
+              </v-chip>
+            </template>
+
+            <template v-slot:expanded-item="{ headers, item }">
+              <td :colspan="headers.length" class="pa-4 simple-table-report">
+                <v-simple-table dense>
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Absent</th>
+                        <th>Day</th>
+                        <th>Date</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(data, index) in item.absents" :key="index">
+                        <td>
+                          <h5 class="grey--text text--darken-2">
+                            {{ index + 1 }}
+                          </h5>
+                        </td>
+                        <td>
+                          <span
+                            v-if="data.absent == 'fullday'"
+                            class="deep-orange--text"
+                            >full day</span
+                          >
+                          <span v-else class="blue-grey--text">half day</span>
+                          <span v-if="data.absent_time">
+                            <v-chip
+                              v-if="data.absent_time == 'morning'"
+                              class="absent-day-chip indigo--text"
+                              small
+                              label
+                              outlined
+                              color="indigo"
+                            >
+                              {{ data.absent_time }}
+                            </v-chip>
+
+                            <v-chip
+                              v-if="data.absent_time == 'afternoon'"
+                              class="absent-day-chip orange--text"
+                              label
+                              small
+                              outlined
+                              color="orange darken-3"
+                            >
+                              {{ data.absent_time }}
+                            </v-chip>
+                          </span>
+                        </td>
+                        <td class="text-lowercase">
+                          <v-chip
+                            color="grey lighten-4"
+                            class="pa-1 date-chip font-weight-medium"
+                            small
+                            label
+                            >{{ data.day }}</v-chip
+                          >
+                        </td>
+                        <td>
+                          <v-chip
+                            color="grey lighten-4"
+                            class="pa-1 date-chip pink--text font-weight-medium"
+                            small
+                            label
+                          >
+                            {{ formatDate(data.date) }}
+                          </v-chip>
+                        </td>
+                        <td>{{ data.description }}</td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </td>
+            </template>
+          </v-data-table>
+
+          <!-- <v-data-table
+            :headers="headers"
+            :items="reportData"
             :loading="tableLoading"
             loading-text="Loading Report data"
+            group-by="id"
             dense
-            group-by="employee.name"
+          >
+            <template
+              v-slot:[`group.header`]="{
+                group,
+                headers,
+                toggle,
+                isOpen,
+                items,
+              }"
+            >
+              <td :colspan="headers.length" class="group-header">
+                <v-btn
+                  @click="toggle"
+                  small
+                  icon
+                  :ref="group"
+                  :data-open="isOpen"
+                >
+                  <v-icon v-if="isOpen">mdi-chevron-up</v-icon>
+                  <v-icon v-else>mdi-chevron-down</v-icon>
+                </v-btn>
+
+                <v-chip class="ma-1 font-weight-medium" small>
+                  <v-avatar
+                    left
+                    v-if="items[0].pic == 'default.png'"
+                    class="white--text"
+                    :color="'#' + items[0].profile_color"
+                  >
+                    {{
+                      items[0].name
+                        .split(" ")
+                        .map((x) => x[0].toUpperCase())
+                        .join("")
+                    }}
+                  </v-avatar>
+                  <v-avatar left v-else>
+                    <v-img :src="'/employees/' + items[0].pic" />
+                  </v-avatar>
+                  {{ items[0].name }} :
+                  <span class="red--text font-weight-bold ml-1">{{
+                    items[0].absent_total
+                  }}</span>
+                </v-chip>
+              </td>
+            </template>
+
+            <template v-slot:[`item`]="item">
+              <v-simple-table dense id="report-simple-table">
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th>absent</th>
+                      <th>day</th>
+                      <th>date</th>
+                      <th>description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in item.item.absents" :key="item.name">
+                      <td>{{ item.absent }}</td>
+                      <td>{{ item.day }}</td>
+                      <td>{{ item.date }}</td>
+                      <td>{{ item.description }}</td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
+            </template>
+          </v-data-table> -->
+
+          <!-- <v-data-table
+            :headers="headers"
+            :items="reportData"
+            :loading="tableLoading"
+            loading-text="Loading Report data"
+            group-by="employee.id"
+            dense
           >
             <template
               v-slot:[`group.header`]="{
@@ -183,7 +413,8 @@
                   <v-avatar
                     left
                     v-if="items[0].employee.pic == 'default.png'"
-                    color="cyan darken-2 white--text"
+                    class="white--text"
+                    :color="'#' + items[0].employee.profile_color"
                   >
                     {{
                       items[0].employee.name
@@ -195,7 +426,83 @@
                   <v-avatar left v-else>
                     <v-img :src="'/employees/' + items[0].employee.pic" />
                   </v-avatar>
-                  {{ group }} :
+                  {{ items[0].employee.name }} :
+                  <span class="red--text font-weight-bold ml-1">{{
+                    items[0].employee.absent_total
+                  }}</span>
+                </v-chip>
+              </td>
+            </template>
+
+            <template v-slot:[`item.employee.absents`]="item">
+              <v-simple-table>
+                <div v-for="data in item" :key="data.id">
+                  <div v-for="absent in data" :key="absent.id">
+                    <tbody>
+                      <tr
+                        v-for="(absentdata, index) in absent.absents"
+                        :key="absentdata.id"
+                      >
+                        <td>
+                          <v-chip x-small>{{ index + 1 }}</v-chip>
+                        </td>
+                        <td>{{ absentdata.date }}</td>
+                      </tr>
+                    </tbody>
+                  </div>
+                </div>
+              </v-simple-table>
+            </template>
+          </v-data-table> -->
+
+          <!-- ------------old-table------------ -->
+          <!-- <v-data-table
+            :headers="headers"
+            :items="reportData"
+            :loading="tableLoading"
+            loading-text="Loading Report data"
+            dense
+            group-by="employee.id"
+          >
+            <template
+              v-slot:[`group.header`]="{
+                group,
+                headers,
+                toggle,
+                isOpen,
+                items,
+              }"
+            >
+              <td :colspan="headers.length" class="group-header">
+                <v-btn
+                  @click="toggle"
+                  small
+                  icon
+                  :ref="group"
+                  :data-open="isOpen"
+                >
+                  <v-icon v-if="isOpen">mdi-chevron-up</v-icon>
+                  <v-icon v-else>mdi-chevron-down</v-icon>
+                </v-btn>
+
+                <v-chip class="ma-1 font-weight-medium" small>
+                  <v-avatar
+                    left
+                    v-if="items[0].employee.pic == 'default.png'"
+                    class="white--text"
+                    :color="'#' + items[0].employee.profile_color"
+                  >
+                    {{
+                      items[0].employee.name
+                        .split(" ")
+                        .map((x) => x[0].toUpperCase())
+                        .join("")
+                    }}
+                  </v-avatar>
+                  <v-avatar left v-else>
+                    <v-img :src="'/employees/' + items[0].employee.pic" />
+                  </v-avatar>
+                  {{ items[0].employee.name }} :
                   <span class="red--text font-weight-bold ml-1">{{
                     items.length
                   }}</span>
@@ -214,6 +521,39 @@
               </v-chip>
             </template>
 
+            <template v-slot:[`item.absent`]="{ item }">
+              <span
+                v-if="item.absent == 'fullday'"
+                class="orange--text text--darken-3"
+              >
+                full day
+              </span>
+              <span v-if="item.absent == 'halfday'" class="blue-grey--text">
+                half day
+                <span v-if="item.absent_time">
+                  <v-chip
+                    v-if="item.absent_time == 'morning'"
+                    label
+                    class="text-lowercase report-chip"
+                    outlined
+                    color="indigo"
+                  >
+                    {{ item.absent_time }}
+                  </v-chip>
+
+                  <v-chip
+                    v-if="item.absent_time == 'afternoon'"
+                    label
+                    class="text-lowercase report-chip"
+                    outlined
+                    color="orange"
+                  >
+                    {{ item.absent_time }}
+                  </v-chip>
+                </span>
+              </span>
+            </template>
+
             <template v-slot:[`item.day`]="{ item }">
               <span class="text-lowercase"> {{ item.day }}</span>
             </template>
@@ -226,7 +566,7 @@
                 {{ formatDate(item.date) }}
               </v-chip>
             </template>
-          </v-data-table>
+          </v-data-table> -->
 
           <!-- ==============PDF==================== -->
 
@@ -259,6 +599,10 @@
 
                 <div class="report-date-time">
                   <p>
+                    Report By:
+                    {{ authData.name }}
+                  </p>
+                  <p>
                     Report Date:
                     <v-icon small>mdi-calendar-month</v-icon>
                     {{
@@ -269,43 +613,77 @@
                   </p>
                 </div>
 
-                <div>
+                <div id="pdf-table">
                   <v-data-table
-                    :headers="headers"
+                    :headers="headersPdf"
                     :items="reportData"
                     :loading="tableLoading"
                     loading-text="Loading Report data"
                     dense
                     :hide-default-footer="true"
-                    group-by="employee.name"
+                    group-by="id"
                   >
-                    <template
-                      v-slot:[`group.header`]="{ group, headers, items }"
-                    >
+                    <template v-slot:[`group.header`]="{ headers, items }">
                       <td :colspan="headers.length" class="group-header">
-                        <span class="employee-name-report">{{ group }}</span> :
-                        <v-chip
-                          x-small
-                          color="grey darken-1"
-                          class="count-absent-chip-report"
-                        >
-                          {{ items.length }}</v-chip
+                        <v-chip small label>
+                          <h4 class="pdf-employee-name">{{ items[0].name }}</h4>
+                          <v-icon x-small>mdi-circle-small</v-icon>
+                          <span class="count-absent-chip-report">{{
+                            items[0].absent_total
+                          }}</span
+                          >day</v-chip
                         >
                       </td>
                     </template>
 
-                    <template v-slot:[`item.id`]="item">
-                      {{ item.index + 1 }}
-                    </template>
+                    <template v-slot:[`item.name`]="{ item }">
+                      <v-simple-table dense>
+                        <template v-slot:default>
+                          <tbody>
+                            <tr
+                              v-for="(data, index) in item.absents"
+                              :key="index"
+                            >
+                              <td>
+                                <h5>
+                                  {{ index + 1 }}
+                                </h5>
+                              </td>
+                              <td>
+                                <span v-if="data.absent == 'fullday'"
+                                  >full day</span
+                                >
+                                <span v-else>half day</span>
+                                <span v-if="data.absent_time">
+                                  <v-chip
+                                    v-if="data.absent_time == 'morning'"
+                                    class="absent-day-chip indigo--text"
+                                    small
+                                    label
+                                    outlined
+                                  >
+                                    {{ data.absent_time }}
+                                  </v-chip>
 
-                    <template v-slot:[`item.day`]="{ item }">
-                      <span class="text-lowercase"> {{ item.day }}</span>
-                    </template>
-
-                    <template v-slot:[`item.date`]="{ item }">
-                      <span class="date-formate">{{
-                        formatDate(item.date)
-                      }}</span>
+                                  <v-chip
+                                    v-if="data.absent_time == 'afternoon'"
+                                    label
+                                    small
+                                    outlined
+                                  >
+                                    {{ data.absent_time }}
+                                  </v-chip>
+                                </span>
+                              </td>
+                              <td class="pdf-report-day">{{ data.day }}</td>
+                              <td>
+                                {{ formatDate(data.date) }}
+                              </td>
+                              <td>{{ data.description }}</td>
+                            </tr>
+                          </tbody>
+                        </template>
+                      </v-simple-table>
                     </template>
                   </v-data-table>
                   <div class="border-bottom"></div>
@@ -326,21 +704,57 @@ export default {
   data() {
     return {
       tableLoading: false,
+      expanded: [],
       menu2: false,
       alert: false,
       btnPDF: false,
       alertMessageText: "",
       btnSaveLoading: false,
+      // =====================================
       headers: [
+        {
+          text: "Absent Count",
+          value: "absent_count",
+          align: "left",
+          sortable: false,
+        },
+        { text: "Employee", value: "name" },
+        { text: "Total Absent", value: "absent_total" },
+        { text: "Position", value: "position" },
+      ],
+
+      headersPdf: [
         {
           align: "start",
           value: "id",
         },
-        { text: "Employee", value: "employee.name" },
-        { text: "Day", value: "day" },
-        { text: "Absent Date", value: "date" },
-        { text: "Description", value: "desription" },
+        { text: "Absence List", value: "name" },
       ],
+
+      //   headers: [
+      //     {
+      //       align: "start",
+      //       value: "id",
+      //     },
+
+      //     { text: "Employee", value: "name" },
+      //   ],
+
+      //   headers: [{ value: "employee.absents" }],
+
+      //   -----------old-table------------
+      //   headers: [
+      //     {
+      //       align: "start",
+      //       value: "id",
+      //     },
+
+      //     { text: "Absent", value: "absent", align: "start" },
+      //     { text: "Day", value: "day" },
+      //     { text: "Absent Date", value: "date" },
+      //     { text: "Description", value: "desription" },
+      //   ],
+      //   ----------/-old-table------------
       reportData: [],
       employeeData: [],
       countReport: "",
@@ -359,6 +773,10 @@ export default {
         ? moment(this.form.dates).format("DD-MM-YYYY")
         : "";
     },
+
+    authData() {
+      return JSON.parse(localStorage.getItem("auth"));
+    },
   },
   mounted() {
     this.ReadEmployee();
@@ -367,7 +785,7 @@ export default {
   methods: {
     ReadEmployee() {
       axios
-        .get("http://127.0.0.1:8000/api/read-employee", {
+        .get("http://127.0.0.1:8000/api/active-employee", {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("access_token"),
           },
@@ -403,6 +821,8 @@ export default {
           })
           .then((response) => {
             if (response.data.length > 0) {
+              console.log(response.data);
+
               this.reportData = response.data;
               this.countReport = response.data.length;
               this.btnPDF = true;

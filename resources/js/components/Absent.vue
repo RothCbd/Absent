@@ -59,8 +59,9 @@
           >
             <v-avatar
               left
+              class="white--text font-weight-regular"
               v-if="item.employee.image == 'default.png'"
-              color="cyan darken-2 white--text"
+              :color="'#' + item.employee.profile_color"
             >
               {{
                 item.employee.name
@@ -74,6 +75,42 @@
             </v-avatar>
             {{ item.employee.name }}
           </v-chip>
+        </template>
+
+        <template v-slot:[`item.absent`]="{ item }">
+          <span class="font-weight-medium">
+            <span v-if="item.absent == 'fullday'" class="orange--text">
+              full day
+            </span>
+            <span v-if="item.absent == 'halfday'" class="blue-grey--text">
+              half day
+            </span>
+          </span>
+          <span v-if="item.absent_time">
+            <v-chip
+              v-if="item.absent_time == 'morning'"
+              class="absent-day-chip indigo--text"
+              label
+              small
+              outlined
+              color="indigo"
+            >
+              {{ item.absent_time
+              }}<v-icon right small>mdi-weather-sunset</v-icon>
+            </v-chip>
+
+            <v-chip
+              v-if="item.absent_time == 'afternoon'"
+              class="absent-day-chip orange--text"
+              label
+              small
+              outlined
+              color="orange darken-3"
+            >
+              {{ item.absent_time }}
+              <v-icon right x-small>mdi-white-balance-sunny</v-icon>
+            </v-chip>
+          </span>
         </template>
 
         <template v-slot:[`item.day`]="{ item }">
@@ -155,14 +192,17 @@
                   <v-avatar left>
                     <v-avatar
                       v-if="data.item.image == 'default.png'"
-                      color="cyan darken-2 white--text"
+                      class="white--text"
+                      :color="'#' + data.item.profile_color"
                     >
-                      {{
-                        data.item.name
-                          .split(" ")
-                          .map((x) => x[0].toUpperCase())
-                          .join("")
-                      }}
+                      <h5 class="font-weight-regular">
+                        {{
+                          data.item.name
+                            .split(" ")
+                            .map((x) => x[0].toUpperCase())
+                            .join("")
+                        }}
+                      </h5>
                     </v-avatar>
                     <v-img
                       v-else
@@ -178,7 +218,7 @@
                 <v-list-item-avatar>
                   <v-avatar
                     v-if="data.item.image == 'default.png'"
-                    color="cyan darken-2 white--text"
+                    :color="'#' + data.item.profile_color"
                     size="40"
                   >
                     <span class="white--text">{{
@@ -203,6 +243,54 @@
                 </v-list-item-content>
               </template>
             </v-autocomplete>
+
+            <!-- ======================== -->
+            <v-row>
+              <v-col cols="7">
+                <v-radio-group
+                  v-model="form.absent"
+                  row
+                  class="ma-0 pa-0"
+                  :error-messages="errorsMessage.absent"
+                >
+                  <v-chip>
+                    <v-radio
+                      class="font-weight-medium"
+                      label="Full Day"
+                      value="fullday"
+                    ></v-radio>
+                  </v-chip>
+                  <v-chip class="font-weight-medium ml-3">
+                    <v-radio label="Half Day" value="halfday"></v-radio>
+                  </v-chip>
+                </v-radio-group>
+              </v-col>
+              <v-col cols="5" class="ma-0 pa-0">
+                <v-radio-group
+                  v-if="form.absent == 'halfday'"
+                  v-model="form.absent_time"
+                  column
+                  class="ma-0 pa-3"
+                  :error-messages="errorsMessage.absent_time"
+                >
+                  <v-radio
+                    class="font-weight-medium"
+                    label="Morning"
+                    value="morning"
+                    color="success"
+                  ></v-radio>
+
+                  <v-radio
+                    class="font-weight-medium"
+                    label="Afternoon"
+                    value="afternoon"
+                    color="warning"
+                  ></v-radio>
+                </v-radio-group>
+              </v-col>
+            </v-row>
+
+            <!-- ======================== -->
 
             <v-menu
               v-model="absentDateChoose"
@@ -324,6 +412,7 @@ export default {
           value: "no",
         },
         { text: "Employee", value: "employee.name" },
+        { text: "Absent", value: "absent" },
         { text: "Day", value: "day" },
         { text: "Absent Date", value: "date" },
         { text: "Description", value: "description" },
@@ -336,6 +425,8 @@ export default {
       form: new Form({
         id: "",
         employee_id: "",
+        absent: "",
+        absent_time: "",
         day: "",
         date: "",
         description: "",
@@ -385,7 +476,7 @@ export default {
 
     ReadEmployee() {
       axios
-        .get("http://127.0.0.1:8000/api/read-employee", {
+        .get("http://127.0.0.1:8000/api/active-employee", {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("access_token"),
           },
@@ -424,6 +515,8 @@ export default {
       this.form.description = "";
       this.tableLoading = false;
       this.errorsMessage = "";
+      this.form.absent = "";
+      this.form.absent_time = "";
       this.btnSaveLoading = false;
     },
 
@@ -458,6 +551,8 @@ export default {
       this.form.day = absent.day;
       this.form.date = absent.date;
       this.form.description = absent.description;
+      this.form.absent = absent.absent;
+      this.form.absent_time = absent.absent_time;
       this.absentForm = true;
     },
 

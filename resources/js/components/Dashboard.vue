@@ -154,7 +154,10 @@
           <v-card-title class="grey--text text--darken-2">
             <h4 class="orange--text text--darken-3">ABSENTS</h4>
             <v-spacer></v-spacer>
-            <h2 class="orange--text text--darken-3">{{ absent.all }}</h2>
+            <h2 class="orange--text text--darken-3">
+              <span v-if="absent.all > 10">{{ absent.all }}</span>
+              <span v-else> 0{{ absent.all }}</span>
+            </h2>
           </v-card-title>
 
           <v-card-text>
@@ -185,27 +188,21 @@
     </v-row>
 
     <!-- ================Table================= -->
-    <div class="table-report mt-5">
-      <v-row>
-        <!-- ---weekly--- -->
-        <v-col cols="12" sm="12" md="4" class="pa-1">
-          <v-card>
-            <v-card-title>
-              <v-icon size="25" color="grey darken-2" left
-                >mdi-account-cancel</v-icon
-              >
-              <small class="grey--text text--darken-2">
-                Absent for this Week</small
-              >
-              <v-chip
-                small
-                color="orange--text text--darken-3"
-                class="ml-2 font-weight-bold"
-                >{{ table.weeklyAbsent.length }}</v-chip
-              >
-            </v-card-title>
 
-            <v-card-text class="pa-4">
+    <v-card class="mt-5">
+      <v-card-title>
+        <h5 class="grey--text text--darken-2 font-weight-medium">
+          <v-icon>mdi-account-cancel</v-icon> Absence Summary
+        </h5>
+      </v-card-title>
+      <v-card-text>
+        <v-row>
+          <!-- ---weekly--- -->
+          <v-col cols="12" sm="12" md="4">
+            <v-card class="mx-auto" outlined>
+              <div class="ma-2">
+                <v-icon small>mdi-table-account</v-icon> Absents for this Week.
+              </div>
               <v-data-table
                 :headers="headers"
                 :items="table.weeklyAbsent"
@@ -213,7 +210,7 @@
                 dense
                 :items-per-page="-1"
                 hide-default-footer
-                height="300"
+                fixed-header
                 group-by="employee.name"
               >
                 <template
@@ -274,29 +271,15 @@
                   </v-chip>
                 </template>
               </v-data-table>
-            </v-card-text>
-          </v-card>
-        </v-col>
+            </v-card>
+          </v-col>
 
-        <!-- --Monthly-- -->
-        <v-col cols="12" sm="12" md="4" class="pa-1">
-          <v-card>
-            <v-card-title>
-              <v-icon size="25" color="grey darken-2" left
-                >mdi-account-cancel</v-icon
-              >
-              <small class="grey--text text--darken-2">
-                Absent for this Month</small
-              >
-              <v-chip
-                small
-                color="orange--text text--darken-3"
-                class="ml-2 font-weight-bold"
-                >{{ table.monthlyAbsent.length }}</v-chip
-              >
-            </v-card-title>
-
-            <v-card-text class="pa-4">
+          <!-- --Monthly-- -->
+          <v-col cols="12" sm="12" md="4">
+            <v-card class="mx-auto" outlined>
+              <div class="ma-2">
+                <v-icon small>mdi-table-account</v-icon> Absents for this Month.
+              </div>
               <v-data-table
                 :headers="headers"
                 :items="table.monthlyAbsent"
@@ -305,7 +288,6 @@
                 :items-per-page="-1"
                 hide-default-footer
                 fixed-header
-                height="300"
                 group-by="employee.name"
               >
                 <template
@@ -366,29 +348,16 @@
                   </v-chip>
                 </template>
               </v-data-table>
-            </v-card-text>
-          </v-card>
-        </v-col>
+            </v-card>
+          </v-col>
 
-        <!-- ----Yearly------ -->
-        <v-col cols="12" sm="12" md="4" class="pa-1">
-          <v-card>
-            <v-card-title>
-              <v-icon size="25" color="grey darken-2" left
-                >mdi-account-cancel</v-icon
-              >
-              <small class="grey--text text--darken-2">
-                Absent for this Month</small
-              >
-              <v-chip
-                small
-                color="orange--text text--darken-3"
-                class="ml-2 font-weight-bold"
-                >{{ table.yearlyAbsent.length }}</v-chip
-              >
-            </v-card-title>
-
-            <v-card-text class="pa-4">
+          <!-- ----Yearly------ -->
+          <v-col cols="12" sm="12" md="4">
+            <v-card class="mx-auto" outlined>
+              <div class="ma-2">
+                <v-icon left small>mdi-table-account</v-icon> Absents for this
+                Year.
+              </div>
               <v-data-table
                 :headers="headers"
                 :items="table.yearlyAbsent"
@@ -396,7 +365,7 @@
                 dense
                 :items-per-page="-1"
                 hide-default-footer
-                height="300"
+                fixed-header
                 group-by="employee.name"
               >
                 <template
@@ -457,11 +426,11 @@
                   </v-chip>
                 </template>
               </v-data-table>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </div>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 

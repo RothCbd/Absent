@@ -22,6 +22,8 @@ class CreateEmployeesTable extends Migration
             $table->string('start_date');
             $table->json('phone_number')->nullable();
             $table->string('pic')->default('default.png');
+            $table->string('profile_color');
+            $table->boolean('is_inactive')->default(false);
             $table->timestamps();
         });
     }

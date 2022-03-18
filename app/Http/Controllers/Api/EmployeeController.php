@@ -10,9 +10,14 @@ use Illuminate\Support\Str;
 
 class EmployeeController extends Controller
 {
-    public function read()
+    public function active()
     {
-        return new employeeData(Employee::orderBy('id', 'DESC')->get());
+        return new employeeData(Employee::where('is_inactive', false)->orderBy('id', 'DESC')->get());
+    }
+
+    public function inactive()
+    {
+        return new employeeData(Employee::where('is_inactive', true)->orderBy('id', 'DESC')->get());
     }
 
     public function create(Request $request)
@@ -54,12 +59,14 @@ class EmployeeController extends Controller
             $employee->pic = $name;
         }
 
+        $employee->profile_color = substr(uniqid(),-6);
+
         $employee->save();
         return response()->json(['message' => 'Employee data save successfully'], 200);
     }
 
-    public function update(Request $request, $id){
-
+    public function update(Request $request, $id)
+    {
         $this->validate($request, [
             'name' => 'required|string|min:2|max:100',
             'email' => 'required|email|max:255|regex:/(.*)\.com/i|unique:employees,email,'.$id,
@@ -102,6 +109,7 @@ class EmployeeController extends Controller
             $employee->pic = $name;
         }
 
+        $employee->	is_inactive = $request->is_inactived;
         $employee->save();
 
         return response()->json(['message' => 'Employee update successfully.'], 200);
