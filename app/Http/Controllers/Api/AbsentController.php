@@ -13,24 +13,30 @@ class AbsentController extends Controller
 {
     public function read()
     {
-        $absents = new absentData(Absent::with('employee')->get());
+
+        $absents = Absent::with(['employee' => function($q){
+            $q->where('is_inactive', false);
+        }])->get();
+
         $absentData = array();
         foreach ($absents->reverse() as $key => $absent){
-            $absentData[] = array(
-                'no' => $key + 1,
-                'id' => $absent->id,
-                'absent' => $absent->absent,
-                'absent_time' => $absent->absent_time,
-                'day' => $absent->day,
-                'date' => $absent->date,
-                'description' => $absent->description,
-                'employee' => [
-                    'id' => $absent->employee->id,
-                    'name' => $absent->employee->name,
-                    'image' => $absent->employee->pic,
-                    'profile_color' => $absent->employee->profile_color,
-                ],
-            );
+            if($absent->employee){
+                $absentData[] = array(
+                    'no' => $key + 1,
+                    'id' => $absent->id,
+                    'absent' => $absent->absent,
+                    'absent_time' => $absent->absent_time,
+                    'day' => $absent->day,
+                    'date' => $absent->date,
+                    'description' => $absent->description,
+                    'employee' => [
+                        'id' => $absent->employee->id,
+                        'name' => $absent->employee->name,
+                        'image' => $absent->employee->pic,
+                        'profile_color' => $absent->employee->profile_color,
+                    ],
+                );
+            }
         }
         return $absentData;
         // return new absentData(Absent::orderBy('id', 'DESC')->get());

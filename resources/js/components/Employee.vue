@@ -51,7 +51,7 @@
         </v-tab>
         <v-tab class="text-capitalize tab" key="inactiveEmployee">
           <v-icon class="mr-2" left>mdi-account-multiple-minus</v-icon>
-          <span>inactive Employee</span>
+          <span>inactived Employee</span>
           <v-chip small class="ml-2 font-weight-bold indigo--text">{{
             employeeInactiveCount
           }}</v-chip>

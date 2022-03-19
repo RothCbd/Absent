@@ -730,31 +730,6 @@ export default {
         },
         { text: "Absence List", value: "name" },
       ],
-
-      //   headers: [
-      //     {
-      //       align: "start",
-      //       value: "id",
-      //     },
-
-      //     { text: "Employee", value: "name" },
-      //   ],
-
-      //   headers: [{ value: "employee.absents" }],
-
-      //   -----------old-table------------
-      //   headers: [
-      //     {
-      //       align: "start",
-      //       value: "id",
-      //     },
-
-      //     { text: "Absent", value: "absent", align: "start" },
-      //     { text: "Day", value: "day" },
-      //     { text: "Absent Date", value: "date" },
-      //     { text: "Description", value: "desription" },
-      //   ],
-      //   ----------/-old-table------------
       reportData: [],
       employeeData: [],
       countReport: "",
@@ -762,6 +737,12 @@ export default {
         employee_id: [],
         dates: [],
       }),
+
+      check: {
+        weekly: false,
+        monthly: false,
+        yearly: false,
+      },
     };
   },
   computed: {
@@ -821,8 +802,6 @@ export default {
           })
           .then((response) => {
             if (response.data.length > 0) {
-              console.log(response.data);
-
               this.reportData = response.data;
               this.countReport = response.data.length;
               this.btnPDF = true;
