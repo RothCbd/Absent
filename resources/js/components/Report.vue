@@ -198,15 +198,15 @@
 
             <template v-slot:[`item.absent_total`]="item">
               <v-chip
-                color="grey lighten-3"
-                small
                 class="
-                  font-weight-medium
                   pa-2
-                  absent_total-chip
+                  count_chip
+                  font-weight-medium
                   orange--text
                   text--darken-3
                 "
+                small
+                outlined
               >
                 {{ item.item.absent_total }} day
               </v-chip>
@@ -712,13 +712,12 @@ export default {
       btnSaveLoading: false,
       // =====================================
       headers: [
+        { text: "Employee", value: "name" },
         {
           text: "Absent Count",
           value: "absent_count",
           align: "left",
-          sortable: false,
         },
-        { text: "Employee", value: "name" },
         { text: "Total Absent", value: "absent_total" },
         { text: "Position", value: "position" },
       ],

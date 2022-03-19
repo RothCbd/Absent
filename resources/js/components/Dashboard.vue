@@ -188,7 +188,6 @@
     </v-row>
 
     <!-- ================Table================= -->
-
     <v-card class="mt-5">
       <v-card-title>
         <h5 class="grey--text text--darken-2 font-weight-medium">
@@ -201,7 +200,7 @@
           <v-col cols="12" sm="12" md="4">
             <v-card class="mx-auto" outlined>
               <div class="ma-2">
-                <v-icon small>mdi-table-account</v-icon> Absents for this Week.
+                <v-icon small>mdi-table-account</v-icon> this Week
               </div>
               <v-data-table
                 :headers="headers"
@@ -209,65 +208,80 @@
                 loading-text="Loading Report data"
                 dense
                 :items-per-page="-1"
+                :expanded.sync="expandedWeekly"
+                show-expand
                 hide-default-footer
                 fixed-header
-                group-by="employee.name"
               >
-                <template
-                  v-slot:[`group.header`]="{
-                    group,
-                    headers,
-                    toggle,
-                    isOpen,
-                    items,
-                  }"
-                >
-                  <td :colspan="headers.length" class="group-header">
-                    <v-btn
-                      @click="toggle"
-                      small
-                      icon
-                      :ref="group"
-                      :data-open="isOpen"
-                    >
-                      <v-icon v-if="isOpen">mdi-chevron-up</v-icon>
-                      <v-icon v-else>mdi-chevron-down</v-icon>
-                    </v-btn>
-
-                    <v-chip class="ma-1 font-weight-medium" small>
-                      <v-avatar
-                        left
-                        v-if="items[0].employee.pic == 'default.png'"
-                        color="cyan darken-2 white--text"
-                      >
-                        {{
-                          items[0].employee.name
-                            .split(" ")
-                            .map((x) => x[0].toUpperCase())
-                            .join("")
-                        }}
-                      </v-avatar>
-                      <v-avatar left v-else>
-                        <v-img :src="'/employees/' + items[0].employee.pic" />
-                      </v-avatar>
-                      {{ group }} :
-                      <span class="red--text font-weight-bold ml-1">{{
-                        items.length
-                      }}</span>
-                    </v-chip>
+                <template v-slot:expanded-item="{ headers, item }">
+                  <td :colspan="headers.length" class="pa-1">
+                    <v-simple-table dense>
+                      <template v-slot:default>
+                        <tbody>
+                          <tr
+                            v-for="(data, index) in item.absents"
+                            :key="index"
+                          >
+                            <td>
+                              <h5 class="grey--text text--darken-2">
+                                {{ index + 1 }}
+                              </h5>
+                            </td>
+                            <td>
+                              <span
+                                v-if="data.absent == 'fullday'"
+                                class="deep-orange--text"
+                                >full day</span
+                              >
+                              <span v-else class="blue-grey--text"
+                                >half day</span
+                              >
+                            </td>
+                            <td class="text-lowercase">
+                              {{ data.day }}
+                            </td>
+                            <td>
+                              {{ formatDate(data.date) }}
+                            </td>
+                            <td>{{ data.description }}</td>
+                          </tr>
+                        </tbody>
+                      </template>
+                    </v-simple-table>
                   </td>
                 </template>
 
-                <template v-slot:[`item.day`]="{ item }">
-                  <span class="text-lowercase"> {{ item.day }}</span>
+                <template v-slot:[`item.name`]="item">
+                  <v-avatar
+                    size="23"
+                    class="ma-1 white--text"
+                    left
+                    v-if="item.item.pic == 'default.png'"
+                    :color="'#' + item.item.profile_color"
+                  >
+                    {{
+                      item.item.name
+                        .split(" ")
+                        .map((x) => x[0].toUpperCase())
+                        .join("")
+                    }}
+                  </v-avatar>
+
+                  <v-avatar size="22" class="ma-1" left v-else>
+                    <v-img :src="'/employees/' + item.item.pic" />
+                  </v-avatar>
+                  <span>{{ item.item.name }}</span>
                 </template>
 
-                <template v-slot:[`item.date`]="{ item }">
-                  <v-chip text-color="blue-grey darken-2" label color="white">
-                    <v-avatar left class="mr-0">
-                      <v-icon small>mdi-calendar-month</v-icon>
-                    </v-avatar>
-                    {{ formatDate(item.date) }}
+                <template v-slot:[`item.absent_total`]="item">
+                  <v-chip
+                    class="pa-2 count_chip font-weight-medium"
+                    small
+                    outlined
+                  >
+                    <span class="font-weight-medium orange--text text--darken-3"
+                      >{{ item.item.absent_total }} day</span
+                    >
                   </v-chip>
                 </template>
               </v-data-table>
@@ -278,7 +292,7 @@
           <v-col cols="12" sm="12" md="4">
             <v-card class="mx-auto" outlined>
               <div class="ma-2">
-                <v-icon small>mdi-table-account</v-icon> Absents for this Month.
+                <v-icon small>mdi-table-account</v-icon> this Month
               </div>
               <v-data-table
                 :headers="headers"
@@ -286,65 +300,80 @@
                 loading-text="Loading Report data"
                 dense
                 :items-per-page="-1"
+                :expanded.sync="expandedMonthly"
+                show-expand
                 hide-default-footer
                 fixed-header
-                group-by="employee.name"
               >
-                <template
-                  v-slot:[`group.header`]="{
-                    group,
-                    headers,
-                    toggle,
-                    isOpen,
-                    items,
-                  }"
-                >
-                  <td :colspan="headers.length" class="group-header">
-                    <v-btn
-                      @click="toggle"
-                      small
-                      icon
-                      :ref="group"
-                      :data-open="isOpen"
-                    >
-                      <v-icon v-if="isOpen">mdi-chevron-up</v-icon>
-                      <v-icon v-else>mdi-chevron-down</v-icon>
-                    </v-btn>
-
-                    <v-chip class="ma-1 font-weight-medium" small>
-                      <v-avatar
-                        left
-                        v-if="items[0].employee.pic == 'default.png'"
-                        color="cyan darken-2 white--text"
-                      >
-                        {{
-                          items[0].employee.name
-                            .split(" ")
-                            .map((x) => x[0].toUpperCase())
-                            .join("")
-                        }}
-                      </v-avatar>
-                      <v-avatar left v-else>
-                        <v-img :src="'/employees/' + items[0].employee.pic" />
-                      </v-avatar>
-                      {{ group }} :
-                      <span class="red--text font-weight-bold ml-1">{{
-                        items.length
-                      }}</span>
-                    </v-chip>
+                <template v-slot:expanded-item="{ headers, item }">
+                  <td :colspan="headers.length" class="pa-1">
+                    <v-simple-table dense>
+                      <template v-slot:default>
+                        <tbody>
+                          <tr
+                            v-for="(data, index) in item.absents"
+                            :key="index"
+                          >
+                            <td>
+                              <h5 class="grey--text text--darken-2">
+                                {{ index + 1 }}
+                              </h5>
+                            </td>
+                            <td>
+                              <span
+                                v-if="data.absent == 'fullday'"
+                                class="deep-orange--text"
+                                >full day</span
+                              >
+                              <span v-else class="blue-grey--text"
+                                >half day</span
+                              >
+                            </td>
+                            <td class="text-lowercase">
+                              {{ data.day }}
+                            </td>
+                            <td>
+                              {{ formatDate(data.date) }}
+                            </td>
+                            <td>{{ data.description }}</td>
+                          </tr>
+                        </tbody>
+                      </template>
+                    </v-simple-table>
                   </td>
                 </template>
 
-                <template v-slot:[`item.day`]="{ item }">
-                  <span class="text-lowercase"> {{ item.day }}</span>
+                <template v-slot:[`item.name`]="item">
+                  <v-avatar
+                    size="23"
+                    class="ma-1 white--text"
+                    left
+                    v-if="item.item.pic == 'default.png'"
+                    :color="'#' + item.item.profile_color"
+                  >
+                    {{
+                      item.item.name
+                        .split(" ")
+                        .map((x) => x[0].toUpperCase())
+                        .join("")
+                    }}
+                  </v-avatar>
+
+                  <v-avatar size="22" class="ma-1" left v-else>
+                    <v-img :src="'/employees/' + item.item.pic" />
+                  </v-avatar>
+                  <span>{{ item.item.name }}</span>
                 </template>
 
-                <template v-slot:[`item.date`]="{ item }">
-                  <v-chip text-color="blue-grey darken-2" label color="white">
-                    <v-avatar left class="mr-0">
-                      <v-icon small>mdi-calendar-month</v-icon>
-                    </v-avatar>
-                    {{ formatDate(item.date) }}
+                <template v-slot:[`item.absent_total`]="item">
+                  <v-chip
+                    class="pa-2 count_chip font-weight-medium"
+                    small
+                    outlined
+                  >
+                    <span class="font-weight-medium orange--text text--darken-3"
+                      >{{ item.item.absent_total }} day</span
+                    >
                   </v-chip>
                 </template>
               </v-data-table>
@@ -355,8 +384,7 @@
           <v-col cols="12" sm="12" md="4">
             <v-card class="mx-auto" outlined>
               <div class="ma-2">
-                <v-icon left small>mdi-table-account</v-icon> Absents for this
-                Year.
+                <v-icon left small>mdi-table-account</v-icon> this Year
               </div>
               <v-data-table
                 :headers="headers"
@@ -364,65 +392,80 @@
                 loading-text="Loading Report data"
                 dense
                 :items-per-page="-1"
+                :expanded.sync="expandedYearly"
+                show-expand
                 hide-default-footer
                 fixed-header
-                group-by="employee.name"
               >
-                <template
-                  v-slot:[`group.header`]="{
-                    group,
-                    headers,
-                    toggle,
-                    isOpen,
-                    items,
-                  }"
-                >
-                  <td :colspan="headers.length" class="group-header">
-                    <v-btn
-                      @click="toggle"
-                      small
-                      icon
-                      :ref="group"
-                      :data-open="isOpen"
-                    >
-                      <v-icon v-if="isOpen">mdi-chevron-up</v-icon>
-                      <v-icon v-else>mdi-chevron-down</v-icon>
-                    </v-btn>
-
-                    <v-chip class="ma-1 font-weight-medium" small>
-                      <v-avatar
-                        left
-                        v-if="items[0].employee.pic == 'default.png'"
-                        color="cyan darken-2 white--text"
-                      >
-                        {{
-                          items[0].employee.name
-                            .split(" ")
-                            .map((x) => x[0].toUpperCase())
-                            .join("")
-                        }}
-                      </v-avatar>
-                      <v-avatar left v-else>
-                        <v-img :src="'/employees/' + items[0].employee.pic" />
-                      </v-avatar>
-                      {{ group }} :
-                      <span class="red--text font-weight-bold ml-1">{{
-                        items.length
-                      }}</span>
-                    </v-chip>
+                <template v-slot:expanded-item="{ headers, item }">
+                  <td :colspan="headers.length" class="pa-1">
+                    <v-simple-table dense>
+                      <template v-slot:default>
+                        <tbody>
+                          <tr
+                            v-for="(data, index) in item.absents"
+                            :key="index"
+                          >
+                            <td>
+                              <h5 class="grey--text text--darken-2">
+                                {{ index + 1 }}
+                              </h5>
+                            </td>
+                            <td>
+                              <span
+                                v-if="data.absent == 'fullday'"
+                                class="deep-orange--text"
+                                >full day</span
+                              >
+                              <span v-else class="blue-grey--text"
+                                >half day</span
+                              >
+                            </td>
+                            <td class="text-lowercase">
+                              {{ data.day }}
+                            </td>
+                            <td>
+                              {{ formatDate(data.date) }}
+                            </td>
+                            <td>{{ data.description }}</td>
+                          </tr>
+                        </tbody>
+                      </template>
+                    </v-simple-table>
                   </td>
                 </template>
 
-                <template v-slot:[`item.day`]="{ item }">
-                  <span class="text-lowercase"> {{ item.day }}</span>
+                <template v-slot:[`item.name`]="item">
+                  <v-avatar
+                    size="23"
+                    class="ma-1 white--text"
+                    left
+                    v-if="item.item.pic == 'default.png'"
+                    :color="'#' + item.item.profile_color"
+                  >
+                    {{
+                      item.item.name
+                        .split(" ")
+                        .map((x) => x[0].toUpperCase())
+                        .join("")
+                    }}
+                  </v-avatar>
+
+                  <v-avatar size="22" class="ma-1" left v-else>
+                    <v-img :src="'/employees/' + item.item.pic" />
+                  </v-avatar>
+                  <span>{{ item.item.name }}</span>
                 </template>
 
-                <template v-slot:[`item.date`]="{ item }">
-                  <v-chip text-color="blue-grey darken-2" label color="white">
-                    <v-avatar left class="mr-0">
-                      <v-icon small>mdi-calendar-month</v-icon>
-                    </v-avatar>
-                    {{ formatDate(item.date) }}
+                <template v-slot:[`item.absent_total`]="item">
+                  <v-chip
+                    class="pa-2 count_chip font-weight-medium"
+                    small
+                    outlined
+                  >
+                    <span class="font-weight-medium orange--text text--darken-3"
+                      >{{ item.item.absent_total }} day</span
+                    >
                   </v-chip>
                 </template>
               </v-data-table>
@@ -439,14 +482,14 @@ import moment from "moment";
 export default {
   data() {
     return {
+      expandedWeekly: [],
+      expandedMonthly: [],
+      expandedYearly: [],
       skeletonLoading: false,
       headers: [
-        {
-          align: "start",
-        },
-        { text: "Employee", value: "employee.name" },
-        { text: "Day", value: "day" },
-        { text: "Absent Date", value: "date" },
+        { text: "Employee", value: "name", align: "start" },
+        // { text: "Count", value: "absent_count" },
+        { text: "Total", value: "absent_total" },
       ],
       weeklyAbsentData: [],
       monthlyAbsentData: [],
@@ -490,6 +533,8 @@ export default {
           },
         })
         .then((response) => {
+          console.log(response.data.absent.weeklyAbsents);
+
           // ----------absent---------
           this.absent.all = response.data.absent.absentCount;
           this.absent.weekCount = response.data.absent.absentWeekCount;
