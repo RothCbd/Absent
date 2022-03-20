@@ -232,7 +232,7 @@
                   <v-img :src="'/employees/' + item.image" />
                 </v-avatar>
 
-                <small
+                <span
                   class="
                     font-weight-medium
                     blue-grey--text
@@ -241,7 +241,7 @@
                   "
                 >
                   {{ item.name }}
-                </small>
+                </span>
               </template>
 
               <template v-slot:[`item.gender`]="{ item }">

@@ -259,18 +259,18 @@
                     v-if="item.item.pic == 'default.png'"
                     :color="'#' + item.item.profile_color"
                   >
-                    {{
+                    <small>{{
                       item.item.name
                         .split(" ")
                         .map((x) => x[0].toUpperCase())
                         .join("")
-                    }}
+                    }}</small>
                   </v-avatar>
 
                   <v-avatar size="22" class="ma-1" left v-else>
                     <v-img :src="'/employees/' + item.item.pic" />
                   </v-avatar>
-                  <span>{{ item.item.name }}</span>
+                  <span class="name-employee-table">{{ item.item.name }}</span>
                 </template>
 
                 <template v-slot:[`item.absent_total`]="item">
@@ -351,18 +351,18 @@
                     v-if="item.item.pic == 'default.png'"
                     :color="'#' + item.item.profile_color"
                   >
-                    {{
+                    <small>{{
                       item.item.name
                         .split(" ")
                         .map((x) => x[0].toUpperCase())
                         .join("")
-                    }}
+                    }}</small>
                   </v-avatar>
 
                   <v-avatar size="22" class="ma-1" left v-else>
                     <v-img :src="'/employees/' + item.item.pic" />
                   </v-avatar>
-                  <span>{{ item.item.name }}</span>
+                  <span class="name-employee-table">{{ item.item.name }}</span>
                 </template>
 
                 <template v-slot:[`item.absent_total`]="item">
@@ -443,18 +443,18 @@
                     v-if="item.item.pic == 'default.png'"
                     :color="'#' + item.item.profile_color"
                   >
-                    {{
+                    <small>{{
                       item.item.name
                         .split(" ")
                         .map((x) => x[0].toUpperCase())
                         .join("")
-                    }}
+                    }}</small>
                   </v-avatar>
 
                   <v-avatar size="22" class="ma-1" left v-else>
                     <v-img :src="'/employees/' + item.item.pic" />
                   </v-avatar>
-                  <span>{{ item.item.name }}</span>
+                  <span class="name-employee-table">{{ item.item.name }}</span>
                 </template>
 
                 <template v-slot:[`item.absent_total`]="item">

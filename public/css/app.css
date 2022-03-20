@@ -135,6 +135,11 @@
   height: 18px !important;
 }
 
+#dashboard .name-employee-table {
+  font-size: 13px;
+  font-weight: 500;
+}
+
 #user .table-card {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
