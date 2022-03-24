@@ -82,19 +82,19 @@
                   v-if="item.image == 'default.png'"
                   :color="'#' + item.profile_color"
                 >
-                  {{
+                  <span>{{
                     item.name
                       .split(" ")
                       .map((x) => x[0].toUpperCase())
                       .join("")
-                  }}
+                  }}</span>
                 </v-avatar>
 
                 <v-avatar size="38" class="ma-2" left v-else>
                   <v-img :src="'/employees/' + item.image" />
                 </v-avatar>
 
-                <small
+                <span
                   class="
                     font-weight-medium
                     blue-grey--text
@@ -103,20 +103,20 @@
                   "
                 >
                   {{ item.name }}
-                </small>
+                </span>
               </template>
 
               <template v-slot:[`item.gender`]="{ item }">
                 <v-chip
                   v-if="item.gender == 'male'"
-                  class="p-1 gender-chip"
+                  class="p-0 gender-chip"
                   small
                   color="indigo"
                   text-color="white"
                   label
                 >
                   <v-avatar left class="mr-0">
-                    <v-icon x-small>mdi-gender-male</v-icon>
+                    <v-icon x-small>mdi-human-male</v-icon>
                   </v-avatar>
                   {{ item.gender }}
                 </v-chip>
@@ -130,7 +130,7 @@
                   label
                 >
                   <v-avatar left class="mr-0">
-                    <v-icon x-small>mdi-gender-female</v-icon>
+                    <v-icon x-small>mdi-human-female</v-icon>
                   </v-avatar>
                   {{ item.gender }}
                 </v-chip>

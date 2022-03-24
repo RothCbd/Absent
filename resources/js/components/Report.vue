@@ -700,6 +700,9 @@
 
 <script>
 import moment from "moment";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
 export default {
   data() {
     return {
@@ -742,6 +745,8 @@ export default {
         monthly: false,
         yearly: false,
       },
+      // ================================
+      heading: "Absence Report",
     };
   },
   computed: {
@@ -833,6 +838,40 @@ export default {
     generatePDF() {
       this.$refs.html2Pdf.generatePdf();
     },
+
+    // ===================
+    // generatePDF() {
+    //   let bodyData = [];
+    //   this.reportData.forEach((value, index) => {
+    //     bodyData.push(value);
+
+    //     value.absents.forEach((absents, index) => {
+    //       bodyData.push(absents.absent);
+    //     });
+    //   });
+
+    //   console.log(bodyData);
+
+    //   const columns = [
+    //     { title: "Employee", dataKey: "name" },
+    //     { title: "Absent Count", dataKey: "absent_count" },
+    //     { title: "Absent Total", dataKey: "absent_total" },
+    //     { title: "Position", dataKey: "position" },
+    //   ];
+    //   const doc = new jsPDF({
+    //     orientation: "portrait",
+    //     unit: "in",
+    //     format: "letter",
+    //   });
+    //   doc.setFontSize(16).text(this.heading, 0.5, 1.0);
+    //   doc.setLineWidth(0.01).line(0.5, 1.1, 8.0, 1.1);
+    //   doc.autoTable({
+    //     columns,
+    //     body: bodyData,
+    //     margin: { left: 0.5, top: 1.25 },
+    //   });
+    //   doc.output("dataurlnewwindow");
+    // },
   },
 };
 </script>

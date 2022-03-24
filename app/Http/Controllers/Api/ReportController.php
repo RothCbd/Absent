@@ -25,6 +25,7 @@ class ReportController extends Controller
                     foreach($employee_id as $id){
                         $getData[] = Employee::with(['absent' => function($q) use($dates){
                             $q->where('date', $dates[0]);
+                            $q->orderBy('date', 'DESC')->get();
                         }])->where('id', $id)->where('is_inactive', false)->get();
                     }
                 }else{
@@ -34,6 +35,7 @@ class ReportController extends Controller
                             $getData[] = Employee::with(['absent' => function($q) use($dates){
                                 $q->where('date', '>=', $dates[0]);
                                 $q->where('date', '<=', $dates[1]);
+                                $q->orderBy('date', 'DESC')->get();
                             }])->where('id', $id)->where('is_inactive', false)->get();
                         }
                     }else{
@@ -41,6 +43,7 @@ class ReportController extends Controller
                             $getData[] = Employee::with(['absent' => function($q) use($dates){
                                 $q->where('date', '>=', $dates[1]);
                                 $q->where('date', '<=', $dates[0]);
+                                $q->orderBy('date', 'DESC')->get();
                             }])->where('id', $id)->where('is_inactive', false)->get();
                         }
                     }
@@ -52,17 +55,20 @@ class ReportController extends Controller
                 if(count($dates) == 1){
                     $getData[] = Employee::with(['absent' => function($q) use($dates){
                         $q->where('date', $dates[0]);
+                        $q->orderBy('date', 'DESC')->get();
                     }])->get();
                 }else{
                     if($dates[1] > $dates[0]){
                         $getData[] = Employee::with(['absent' => function($q) use($dates){
                             $q->where('date', '>=', $dates[0]);
                             $q->where('date', '<=', $dates[1]);
+                            $q->orderBy('date', 'DESC')->get();
                         }])->where('is_inactive', false)->get();
                     }else{
                         $getData[] = Employee::with(['absent' => function($q) use($dates){
                             $q->where('date', '>=', $dates[1]);
                             $q->where('date', '<=', $dates[0]);
+                            $q->orderBy('date', 'DESC')->get();
                         }])->where('is_inactive', false)->get();
                     }
                 }
@@ -71,7 +77,9 @@ class ReportController extends Controller
             // ---BY-EMPLOYEE---
             if($employee_id && !$dates){
                 foreach($employee_id as $id){
-                    $getData[] = Employee::with('absent')->where('id', $id)->where('is_inactive', false)->get();
+                    $getData[] = Employee::with(['absent' => function($q){
+                        $q->orderBy('date', 'DESC')->get();
+                    }])->where('id', $id)->where('is_inactive', false)->get();
                 }
             }
 

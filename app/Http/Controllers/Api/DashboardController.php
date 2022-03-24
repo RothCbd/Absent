@@ -51,6 +51,7 @@ class DashboardController extends Controller
         $absentWeeklys = Employee::whereHas('absent')->with('absent', function($q) use($weekStartDate, $weekEndDate){
             $q->where('date', '>=' ,$weekStartDate);
             $q->where('date', '<=', $weekEndDate);
+            $q->orderBy('date', 'DESC')->get();
         })->where('is_inactive', false)->get();
 
         foreach($absentWeeklys as $absentWeekly){
@@ -82,6 +83,7 @@ class DashboardController extends Controller
 
         $absentMonthlys = Employee::whereHas('absent')->with('absent', function($q){
             $q->whereMonth('date', Carbon::now()->month);
+            $q->orderBy('date', 'DESC')->get();
         })->where('is_inactive', false)->get();
 
         foreach($absentMonthlys as $absentMonthly){

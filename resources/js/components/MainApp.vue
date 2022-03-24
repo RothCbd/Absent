@@ -65,6 +65,15 @@
             </v-list-item-content>
           </v-list-item>
 
+          <v-list-item link to="/employee">
+            <v-list-item-action>
+              <v-icon>mdi-account-tie</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Employees</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
           <v-list-item link to="/absent">
             <v-list-item-action>
               <v-icon>mdi-account-cancel</v-icon>
@@ -80,15 +89,6 @@
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>Report</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item link to="/employee">
-            <v-list-item-action>
-              <v-icon>mdi-account-tie</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Employees</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -119,14 +119,14 @@
           color="blue-grey darken-3"
         ></v-app-bar-nav-icon>
 
-        <v-toolbar-title class="indigo--text font-weight-bold">
-          <small>Absent Managerment</small>
+        <v-toolbar-title class="grey--text text--darken-2 font-weight-medium">
+          <small>Absence Managerment</small>
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
 
         <h4 class="mr-6 grey--text text--darken-1 mt-1 font-weight-medium">
-          <v-chip label outlined color="indigo" small>
+          <v-chip label outlined color="grey--text text--darken-2" small>
             {{ formatDate(new Date()) }}
           </v-chip>
         </h4>
