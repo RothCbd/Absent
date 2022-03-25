@@ -120,7 +120,7 @@
         ></v-app-bar-nav-icon>
 
         <v-toolbar-title class="grey--text text--darken-2 font-weight-medium">
-          <small>Absence Managerment</small>
+          <small>Absence Management</small>
         </v-toolbar-title>
 
         <v-spacer></v-spacer>

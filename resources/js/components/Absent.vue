@@ -55,7 +55,7 @@
             class="font-weight-medium absent-employee-name"
             small
             label
-            color="grey lighten-4"
+            color="transparent"
           >
             <v-avatar
               left
@@ -126,7 +126,7 @@
 
         <template v-slot:[`item.date`]="{ item }">
           <v-chip
-            class="p-1 start-date"
+            class="pa-1 start-date"
             small
             color="pink darken-3"
             text-color="white"
