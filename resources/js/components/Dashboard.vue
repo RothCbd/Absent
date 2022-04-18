@@ -104,10 +104,18 @@
                 <v-icon size="70" color="indigo">mdi-account-multiple</v-icon>
               </v-col>
               <v-col cols="8" class="text-right">
-                <h3 v-if="user.admin < 10">Admin : 0{{ user.admin }}</h3>
-                <h3 v-else>Admin : {{ user.admin }}</h3>
-                <h3 v-if="user.user < 10">User : 0{{ user.user }}</h3>
-                <h3 v-else>User : {{ user.user }}</h3>
+                <h3 class="font-weight-medium" v-if="user.admin < 10">
+                  Admin : 0{{ user.admin }}
+                </h3>
+                <h3 class="font-weight-medium" v-else>
+                  Admin : {{ user.admin }}
+                </h3>
+                <h3 class="font-weight-medium" v-if="user.user < 10">
+                  User : 0{{ user.user }}
+                </h3>
+                <h3 class="font-weight-medium" v-else>
+                  User : {{ user.user }}
+                </h3>
               </v-col>
             </v-row>
           </v-card-text>
@@ -134,14 +142,18 @@
                 <v-icon size="70" color="teal">mdi-account-tie</v-icon>
               </v-col>
               <v-col cols="8" class="text-right">
-                <h3 v-if="employee.senior < 10">
+                <h3 class="font-weight-medium" v-if="employee.senior < 10">
                   Senior : 0{{ employee.senior }}
                 </h3>
-                <h3 v-else>Senior : {{ employee.senior }}</h3>
-                <h3 v-if="employee.junior < 10">
+                <h3 class="font-weight-medium" v-else>
+                  Senior : {{ employee.senior }}
+                </h3>
+                <h3 class="font-weight-medium" v-if="employee.junior < 10">
                   Junior : 0{{ employee.junior }}
                 </h3>
-                <h3 v-else>Junior : {{ employee.junior }}</h3>
+                <h3 class="font-weight-medium" v-else>
+                  Junior : {{ employee.junior }}
+                </h3>
               </v-col>
             </v-row>
           </v-card-text>
@@ -168,18 +180,26 @@
                 >
               </v-col>
               <v-col cols="8" class="text-right">
-                <h3 v-if="absent.weekCount < 10">
+                <h3 class="font-weight-medium" v-if="absent.weekCount < 10">
                   this Week : 0{{ absent.weekCount }}
                 </h3>
-                <h3 v-else>this Week : {{ absent.weekCount }}</h3>
+                <h3 class="font-weight-medium" v-else>
+                  this Week : {{ absent.weekCount }}
+                </h3>
 
-                <h3 v-if="absent.monthly < 10">
+                <h3 class="font-weight-medium" v-if="absent.monthly < 10">
                   this Month : 0{{ absent.monthly }}
                 </h3>
-                <h3 v-else>this Month : {{ absent.monthly }}</h3>
+                <h3 class="font-weight-medium" v-else>
+                  this Month : {{ absent.monthly }}
+                </h3>
 
-                <h3 v-if="absent.year < 10">this Year : 0{{ absent.year }}</h3>
-                <h3 v-else>this Year : {{ absent.year }}</h3>
+                <h3 class="font-weight-medium" v-if="absent.year < 10">
+                  this Year : 0{{ absent.year }}
+                </h3>
+                <h3 class="font-weight-medium" v-else>
+                  this Year : {{ absent.year }}
+                </h3>
               </v-col>
             </v-row>
           </v-card-text>
@@ -241,7 +261,7 @@
                               {{ data.day }}
                             </td>
                             <td>
-                              {{ formatDate(data.date) }}
+                              <span>{{ formatDate(data.date) }}</span>
                             </td>
                             <td>{{ data.description }}</td>
                           </tr>

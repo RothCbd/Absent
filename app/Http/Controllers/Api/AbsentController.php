@@ -8,15 +8,21 @@ use App\Models\Absent;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AbsentController extends Controller
 {
     public function read()
     {
+        // return Absent::orderBy('date')->get()->groupBy('date');
+
+        // ====================
 
         $absents = Absent::with(['employee' => function($q){
             $q->where('is_inactive', false);
-        }])->get();
+        }])
+        ->OrderBy('date')
+        ->get();
 
         $absentData = array();
         foreach ($absents->reverse() as $key => $absent){
