@@ -101,7 +101,7 @@ class ReportController extends Controller
                             'profile_color' => $item->profile_color,
                             'absent_total' => $absent_total,
                             'absent_count' => count($item->absent),
-                            'absents' => $item->absent,
+                            'data' => $item->absent,
                         );
                     }elseif($employee_id && !$dates)
                     {
@@ -118,7 +118,7 @@ class ReportController extends Controller
                             'profile_color' => $item->profile_color,
                             'absent_total' => $absent_total,
                             'absent_count' => count($item->absent),
-                            'absents' => $item->absent,
+                            'data' => $item->absent,
                         );
                     }elseif($dates){
                         if(count($item->absent) > 0){
@@ -135,7 +135,7 @@ class ReportController extends Controller
                                 'profile_color' => $item->profile_color,
                                 'absent_total' => $absent_total,
                                 'absent_count' => count($item->absent),
-                                'absents' => $item->absent,
+                                'data' => $item->absent,
                             );
                         }
                     }

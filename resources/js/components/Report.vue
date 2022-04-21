@@ -237,7 +237,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(data, index) in item.absents" :key="index">
+                      <tr v-for="(data, index) in item.data" :key="index">
                         <td>
                           <h5 class="grey--text text--darken-2">
                             {{ index + 1 }}
@@ -640,10 +640,7 @@
                       <v-simple-table dense>
                         <template v-slot:default>
                           <tbody>
-                            <tr
-                              v-for="(data, index) in item.absents"
-                              :key="index"
-                            >
+                            <tr v-for="(data, index) in item.data" :key="index">
                               <td>
                                 <h5>
                                   {{ index + 1 }}
