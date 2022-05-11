@@ -588,7 +588,6 @@ export default {
         { text: "Position", value: "position" },
         { text: "Start Date", value: "start_date" },
         { text: "Phone", value: "phone_number" },
-        { text: "Inactive", value: "is_inactive" },
         { text: "Action", sortable: false, align: "center", value: "actions" },
       ],
       employeeActiveData: [],
