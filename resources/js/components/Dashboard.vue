@@ -164,7 +164,7 @@
       <v-col cols="12" sm="12" md="4">
         <v-card class="dashboard-card" elevation="1">
           <v-card-title class="grey--text text--darken-2">
-            <h4 class="orange--text text--darken-3">ABSENTS</h4>
+            <h4 class="orange--text text--darken-3">ABSENT</h4>
             <v-spacer></v-spacer>
             <h2 class="orange--text text--darken-3">
               <span v-if="absent.all > 10">{{ absent.all }}</span>

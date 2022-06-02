@@ -126,7 +126,7 @@
 
         <template v-slot:[`item.date`]="{ item }">
           <v-chip
-            class="pa-1 start-date"
+            class="pa-1 absent-date"
             small
             color="pink darken-3"
             text-color="white"
@@ -446,7 +446,7 @@ export default {
     },
     computedDateFormattedMomentjs() {
       return this.form.date
-        ? moment(this.form.date).format("dddd, DD-MM-YYYY")
+        ? moment(this.form.date).format("dddd, DD/ MM/ YYYY")
         : "";
     },
   },
@@ -490,7 +490,7 @@ export default {
     },
 
     formatDate(value) {
-      return moment(value).format("DD-MM-YYYY");
+      return moment(value).format("DD/MM/YYYY");
     },
 
     getColor(day) {

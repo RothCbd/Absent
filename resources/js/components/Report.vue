@@ -752,7 +752,7 @@ export default {
     },
     computedDateFormattedMomentjs() {
       return this.form.dates
-        ? moment(this.form.dates).format("DD-MM-YYYY")
+        ? moment(this.form.dates).format("DD/MM/YYYY")
         : "";
     },
 
@@ -818,7 +818,7 @@ export default {
     },
 
     formatDate(value) {
-      return moment(value).format("DD-MM-YYYY");
+      return moment(value).format("DD/MM/YYYY");
     },
 
     clearDate() {

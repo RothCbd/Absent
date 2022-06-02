@@ -12,12 +12,12 @@ class EmployeeController extends Controller
 {
     public function active()
     {
-        return new employeeData(Employee::where('is_inactive', false)->orderBy('id', 'DESC')->get());
+        return new employeeData(Employee::where('is_inactive', false)->get());
     }
 
     public function inactive()
     {
-        return new employeeData(Employee::where('is_inactive', true)->orderBy('id', 'DESC')->get());
+        return new employeeData(Employee::where('is_inactive', true)->get());
     }
 
     public function create(Request $request)

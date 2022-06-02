@@ -82,9 +82,11 @@
           <v-row>
             <v-col
               cols="12"
-              sm="5"
-              class="d-flex justify-center align-center"
+              sm="12"
+              md="5"
+              class="d-flex justify-center align-center d-sm-none d-md-flex"
               data-aos="fade-right"
+
             >
               <v-img
                 max-height="300"
@@ -94,13 +96,14 @@
             </v-col>
             <v-col
               cols="12"
-              sm="7"
+              sm="12"
+              md="7"
               class="pa-0"
               data-aos="fade-up"
               data-aos-anchor-placement="top-bottom"
             >
               <v-card elevation="0" class="ma-5">
-                <span class="title blue--text">ABSENT MANAGERMENT</span>
+                <span class="title blue--text">ABSENCES MANAGERMENT</span>
                 <v-card-text class="mt-2 pb-0">
                   <p>Sign in with your email and password:</p>
 

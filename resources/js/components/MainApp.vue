@@ -125,7 +125,7 @@
 
         <v-spacer></v-spacer>
 
-        <h4 class="mr-6 grey--text text--darken-1 mt-1 font-weight-medium">
+        <h4 class="mr-6 grey--text text--darken-1 mt-1 font-weight-medium d-none d-sm-flex">
           <v-chip label outlined color="grey--text text--darken-2" small>
             {{ formatDate(new Date()) }}
           </v-chip>

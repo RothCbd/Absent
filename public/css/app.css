@@ -6,6 +6,10 @@
   width: 0px;
 }
 
+.v-toolbar--dense {
+  z-index: 999 !important;
+}
+
 .v-app-bar {
   background-color: #3a9dca !important;
   border-color: #3a9dca !important;
@@ -84,7 +88,8 @@
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
 }
 
-#dashboard .v-card h4, h2 {
+#dashboard .v-card h4,
+h2 {
   font-weight: 500;
 }
 
@@ -258,8 +263,99 @@
   padding: 0 5px !important;
 }
 
+.employeeCard {
+  overflow: hidden;
+  box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px !important;
+}
+
+.cardDetail {
+  z-index: 99;
+}
+
+.cardNum {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ecf0f1;
+  border-radius: 100%;
+  top: 5px;
+  right: 5px;
+  border: 1px solid #a4b0be;
+}
+
+.cardDetail p {
+  margin-bottom: 3px !important;
+  font-size: 14px;
+}
+
+.cardPosition {
+  margin-left: -35px;
+  margin-top: 15px;
+  background: #ffffff;
+  padding: 13px 10px;
+  z-index: 1;
+  border-radius: 100px;
+  color: #57606fee;
+}
+
+.table-card .v-image__image {
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+.cardDefaulProfileImg {
+  height: 150px;
+  width: 130px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #f1f2f6;
+  border-radius: 15px;
+}
+
+.cardEmpName {
+  font-size: 30px;
+  font-weight: 600;
+  background-color: #7a7a7a95;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: rgba(255, 255, 255, 0.297) 0px 3px 3px;
+}
+
+.table-card .theme--light.v-image {
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+.cardPhoneNum {
+  font-size: 13px;
+}
+
+.cardAction {
+  position: absolute;
+  bottom: 5px;
+  right: 0px;
+}
+
 #absent .table-card {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.absent-date {
+  letter-spacing: 1px;
 }
 
 .absent-day-chip {

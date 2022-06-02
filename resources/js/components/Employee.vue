@@ -9,14 +9,22 @@
                 <v-icon class="mb-1" color="grey darken-2"
                   >mdi-account-tie</v-icon
                 >
-                <span class="text-decoration-underline">Employees List</span>
-                <!-- <v-chip color="grey lighten-2 grey--text text--darken-3">{{
-                  employeeCount
-                }}</v-chip> -->
+                    <span class="text-decoration-underline">Employees List</span>
+
+                    <v-btn
+                        class="mx-2"
+                        fab
+                        small
+                        icon
+                        @click="listViewChang"
+                    >
+                        <v-icon dark>{{ cardView ? 'mdi-format-list-numbered' : 'mdi-view-grid' }}</v-icon>
+                    </v-btn>
               </h3>
             </v-col>
             <v-col cols="12" sm="12" md="6">
               <v-text-field
+                v-show="!cardView"
                 class="txt-search"
                 v-model="searchEmployee"
                 append-icon="mdi-magnify"
@@ -60,7 +68,7 @@
 
       <v-tabs-items v-model="tab">
         <v-tab-item key="activeEmployee">
-          <v-card class="mx-auto table-card">
+          <v-card class="mx-auto table-card" v-show="!cardView">
             <v-data-table
               :headers="headers"
               :items="employeeActiveData"
@@ -194,6 +202,76 @@
                 >
               </template>
             </v-data-table>
+          </v-card>
+
+          <!-- card list-->
+          <v-card color="grey lighten-4" class="pa-5 table-card" v-show="cardView">
+            <v-flex class="d-flex flex-wrap justify-center">
+                <v-card
+                    v-for="(item, index) in employeeActiveData"
+                    :key="index"
+                    class="ma-3 employeeCard"
+                    width="344"
+                    height="210"
+                    max-width="344"
+                >
+                    <v-row class="ma-0">
+                        <v-col cols="5">
+                            <v-img
+                                v-if="item.image == 'default.png'"
+                                height="150"
+                                width="130"
+                                class="mt-5 cardDefaulProfileImg"
+                            >
+                                <span class="cardEmpName">{{
+                                    item.name
+                                    .split(" ")
+                                    .map((x) => x[0].toUpperCase())
+                                    .join("")
+                                }}</span>
+                            </v-img>
+
+                            <v-img
+                                v-else
+                                height="150"
+                                width="130"
+                                :src="'/employees/' + item.image"
+                                class="mt-5 cardImg"
+                            >
+                            </v-img>
+
+                        </v-col>
+                        <v-col cols="7" class="cardDetail pa-0">
+                            <div class="cardNum">{{ index + 1 }}</div>
+                            <h5 class="cardPosition">Junior Software Development</h5>
+                            <h4>{{ item.name }}</h4>
+                            <p><v-icon x-small>mdi-email</v-icon> {{ item.email }}</p>
+                            <p v-if="item.gender == 'male'"><v-icon small>mdi-human-male</v-icon> {{ item.gender }}</p>
+                            <p v-if="item.gender == 'female'"><v-icon small>mdi-human-female</v-icon> {{ item.gender }}</p>
+                            <p><v-icon x-small>mdi-calendar-month</v-icon> {{ formatDate(item.start_date) }}</p>
+                            <span v-for="number in item.phone_number" :key="number.id">
+                                <p v-if="number.phone != null" class="cardPhoneNum"><v-icon x-small>mdi-phone</v-icon> {{ number.phone }}</p>
+                            </span>
+
+                            <!-- SHAPE -->
+                            <div style="position: absolute; bottom: -40px; right: -30px; height: 100px; width: 100px; border-radius: 50%; background: rgb(63 81 181 / 7%);"></div>
+                            <div style="position: absolute; bottom: 30px; right: 20px; height: 120px; width: 120px; border-radius: 50%; background: rgb(63 81 181 / 7%);"></div>
+                            <div style="position: absolute; bottom: -30px; left: 20px; height: 150px; width: 150px; border-radius: 50%; background: rgb(63 81 181 / 7%); z-index: -1;"></div>
+
+                            <div class="cardAction">
+                                <v-icon small class="mr-2" @click="editEmployee(item)">mdi-pencil</v-icon>
+                                <v-icon
+                                    small
+                                    class="mr-2"
+                                    @click="deleteEployee(item.id, item.name)"
+                                >
+                                    mdi-delete
+                                </v-icon>
+                            </div>
+                        </v-col>
+                    </v-row>
+                </v-card>
+            </v-flex>
           </v-card>
         </v-tab-item>
 
@@ -576,6 +654,7 @@ export default {
       editMode: false,
       tableLoading: true,
       absentDateChoose: false,
+      cardView: false,
       headers: [
         {
           text: "No.",
@@ -624,7 +703,7 @@ export default {
     },
     computedDateFormattedMomentjs() {
       return this.form.start_date
-        ? moment(this.form.start_date).format("DD-MM-YYYY")
+        ? moment(this.form.start_date).format("DD/MM/YYYY")
         : "";
     },
   },
@@ -669,13 +748,18 @@ export default {
         });
     },
 
+
+    listViewChang(){
+      this.cardView = this.cardView ? false : true;
+    },
+
     // randomColor() {
     //   let getColor = "#" + ((Math.random() * 0xffffff) << 0).toString(16);
     //   return "" + getColor + "";
     // },
 
     formatDate(value) {
-      return moment(value).format("DD-MM-YYYY");
+      return moment(value).format("DD/MM/YYYY");
     },
 
     addPhone: function () {
