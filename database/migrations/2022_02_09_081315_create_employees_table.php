@@ -18,12 +18,15 @@ class CreateEmployeesTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('gender');
-            $table->string('position');
+            $table->integer('postion_id')->unsigned();
+            $table->foreign('postion_id')->references('id')->on('positions')->onDelete('cascade');
+
             $table->string('start_date');
             $table->json('phone_number')->nullable();
             $table->string('pic')->default('default.png');
             $table->string('profile_color');
             $table->boolean('is_inactive')->default(false);
+            $table->string('leave_date')->nullable();;
             $table->timestamps();
         });
     }

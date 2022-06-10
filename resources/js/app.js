@@ -35,6 +35,7 @@ import ResetPassword from './components/auth/ResetPassword'
 
 import Dashboard from './components/Dashboard';
 import User from './components/User';
+import Position from './components/Position';
 import Employee from './components/Employee';
 import Absent from './components/Absent';
 import Report from './components/Report';
@@ -87,6 +88,15 @@ let routes = [
         meta: {
             requiresAuth: true,
             title: 'User'
+        }
+    },
+    {
+        path: '/position',
+        name:'position',
+        component: Position,
+        meta: {
+            requiresAuth: true,
+            title: 'Position'
         }
     },
     {

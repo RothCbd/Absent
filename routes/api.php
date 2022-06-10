@@ -6,7 +6,9 @@ use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\EmailVerificationController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\ForgotPasswordController;
+use App\Http\Controllers\Api\HolidayController;
 use App\Http\Controllers\Api\Mobile\AbsentController as MobileAbsentController;
+use App\Http\Controllers\Api\PositionController;
 use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -44,11 +46,24 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // --------Dashboard----------
     Route::get('dashboard-data', [DashboardController::class, 'read']);
 
+    // --------Holiday----------
+    Route::get('read-holiday-date', [HolidayController::class, 'readDate']);
+    Route::get('read-holiday', [HolidayController::class, 'read']);
+    Route::post('create-holiday', [HolidayController::class, 'create']);
+    Route::post('update-holiday/{id}', [HolidayController::class, 'update']);
+    Route::delete('delete-holiday/{id}', [HolidayController::class, 'delete']);
+
     // --------user---------
     Route::get('read-user', [UserController::class, 'read']);
     Route::post('create-user', [UserController::class, 'create']);
     Route::post('update-user/{id}', [UserController::class, 'update']);
     Route::delete('delete-user/{id}', [UserController::class, 'delete']);
+
+    // ---------Position-------
+    Route::get('read-position', [PositionController::class, 'read']);
+    Route::post('create-position', [PositionController::class, 'create']);
+    Route::post('update-position/{id}', [PositionController::class, 'update']);
+    Route::delete('delete-position/{id}', [PositionController::class, 'delete']);
 
     // --------employee--------
     Route::get('active-employee', [EmployeeController::class, 'active']);
@@ -65,7 +80,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // -------Report------------
     Route::post('read-report', [ReportController::class, 'report']);
-
 
     Route::post('update-profile/{id}', [AuthController::class, 'update']);
     Route::post('update-password/{id}', [AuthController::class, 'password']);

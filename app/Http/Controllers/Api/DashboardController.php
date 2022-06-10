@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Absent;
 use App\Models\Employee;
+use App\Models\Position;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -15,18 +16,33 @@ class DashboardController extends Controller
 {
     public function read()
     {
-        $empSenior = array();
-        $empJunior = array();
-        $employess = Employee::all();
-        foreach($employess as $data){
-            if(Str::contains($data->position, ['Senior'])){
-               $empSenior[] = Employee::where('position', $data->position, ['Senior'])->count();
-            }
 
-            if(Str::contains($data->position, ['Junior'])){
-                $empJunior[] = Employee::where('position', $data->position, ['Junior'])->count();
+
+        // $empSenior = array();
+        // $empJunior = array();
+        // $employess = Employee::all();
+        // foreach($employess as $data){
+        //     if(Str::contains($data->position, ['Senior'])){
+        //        $empSenior[] = Employee::where('position', $data->position, ['Senior'])->count();
+        //     }
+
+        //     if(Str::contains($data->position, ['Junior'])){
+        //         $empJunior[] = Employee::where('position', $data->position, ['Junior'])->count();
+        //     }
+        // }
+
+        $positionData = array();
+        $positions = Position::withCount('employee')->get();
+        foreach($positions as $position){
+            if($position->employee_count > 0){
+                $positionData[] = array(
+                    'positions' => $position->title,
+                    'count' => $position->employee_count
+                );
             }
         }
+
+        // return $positionData;
 
         $userCount = User::where('id', '!=', auth('sanctum')->user()->id)->count();
         $userRoleAdmin = User::where('role_id', 1)->count();
@@ -151,8 +167,7 @@ class DashboardController extends Controller
             ],
             'employee' => [
                 'allEmployee' =>  $employeesCount,
-                'senior' => count($empSenior),
-                'junior' => count($empJunior),
+                'positions' => $positionData,
             ],
             'absent' => [
                 'absentCount' => $absentsCount,

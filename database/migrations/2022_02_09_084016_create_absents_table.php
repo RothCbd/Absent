@@ -23,7 +23,6 @@ class CreateAbsentsTable extends Migration
             $table->string('day');
             $table->string('date');
             $table->string('description')->nullable();
-
             $table->timestamps();
         });
     }

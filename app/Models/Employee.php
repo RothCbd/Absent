@@ -16,4 +16,8 @@ class Employee extends Model
     public function absent(){
         return $this->hasMany(Absent::class, 'employee_id');
     }
+
+    public function position(){
+        return $this->belongsTo(Position::class, 'postion_id');
+    }
 }

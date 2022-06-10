@@ -21,12 +21,13 @@ class employeeData extends ResourceCollection
                     'name' => $employee->name,
                     'email' => $employee->email,
                     'gender' => $employee->gender,
-                    'position' => $employee->position,
+                    'position' => $employee->position->title,
                     'start_date' => $employee->start_date,
                     'phone_number' => $employee->phone_number,
                     'image' => $employee->pic,
                     'profile_color' => $employee->profile_color,
-                    'is_inactived' => $employee->is_inactive
+                    'is_inactived' => $employee->is_inactive,
+                    'leave_date' => $employee->leave_date,
                 ];
             })
         ];

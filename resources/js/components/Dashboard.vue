@@ -33,7 +33,7 @@
       </v-col>
 
       <v-col cols="12" sm="12" md="4">
-        <v-card class="dashboard-card" elevation="1">
+        <v-card class="dashboard-card" elevation="1" height="180">
           <v-card-title class="grey--text text--darken-2">
             <v-skeleton-loader
               type="table-heading"
@@ -90,7 +90,7 @@
     <v-row v-show="!skeletonLoading">
       <!-- Users -->
       <v-col cols="12" sm="12" md="4">
-        <v-card class="dashboard-card" elevation="1">
+        <v-card class="dashboard-card user" elevation="1" height="180">
           <v-card-title class="grey--text text--darken-2">
             <h4 class="indigo--text">USERS</h4>
             <v-spacer></v-spacer>
@@ -104,16 +104,16 @@
                 <v-icon size="70" color="indigo">mdi-account-multiple</v-icon>
               </v-col>
               <v-col cols="8" class="text-right">
-                <h3 class="font-weight-medium" v-if="user.admin < 10">
+                <h3 class="font-weight-medium blue-grey--text text--darken-1" v-if="user.admin < 10">
                   Admin : 0{{ user.admin }}
                 </h3>
-                <h3 class="font-weight-medium" v-else>
+                <h3 class="font-weight-medium blue-grey--text text--darken-1" v-else>
                   Admin : {{ user.admin }}
                 </h3>
-                <h3 class="font-weight-medium" v-if="user.user < 10">
+                <h3 class="font-weight-medium blue-grey--text text--darken-1" v-if="user.user < 10">
                   User : 0{{ user.user }}
                 </h3>
-                <h3 class="font-weight-medium" v-else>
+                <h3 class="font-weight-medium blue-grey--text text--darken-1" v-else>
                   User : {{ user.user }}
                 </h3>
               </v-col>
@@ -124,7 +124,7 @@
 
       <!-- Employee -->
       <v-col cols="12" sm="12" md="4">
-        <v-card class="dashboard-card" elevation="1">
+        <v-card class="dashboard-card employee" elevation="1" height="180">
           <v-card-title class="grey--text text--darken-2">
             <h4 class="teal--text">EMPLOYEES</h4>
             <v-spacer></v-spacer>
@@ -142,18 +142,14 @@
                 <v-icon size="70" color="teal">mdi-account-tie</v-icon>
               </v-col>
               <v-col cols="8" class="text-right">
-                <h3 class="font-weight-medium" v-if="employee.senior < 10">
-                  Senior : 0{{ employee.senior }}
+                <h3
+                    v-for="(item, index) in employee.positionsData" :key="index"
+                    class="font-weight-medium text-capitalize blue-grey--text text--darken-1"
+                >
+                  {{ item.positions }} : <span v-if="item.count < 9">0{{ item.count }}</span>
+                  <span v-else>{{ item.count }}</span>
                 </h3>
-                <h3 class="font-weight-medium" v-else>
-                  Senior : {{ employee.senior }}
-                </h3>
-                <h3 class="font-weight-medium" v-if="employee.junior < 10">
-                  Junior : 0{{ employee.junior }}
-                </h3>
-                <h3 class="font-weight-medium" v-else>
-                  Junior : {{ employee.junior }}
-                </h3>
+
               </v-col>
             </v-row>
           </v-card-text>
@@ -162,7 +158,7 @@
 
       <!-- Absent -->
       <v-col cols="12" sm="12" md="4">
-        <v-card class="dashboard-card" elevation="1">
+        <v-card class="dashboard-card absent" elevation="1" height="180">
           <v-card-title class="grey--text text--darken-2">
             <h4 class="orange--text text--darken-3">ABSENT</h4>
             <v-spacer></v-spacer>
@@ -180,24 +176,24 @@
                 >
               </v-col>
               <v-col cols="8" class="text-right">
-                <h3 class="font-weight-medium" v-if="absent.weekCount < 10">
+                <h3 class="font-weight-medium blue-grey--text text--darken-1" v-if="absent.weekCount < 10">
                   this Week : 0{{ absent.weekCount }}
                 </h3>
-                <h3 class="font-weight-medium" v-else>
+                <h3 class="font-weight-medium blue-grey--text text--darken-1" v-else>
                   this Week : {{ absent.weekCount }}
                 </h3>
 
-                <h3 class="font-weight-medium" v-if="absent.monthly < 10">
+                <h3 class="font-weight-medium blue-grey--text text--darken-1" v-if="absent.monthly < 10">
                   this Month : 0{{ absent.monthly }}
                 </h3>
-                <h3 class="font-weight-medium" v-else>
+                <h3 class="font-weight-medium blue-grey--text text--darken-1" v-else>
                   this Month : {{ absent.monthly }}
                 </h3>
 
-                <h3 class="font-weight-medium" v-if="absent.year < 10">
+                <h3 class="font-weight-medium blue-grey--text text--darken-1" v-if="absent.year < 10">
                   this Year : 0{{ absent.year }}
                 </h3>
-                <h3 class="font-weight-medium" v-else>
+                <h3 class="font-weight-medium blue-grey--text text--darken-1" v-else>
                   this Year : {{ absent.year }}
                 </h3>
               </v-col>
@@ -508,7 +504,6 @@ export default {
       skeletonLoading: false,
       headers: [
         { text: "Employee", value: "name", align: "start" },
-        // { text: "Count", value: "absent_count" },
         { text: "Total", value: "absent_total" },
       ],
       weeklyAbsentData: [],
@@ -523,6 +518,7 @@ export default {
         all: "",
         senior: "",
         junior: "",
+        positionsData: [],
       },
       user: {
         all: "",
@@ -553,31 +549,31 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data.absent.weeklyAbsents);
+            // ----------absent---------
+            this.absent.all = response.data.absent.absentCount;
+            this.absent.weekCount = response.data.absent.absentWeekCount;
+            this.absent.monthly = response.data.absent.absentMonthCount;
+            this.absent.year = response.data.absent.absentYearCount;
 
-          // ----------absent---------
-          this.absent.all = response.data.absent.absentCount;
-          this.absent.weekCount = response.data.absent.absentWeekCount;
-          this.absent.monthly = response.data.absent.absentMonthCount;
-          this.absent.year = response.data.absent.absentYearCount;
+            // ----------employee---------
+            this.employee.all = response.data.employee.allEmployee;
+            this.employee.senior = response.data.employee.senior;
+            this.employee.junior = response.data.employee.junior;
 
-          // ----------employee---------
-          this.employee.all = response.data.employee.allEmployee;
-          this.employee.senior = response.data.employee.senior;
-          this.employee.junior = response.data.employee.junior;
+            this.employee.positionsData = response.data.employee.positions;
 
-          // ----------User-------------
-          this.user.all = response.data.user.allUser;
-          this.user.admin = response.data.user.admin;
-          this.user.user = response.data.user.user;
+            // ----------User-------------
+            this.user.all = response.data.user.allUser;
+            this.user.admin = response.data.user.admin;
+            this.user.user = response.data.user.user;
 
-          // ---------Table-------------
-          this.table.weeklyAbsent = response.data.absent.weeklyAbsents;
-          this.table.monthlyAbsent = response.data.absent.monthlyAbsents;
-          this.table.yearlyAbsent = response.data.absent.yearAbsents;
+            // ---------Table-------------
+            this.table.weeklyAbsent = response.data.absent.weeklyAbsents;
+            this.table.monthlyAbsent = response.data.absent.monthlyAbsents;
+            this.table.yearlyAbsent = response.data.absent.yearAbsents;
         })
         .catch((errors) => {
-          console.log(errors);
+            console.log(errors);
         });
     },
   },

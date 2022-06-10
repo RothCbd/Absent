@@ -173,15 +173,15 @@
           <v-card-text>
             <!-- ================= -->
             <v-autocomplete
-              v-model="form.employee_id"
-              :items="employeeData"
-              :item-text="(item) => item.name"
-              item-value="id"
-              clearable
-              label="Select Employee"
-              prepend-inner-icon="mdi-account-tie"
-              outlined
-              :error-messages="errorsMessage.employee_id"
+                v-model="form.employee_id"
+                :items="employeeData"
+                :item-text="(item) => item.name"
+                item-value="id"
+                clearable
+                label="Select Employee"
+                prepend-inner-icon="mdi-account-tie"
+                outlined
+                :error-messages="errorsMessage.employee_id"
             >
               <template v-slot:selection="data">
                 <v-chip
@@ -207,7 +207,7 @@
                     <v-img
                       v-else
                       :src="'/employees/' + data.item.image"
-                      sizes="40"
+                      sizes="35"
                     ></v-img>
                   </v-avatar>
                   {{ data.item.name }}
@@ -219,7 +219,7 @@
                   <v-avatar
                     v-if="data.item.image == 'default.png'"
                     :color="'#' + data.item.profile_color"
-                    size="40"
+                    size="35"
                   >
                     <span class="white--text">{{
                       data.item.name
@@ -232,13 +232,26 @@
                   <v-img
                     v-else
                     :src="'/employees/' + data.item.image"
-                    sizes="40"
+                    sizes="35"
                   ></v-img>
                 </v-list-item-avatar>
                 <v-list-item-content>
                   <v-list-item-title>
                     {{ data.item.name }} -
-                    <v-chip small label> {{ data.item.position }} </v-chip>
+                    <!-- <v-chip small label> {{ data.item.position }} </v-chip> -->
+                    <v-chip
+                        label
+                        dark
+                        color="blue-grey darken-2"
+                        class="text-capitalize pa-1"
+                        outlined
+                        small
+                    >
+                        <v-avatar left>
+                            <v-icon small>mdi-account-star</v-icon>
+                        </v-avatar>
+                        {{ data.item.position }}
+                    </v-chip>
                   </v-list-item-title>
                 </v-list-item-content>
               </template>
@@ -465,6 +478,9 @@ export default {
           },
         })
         .then((response) => {
+
+            console.log(response.data);
+
           this.absentData = response.data;
           this.absentCount = response.data.length;
           this.tableLoading = false;

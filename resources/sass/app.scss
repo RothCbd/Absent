@@ -11,6 +11,10 @@
     width: 0px;
 }
 
+.mdi-delete {
+    color: #e12e2e !important;
+}
+
 .v-toolbar--dense {
     z-index: 999 !important;
 }
@@ -40,6 +44,10 @@
     margin-top: -19px !important;
 }
 
+.calendarDialog {
+    z-index: 999;
+}
+
 #main-app .theme--light.v-list {
     color: #4b6584 !important;
 }
@@ -52,6 +60,22 @@
 #main-app.v-application .cyan.darken-2 {
     background-color: #3a9dca !important;
     border-color: #3a9dca !important;
+}
+
+#main-app .v-picker__body {
+    background-color: #3f51b511;
+}
+
+#calendarDialog .v-date-picker-table .v-btn.v-btn--active {
+    color: #ff0000 !important;
+}
+
+#calendarDialog .accent {
+    background-color: rgb(255, 220, 220) !important;
+}
+
+.holiday-dates {
+    font-size: 13px !important;
 }
 
 // =============login==============
@@ -82,6 +106,8 @@
 // =============Dashboard==========
 @import url('https://fonts.googleapis.com/css2?family=Redressed&family=Roboto&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600&display=swap');
+
 #dashboard .widget-card {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
@@ -92,6 +118,21 @@
 
 #dashboard .widget-card h2 {
     font-family: 'Roboto', sans-serif;
+}
+
+#dashboard .employee h3 {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-size: 15px !important;
+}
+
+#dashboard .absent h3 {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-size: 17px !important;
+}
+
+#dashboard .user h3 {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-size: 17px !important;
 }
 
 .dashboard-card .v-icon {
@@ -230,6 +271,23 @@ h2 {
     font-size: 13px;
 }
 
+// ===============POSITION============
+#position .table-card {
+    box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+}
+
+#position .mdi-account-star {
+    font-size: 20px !important;
+}
+
+#position .v-data-table__expanded__content {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px !important;
+}
+
+#position .employee_count_by_position .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
+    height: 30px !important;
+}
+
 // ===============employee============
 @import url('https://fonts.googleapis.com/css2?family=Fredoka&family=Roboto&display=swap');
 
@@ -247,7 +305,7 @@ h2 {
 
 #employee .v-chip.v-size--small {
     border-radius: 10px;
-    font-size: 11px;
+    font-size: 12px;
     height: 20px;
 }
 
@@ -265,6 +323,7 @@ h2 {
 
 .start-date {
     font-size: 12px !important;
+    letter-spacing: 1px;
 }
 
 .card-action {
@@ -286,6 +345,10 @@ h2 {
     // background-color: #40739e !important;
     overflow: hidden;
     box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px !important;
+}
+
+.v-list-item__mask {
+    background: #fff372 !important;
 }
 
 .cardDetail {

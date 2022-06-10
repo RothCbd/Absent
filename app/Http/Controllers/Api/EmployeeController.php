@@ -26,16 +26,19 @@ class EmployeeController extends Controller
             'name' => 'required|string|min:2|max:100',
             'email' => 'required|email|max:255|regex:/(.*)\.com/i|unique:employees,email',
             'gender' => 'required',
-            'position' => 'required',
+            'position_id' => 'required',
             'start_date' => 'required',
             'phone_number' => 'required|unique:employees,phone_number',
+        ],[
+            'position_id.required' => 'The position field is required.'
         ]);
 
         $employee = new Employee();
         $employee->name = $request->name;
         $employee->gender = $request->gender;
         $employee->email = $request->email;
-        $employee->position = Str::title($request->position);
+        // $employee->position = Str::title($request->position);
+        $employee->postion_id = $request->position_id;
         $employee->start_date = $request->start_date;
 
         $phoneEmpty = array(['phone' => null]);
@@ -71,16 +74,19 @@ class EmployeeController extends Controller
             'name' => 'required|string|min:2|max:100',
             'email' => 'required|email|max:255|regex:/(.*)\.com/i|unique:employees,email,'.$id,
             'gender' => 'required',
-            'position' => 'required',
+            'position_id' => 'required',
             'start_date' => 'required',
             'phone_number' => 'required|unique:employees,phone_number,'.$id,
+        ],[
+            'position_id.required' => 'The position field is required.'
         ]);
 
         $employee = Employee::findOrFail($id);
         $employee->name = $request->name;
         $employee->gender = $request->gender;
         $employee->email = $request->email;
-        $employee->position = Str::title($request->position);
+        // $employee->position = Str::title($request->position);
+        $employee->postion_id = $request->position_id;
         $employee->start_date = $request->start_date;
 
         $phoneEmpty = array(['phone' => null]);
@@ -110,6 +116,14 @@ class EmployeeController extends Controller
         }
 
         $employee->	is_inactive = $request->is_inactived;
+        if($request->is_inactived){
+            $this->validate($request, [
+                'leave_date' => 'required',
+            ]);
+
+            $employee->leave_date = $request->leave_date;
+        }
+
         $employee->save();
 
         return response()->json(['message' => 'Employee update successfully.'], 200);

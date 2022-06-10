@@ -214,13 +214,18 @@
 
             <template v-slot:[`item.position`]="item">
               <v-chip
-                label
-                color="blue-grey darken-1"
-                small
-                class="pa-2 text-lowercase position-chip white--text"
-              >
-                {{ item.item.position }}
-              </v-chip>
+                    label
+                    dark
+                    color="blue-grey darken-2"
+                    class="text-capitalize pa-1"
+                    outlined
+                    small
+                >
+                    <v-avatar left>
+                        <v-icon small>mdi-account-star</v-icon>
+                    </v-avatar>
+                    {{ item.item.position }}
+                </v-chip>
             </template>
 
             <template v-slot:expanded-item="{ headers, item }">
