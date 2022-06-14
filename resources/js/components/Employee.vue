@@ -9,40 +9,30 @@
                 <v-icon class="mb-1" color="grey darken-2"
                   >mdi-account-tie</v-icon
                 >
-                    <span class="text-decoration-underline">Employees List</span>
-
-                    <v-btn
-                        class="mx-2"
-                        fab
-                        small
-                        icon
-                        @click="listViewChang"
-                    >
-                        <v-icon dark>{{ cardView ? 'mdi-format-list-numbered' : 'mdi-view-grid' }}</v-icon>
-                    </v-btn>
+                <span class="text-decoration-underline">{{ $t('employee.list') }}</span>
               </h3>
             </v-col>
             <v-col cols="12" sm="12" md="6">
-              <v-text-field
-                v-show="!cardView"
-                class="txt-search"
-                v-model="searchEmployee"
-                append-icon="mdi-magnify"
-                label="Search"
-                single-line
-              ></v-text-field>
+                <v-text-field
+                    v-show="!cardView"
+                    class="txt-search"
+                    v-model="searchEmployee"
+                    append-icon="mdi-magnify"
+                    v-bind:label="$t('employee.search')"
+                    single-line
+                ></v-text-field>
             </v-col>
           </v-row>
         </v-col>
 
         <v-col cols="12" sm="6" class="text-end">
-          <v-btn
-            small
-            color="indigo"
-            class="add-user white--text pa-2 font-weight-regular mb-2"
-            @click="openDialog"
-            ><v-icon left>mdi-plus</v-icon> Add employee</v-btn
-          >
+            <v-btn
+                small
+                class="khawin-background-color add-user white--text pa-2 font-weight-regular mb-2"
+                @click="openDialog"
+            >
+                <v-icon left>mdi-plus</v-icon> {{ $t('employee.btnAddEmp') }}
+            </v-btn>
         </v-col>
       </v-row>
 
@@ -52,29 +42,43 @@
         <v-tabs-slider color="transparent"></v-tabs-slider>
         <v-tab class="text-capitalize tab" key="activeEmployee">
           <v-icon class="mr-2" left>mdi-account-multiple</v-icon>
-          <span>Active Employee</span>
+          <span class="font-weight-medium">{{ $t('employee.activeEmp') }}</span>
           <v-chip small class="ml-2 font-weight-bold indigo--text">{{
             employeeActiveCount
           }}</v-chip>
         </v-tab>
         <v-tab class="text-capitalize tab" key="inactiveEmployee">
           <v-icon class="mr-2" left>mdi-account-multiple-minus</v-icon>
-          <span>inactived Employee</span>
+          <span class="font-weight-medium">{{ $t('employee.inctiveEmp') }}</span>
           <v-chip small class="ml-2 font-weight-bold indigo--text">{{
             employeeInactiveCount
           }}</v-chip>
         </v-tab>
+
+        <v-spacer></v-spacer>
+        <v-btn
+            class="mx-2"
+            fab
+            small
+            icon
+            @click="listViewChang"
+        >
+            <v-icon dark>{{ cardView ? 'mdi-format-list-numbered' : 'mdi-view-grid' }}</v-icon>
+        </v-btn>
       </v-tabs>
 
       <v-tabs-items v-model="tab">
         <v-tab-item key="activeEmployee">
           <v-card class="mx-auto table-card" v-show="!cardView">
             <v-data-table
-              :headers="ActiveEmployeeHeaders"
-              :items="employeeActiveData"
-              :search="searchEmployee"
-              :loading="tableLoading"
-              loading-text="Loading users data"
+                :headers="ActiveEmployeeHeaders"
+                :items="employeeActiveData"
+                :search="searchEmployee"
+                :loading="tableLoading"
+                loading-text="Loading users data"
+                :footer-props="{
+                    'items-per-page-text':$t('employee.tablePagination')
+                }"
             >
               <template v-slot:[`item.id`]="item">
                 {{ item.index + 1 }}
@@ -104,7 +108,7 @@
 
                 <span
                   class="
-                    font-weight-medium
+                    font-weight-bold
                     blue-grey--text
                     text--darken-3 text-capitalize
                     employee-name
@@ -117,11 +121,11 @@
               <template v-slot:[`item.gender`]="{ item }">
                 <v-chip
                   v-if="item.gender == 'male'"
-                  class="p-0 gender-chip"
-                  small
-                  color="indigo"
-                  text-color="white"
-                  label
+                    class="pa-1 gender-chip ma-0"
+                    small
+                    color="indigo"
+                    text-color="white"
+                    label
                 >
                   <v-avatar left class="mr-0">
                     <v-icon x-small>mdi-human-male</v-icon>
@@ -130,43 +134,43 @@
                 </v-chip>
 
                 <v-chip
-                  v-else
-                  class="p-1 gender-chip"
-                  small
-                  color="pink"
-                  text-color="white"
-                  label
+                    v-else
+                    class="p-1 gender-chip"
+                    small
+                    color="pink"
+                    text-color="white"
+                    label
                 >
-                  <v-avatar left class="mr-0">
-                    <v-icon x-small>mdi-human-female</v-icon>
-                  </v-avatar>
-                  {{ item.gender }}
+                    <v-avatar left class="mr-0">
+                        <v-icon x-small>mdi-human-female</v-icon>
+                    </v-avatar>
+                    {{ item.gender }}
                 </v-chip>
               </template>
 
-                <template v-slot:[`item.position`]="{ item }">
+                <template v-slot:[`item.position.title`]="{ item }">
                     <v-chip
                         label
                         dark
                         color="blue-grey darken-2"
                         class="text-capitalize pa-1 font-weight-medium"
                         small
-                        outlined
+
                     >
                         <v-avatar left>
                             <v-icon small>mdi-account-star</v-icon>
                         </v-avatar>
-                        {{ item.position }}
+                        {{ item.position.title }}
                     </v-chip>
                 </template>
 
                 <template v-slot:[`item.start_date`]="{ item }">
                     <v-chip
-                    class="p-1 start-date"
-                    small
-                    color="teal"
-                    text-color="white"
-                    label
+                        class="pa-1 start-date"
+                        small
+                        color="teal"
+                        text-color="white"
+                        label
                     >
                     <v-avatar left class="mr-0">
                         <v-icon x-small>mdi-calendar-month</v-icon>
@@ -204,6 +208,10 @@
                     @click="deleteEployee(item.id, item.name)"
                     >mdi-delete</v-icon
                     >
+                </template>
+
+                <template v-slot:no-results>
+                    <span>{{ $t('employee.tabelNotFound') }}</span>
                 </template>
             </v-data-table>
           </v-card>
@@ -282,79 +290,80 @@
         <v-tab-item key="inactiveEmployee">
           <v-card class="mx-auto table-card">
             <v-data-table
-              :headers="InactiveEmployeeHeaders"
-              :items="employeeInactiveData"
-              :search="searchEmployee"
-              :loading="tableLoading"
-              loading-text="Loading users data"
+                :headers="InactiveEmployeeHeaders"
+                :items="employeeInactiveData"
+                :search="searchEmployee"
+                :loading="tableLoading"
+                loading-text="Loading users data"
+                :footer-props="{
+                    'items-per-page-text':$t('employee.tablePagination')
+                }"
             >
-              <template v-slot:[`item.id`]="item">
-                {{ item.index + 1 }}
-              </template>
+                <template v-slot:[`item.id`]="item">
+                    {{ item.index + 1 }}
+                </template>
 
-              <!-- :color="randomColor()" -->
-              <!-- color="cyan darken-2 white--text" -->
-              <template v-slot:[`item.name`]="{ item }">
-                <v-avatar
-                  size="40"
-                  class="ma-1 white--text"
-                  left
-                  v-if="item.image == 'default.png'"
-                  :color="'#' + item.profile_color"
-                >
-                  {{
-                    item.name
-                      .split(" ")
-                      .map((x) => x[0].toUpperCase())
-                      .join("")
-                  }}
-                </v-avatar>
+                <template v-slot:[`item.name`]="{ item }">
+                    <v-avatar
+                        size="40"
+                        class="ma-1 white--text"
+                        left
+                        v-if="item.image == 'default.png'"
+                        :color="'#' + item.profile_color"
+                    >
+                        {{
+                            item.name
+                            .split(" ")
+                            .map((x) => x[0].toUpperCase())
+                            .join("")
+                        }}
+                    </v-avatar>
 
-                <v-avatar size="38" class="ma-2" left v-else>
-                  <v-img :src="'/employees/' + item.image" />
-                </v-avatar>
+                    <v-avatar size="38" class="ma-2" left v-else>
+                    <v-img :src="'/employees/' + item.image" />
+                    </v-avatar>
 
-                <span
-                  class="
-                    font-weight-medium
-                    blue-grey--text
-                    text--darken-3 text-capitalize
-                    employee-name
-                  "
-                >
-                  {{ item.name }}
-                </span>
-              </template>
+                    <span
+                        class="
+                            font-weight-medium
+                            blue-grey--text
+                            text--darken-3 text-capitalize
+                            employee-name
+                        "
+                    >
+                        {{ item.name }}
+                    </span>
+                </template>
 
-              <template v-slot:[`item.gender`]="{ item }">
-                <v-chip
-                  v-if="item.gender == 'male'"
-                  class="p-1 gender-chip"
-                  small
-                  color="indigo"
-                  text-color="white"
-                  label
-                >
-                  <v-avatar left class="mr-0">
-                    <v-icon x-small>mdi-gender-male</v-icon>
-                  </v-avatar>
-                  {{ item.gender }}
-                </v-chip>
+                <template v-slot:[`item.gender`]="{ item }">
+                    <v-chip
+                        v-if="item.gender == 'male'"
+                        class="p-1 gender-chip"
+                        small
+                        color="indigo"
+                        text-color="white"
+                        label
+                    >
+                        <v-avatar left class="mr-0">
+                            <v-icon x-small>mdi-gender-male</v-icon>
+                        </v-avatar>
+                    {{ item.gender }}
+                    </v-chip>
 
-                <v-chip
-                  v-else
-                  class="p-1 gender-chip"
-                  small
-                  color="pink"
-                  text-color="white"
-                  label
-                >
-                  <v-avatar left class="mr-0">
-                    <v-icon x-small>mdi-gender-female</v-icon>
-                  </v-avatar>
-                  {{ item.gender }}
-                </v-chip>
-              </template>
+                    <v-chip
+                        v-else
+                        class="p-1 gender-chip"
+                        small
+                        color="pink"
+                        text-color="white"
+                        label
+                    >
+                    <v-avatar left class="mr-0">
+                        <v-icon x-small>mdi-gender-female</v-icon>
+                    </v-avatar>
+                        {{ item.gender }}
+                    </v-chip>
+                </template>
 
                 <template v-slot:[`item.position`]="{ item }">
                     <v-chip
@@ -401,39 +410,39 @@
                         </v-avatar>
                         {{ formatDate(item.leave_date) }}
                     </v-chip>
-
                 </template>
 
-              <template v-slot:[`item.phone_number`]="{ item }">
-                <span v-for="number in item.phone_number" :key="number.id">
-                  <v-chip
-                    v-if="number.phone != null"
-                    class="p-1 start-date"
-                    small
-                    color="grey lighten-2"
-                    text-color="blue-grey darken-3"
-                    label
-                  >
-                    {{ number.phone }}
-                    <v-avatar class="mr-0">
-                      <v-icon x-small>mdi-phone</v-icon>
-                    </v-avatar>
-                  </v-chip>
-                  <br />
-                </span>
-              </template>
+                <template v-slot:[`item.phone_number`]="{ item }">
+                    <span v-for="number in item.phone_number" :key="number.id">
+                    <v-chip
+                        v-if="number.phone != null"
+                        class="p-1 start-date"
+                        small
+                        color="grey lighten-2"
+                        text-color="blue-grey darken-3"
+                        label
+                    >
+                        {{ number.phone }}
+                        <v-avatar class="mr-0">
+                        <v-icon x-small>mdi-phone</v-icon>
+                        </v-avatar>
+                    </v-chip>
+                    <br />
+                    </span>
+                </template>
 
-              <template v-slot:[`item.actions`]="{ item }">
-                <v-icon small class="mr-2" @click="editEmployee(item)"
-                  >mdi-pencil</v-icon
-                >
-                <v-icon
-                  small
-                  class="mr-2"
-                  @click="deleteEployee(item.id, item.name)"
-                  >mdi-delete</v-icon
-                >
-              </template>
+                <template v-slot:[`item.actions`]="{ item }">
+                    <v-icon small class="mr-2" @click="editEmployee(item)">mdi-pencil</v-icon>
+                    <v-icon
+                        small
+                        class="mr-2"
+                        @click="deleteEployee(item.id, item.name)">
+                        mdi-delete
+                    </v-icon>
+                </template>
+                <template v-slot:no-results>
+                    <span>{{ $t('employee.tabelNotFound') }}</span>
+                </template>
             </v-data-table>
           </v-card>
         </v-tab-item>
@@ -441,24 +450,26 @@
 
       <!-- --------employee-Insert-Form------ -->
       <v-dialog
-        v-model="employeeForm"
-        width="550"
-        persistent
-        overlay-opacity="0"
+            v-model="employeeForm"
+            width="550"
+            persistent
+            overlay-opacity="0"
       >
         <v-card>
           <v-toolbar
             dense
             flat
-            color="indigo lighten-1"
-            class="user-form-dialog"
+            color="lighten-1"
+            class="user-form-dialog khawin-background-color"
           >
             <span v-if="editMode === false" class="white--text">
-              <v-icon left color="white">mdi-account-plus</v-icon>
-              {{ formTitle }}
+                <v-icon left color="white">mdi-account-plus</v-icon>
+                {{ $t('employee.frmAddEmp') }}
             </span>
             <span v-else class="white--text"
-              ><v-icon left dark>mdi-account-edit</v-icon>{{ formTitle }}</span
+              ><v-icon left dark>mdi-account-edit</v-icon>
+                {{ $t('employee.frmEditEmp') }}
+              </span
             >
           </v-toolbar>
 
@@ -471,7 +482,8 @@
                     <v-col sm="8">
                         <v-text-field
                             v-model="form.name"
-                            label="Name"
+                            v-bind:label="$t('employee.txtName')"
+                            color="cyan darken-1"
                             prepend-icon="mdi-account-tie"
                             :error-messages="errorsMessage.name"
                         ></v-text-field>
@@ -482,13 +494,14 @@
                             :error-messages="errorsMessage.gender"
                             class="p-0 m-0 ml-5 employee-radio"
                         >
-                            <v-radio label="Male" value="male"></v-radio>
-                            <v-radio label="Female" value="female"></v-radio>
+                            <v-radio v-bind:label="$t('employee.genderM')" value="male"></v-radio>
+                            <v-radio v-bind:label="$t('employee.genderF')" value="female"></v-radio>
                         </v-radio-group>
 
                         <v-text-field
                             v-model="form.email"
-                            label="Email"
+                            v-bind:label="$t('employee.txtEmail')"
+                            color="cyan darken-1"
                             prepend-icon="mdi-email"
                             :error-messages="errorsMessage.email"
                         ></v-text-field>
@@ -500,7 +513,8 @@
                             :item-text="(item) => item.title"
                             item-value="id"
                             clearable
-                            label="Select Position"
+                            v-bind:label="$t('employee.selectPosition')"
+                            color="cyan darken-1"
                             prepend-icon="mdi-account-star"
                             :error-messages="errorsMessage.position_id"
                         >
@@ -509,9 +523,8 @@
                                     label
                                     dark
                                     color="blue-grey darken-2"
-                                    class="text-capitalize p-2 font-weight-medium"
+                                    class="text-capitalize pa-1 font-weight-regular"
                                     small
-                                    outlined
                                 >
                                     {{ data.item.title }}
                                 </v-chip>
@@ -526,7 +539,8 @@
                     >
                         <template v-slot:activator="{ on, attrs }">
                             <v-text-field
-                                label="Start Date"
+                                v-bind:label="$t('employee.txtStartDate')"
+                                color="cyan darken-1"
                                 :value="computedDateFormattedMomentjs"
                                 prepend-icon="mdi-calendar"
                                 readonly
@@ -549,10 +563,11 @@
                                 :key="index"
                             >
                                 <v-text-field
-                                v-model="number.phone"
-                                label="Phone Number"
-                                prepend-icon="mdi-phone"
-                                v-mask="'###-###-####'"
+                                    v-model="number.phone"
+                                    color="cyan darken-1"
+                                    v-bind:label="$t('employee.txtPhoneNum')"
+                                    prepend-icon="mdi-phone"
+                                    v-mask="'###-###-####'"
                                 ></v-text-field>
                                 <small v-if="index !== 0" class="btn-remove-phoneNum">
                                 <v-icon @click="removePhone(index)">mdi-close</v-icon>
@@ -575,7 +590,7 @@
                         >
                            <v-checkbox
                                 v-model="form.is_inactived"
-                                label="Is inactive"
+                                v-bind:label="$t('employee.isInactive')"
                                 color="red"
                                 class="pa-0 ma-0"
                                 hide-details
@@ -589,7 +604,7 @@
                             >
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
-                                        label="Leave Date"
+                                        v-bind:label="$t('employee.leavedDate')"
                                         :value="computedDateFormattedLeaveDate"
                                         prepend-icon="mdi-calendar"
                                         readonly
@@ -623,10 +638,10 @@
                             ></v-img>
 
                             <v-img
-                            v-if="
-                                preview_profile_edit &&
-                                preview_profile_edit != 'default.png'
-                            "
+                                v-if="
+                                    preview_profile_edit &&
+                                    preview_profile_edit != 'default.png'
+                                "
                             :src="'/employees/' + preview_profile_edit"
                             class="img-fluid rounded-sm"
                             ></v-img>
@@ -636,7 +651,7 @@
                             v-model="form.image"
                             @change="onFileChange"
                             prepend-icon="mdi-image-multiple"
-                            label="employee image"
+                            v-bind:label="$t('employee.empImage')"
                             @click:clear="clearImage()"
                             :error-messages="errorsMessage.image"
                         />
@@ -652,16 +667,17 @@
                 depressed
                 @click="closeDialog"
               >
-                cancel
+                {{ $t('employee.btnCancel') }}
               </v-btn>
               <v-btn
-                color="primary"
                 small
                 depressed
                 type="submit"
                 :loading="btnSaveLoading"
+                class="khawin-background-color"
+                dark
               >
-                save
+                {{ $t('employee.btnSave') }}
               </v-btn>
             </v-card-actions>
           </form>
@@ -735,35 +751,31 @@ export default {
         leaveDateChoose: false,
         cardView: false,
     //   -------Table-header-----------------
-        ActiveEmployeeHeaders: [
-            {
-            text: "No.",
-            align: "start",
-            value: "id",
-            },
-            { text: "Name", value: "name" },
-            { text: "Gender", value: "gender" },
-            { text: "Email", value: "email" },
-            { text: "Position", value: "position" },
-            { text: "Start Date", value: "start_date" },
-            { text: "Phone", value: "phone_number" },
-            { text: "Action", sortable: false, align: "center", value: "actions" },
-        ],
+        // ActiveEmployeeHeaders: [
+        //     {
+        //     text: "No.",
+        //     align: "start",
+        //     value: "id",
+        //     },
+        //     { text: "Name", value: "name" },
+        //     { text: "Gender", value: "gender" },
+        //     { text: "Email", value: "email" },
+        //     { text: "Position", value: "position" },
+        //     { text: "Start Date", value: "start_date" },
+        //     { text: "Phone", value: "phone_number" },
+        //     { text: "Action", sortable: false, align: "center", value: "actions" },
+        // ],
 
-        InactiveEmployeeHeaders: [
-            {
-            text: "No.",
-            align: "start",
-            value: "id",
-            },
-            { text: "Name", value: "name" },
-            { text: "Gender", value: "gender" },
-            { text: "Email", value: "email" },
-            { text: "Position", value: "position" },
-            { text: "Date started/stopped", value: "start_date" },
-            { text: "Phone", value: "phone_number" },
-            { text: "Action", sortable: false, align: "center", value: "actions" },
-        ],
+        // InactiveEmployeeHeaders: [
+        //     { text: "No.", align: "start", value: "id"},
+        //     { text: "Name", value: "name" },
+        //     { text: "Gender", value: "gender" },
+        //     { text: "Email", value: "email" },
+        //     { text: "Position", value: "position" },
+        //     { text: "Date started/stopped", value: "start_date" },
+        //     { text: "Phone", value: "phone_number" },
+        //     { text: "Action", sortable: false, align: "center", value: "actions" },
+        // ],
       //   -------/Table-header-----------------
         employeeActiveData: [],
         employeeInactiveData: [],
@@ -797,20 +809,51 @@ export default {
   },
     computed: {
         formTitle() {
-        return this.editMode === false ? "Add Employee" : "Edit Employee";
+            return this.editMode === false ? "Add Employee" : "Edit Employee";
         },
         computedDateFormattedMomentjs() {
-        return this.form.start_date
+            return this.form.start_date
             ? moment(this.form.start_date).format("DD/MM/YYYY")
             : "";
         },
 
         computedDateFormattedLeaveDate() {
-        return this.form.leave_date
+            return this.form.leave_date
             ? moment(this.form.leave_date).format("DD/MM/YYYY")
             : "";
         },
+
+        ActiveEmployeeHeaders(){
+            return [
+                {
+                    text: "#",
+                    align: "start",
+                    value: "id",
+                },
+                { text: this.$t('employee.tbName'), value: "name" },
+                { text: this.$t('employee.tbGender'), value: "gender" },
+                { text: this.$t('employee.tbEmail'), value: "email" },
+                { text: this.$t('employee.tbPosition'), value: "position.title" },
+                { text: this.$t('employee.tbStartDate'), value: "start_date" },
+                { text: this.$t('employee.tbPhoneNum'), value: "phone_number" },
+                { text: this.$t('employee.tbEditDelete'), sortable: false, align: "center", value: "actions" },
+            ]
+        },
+
+        InactiveEmployeeHeaders(){
+            return [
+                { text: "#", align: "start", value: "id"},
+                { text: this.$t('employee.tbName'), value: "name" },
+                { text: this.$t('employee.tbGender'), value: "gender" },
+                { text: this.$t('employee.tbEmail'), value: "email" },
+                { text: this.$t('employee.tbPosition'), value: "position.title" },
+                { text: this.$t('employee.tbStartStopDate'), value: "start_date" },
+                { text: this.$t('employee.tbPhoneNum'), value: "phone_number" },
+                { text: this.$t('employee.tbEditDelete'), sortable: false, align: "center", value: "actions" },
+            ]
+        },
     },
+
     mounted() {
         this.ReadEmployeeActive();
         this.ReadEmployeeInactive();
@@ -827,12 +870,12 @@ export default {
                 },
                 })
                 .then((response) => {
-                this.employeeActiveData = response.data.data;
-                this.employeeActiveCount = response.data.data.length;
-                this.tableLoading = false;
+                    this.employeeActiveData = response.data.data;
+                    this.employeeActiveCount = response.data.data.length;
+                    this.tableLoading = false;
                 })
                 .catch((error) => {
-                console.log(error);
+                    console.log(error);
                 });
         },
 
@@ -870,7 +913,7 @@ export default {
 
 
         listViewChang(){
-        this.cardView = this.cardView ? false : true;
+            this.cardView = this.cardView ? false : true;
         },
 
         // randomColor() {
@@ -969,7 +1012,7 @@ export default {
 
         editEmployee(employee) {
 
-            console.log(employee)
+            console.log(employee.position)
 
             this.editMode = true;
             this.form.id = employee.id;

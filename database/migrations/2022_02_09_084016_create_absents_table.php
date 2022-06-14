@@ -22,6 +22,7 @@ class CreateAbsentsTable extends Migration
             $table->float('number');
             $table->string('day');
             $table->string('date');
+            $table->string('year_month');
             $table->string('description')->nullable();
             $table->timestamps();
         });

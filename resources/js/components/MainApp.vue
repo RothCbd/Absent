@@ -8,118 +8,126 @@
 
         <v-app v-if="loggedIn" id="main-app">
         <v-navigation-drawer color="grey lighten-5" app v-model="drawer">
-            <v-card flat color="indigo" class="menu-card">
-            <v-list class="profile">
-                <v-list-item link class="text-center p-0">
-                <v-list-item-content>
-                    <v-list-item-title>
-                    <v-avatar color="grey lighten-5" size="50">
-                        <span
-                            v-if="auth.profile == 'default.png'"
+            <v-card flat class="menu-card khawin-background-color">
+                <v-list class="profile">
+                    <v-list-item link class="text-center p-0">
+                    <v-list-item-content>
+                        <v-list-item-title>
+                        <v-avatar color="grey lighten-5" size="50">
+                            <span
+                                v-if="auth.profile == 'default.png'"
+                                class="
+                                    blue--text
+                                    text--lighten-1
+                                    headline-1
+                                    font-weight-medium
+                                "
+                            >
+                                {{
+                                    auth.name
+                                    .split(" ")
+                                    .map((x) => x[0].toUpperCase())
+                                    .join("")
+                                }}
+                            </span>
+
+                            <v-img v-else :src="'/profiles/' + auth.profile" />
+                        </v-avatar>
+                        <h5
                             class="
-                                blue--text
-                                text--lighten-1
-                                headline-1
-                                font-weight-medium
+                            mt-2
+                            mb-0
+                            white--text
+                            text--darken-1
+                            font-weight-regular
                             "
                         >
-                            {{
-                                auth.name
-                                .split(" ")
-                                .map((x) => x[0].toUpperCase())
-                                .join("")
-                            }}
-                        </span>
+                            {{ auth.name }}
+                        </h5>
+                        </v-list-item-title>
+                        <v-list-item-subtitle class="white--text text--darken-1">{{
+                        auth.email
+                        }}</v-list-item-subtitle>
 
-                        <v-img v-else :src="'/profiles/' + auth.profile" />
-                    </v-avatar>
-                    <h5
-                        class="
-                        mt-2
-                        mb-0
-                        white--text
-                        text--darken-1
-                        font-weight-regular
-                        "
-                    >
-                        {{ auth.name }}
-                    </h5>
-                    </v-list-item-title>
-                    <v-list-item-subtitle class="white--text text--darken-1">{{
-                    auth.email
-                    }}</v-list-item-subtitle>
-
-                    <!-- <p class="white--text">{{ auth.name }}</p> -->
-                </v-list-item-content>
-                </v-list-item>
-            </v-list>
+                        <!-- <p class="white--text">{{ auth.name }}</p> -->
+                    </v-list-item-content>
+                    </v-list-item>
+                </v-list>
             </v-card>
 
             <!-- ------list------ -->
             <v-list dense class="menu-icon">
-            <v-list-item link to="/">
-                <v-list-item-action>
-                <v-icon>mdi-view-dashboard</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                <v-list-item-title>Dashboard</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
+                <v-list-item link to="/">
+                    <v-list-item-action>
+                    <v-icon>mdi-view-dashboard</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                    <v-list-item-title>Dashboard</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
 
-            <v-list-item link to="/position">
-                <v-list-item-action>
-                <v-icon x-small>mdi-badge-account-outline</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                <v-list-item-title>Position</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
+                <v-list-item link to="/position">
+                    <v-list-item-action>
+                    <v-icon x-small>mdi-badge-account-outline</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                    <v-list-item-title>Position</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
 
-            <v-list-item link to="/employee">
-                <v-list-item-action>
-                <v-icon>mdi-account-tie</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                <v-list-item-title>Employees</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
+                <v-list-item link to="/employee">
+                    <v-list-item-action>
+                    <v-icon>mdi-account-tie</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                    <v-list-item-title>Employees</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
 
-            <v-list-item link to="/absent">
-                <v-list-item-action>
-                <v-icon>mdi-account-cancel</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                <v-list-item-title>Absent</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
+                <v-list-item link to="/absent">
+                    <v-list-item-action>
+                    <v-icon>mdi-account-cancel</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                    <v-list-item-title>Absent</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
 
-            <v-list-item link to="/report">
-                <v-list-item-action>
-                <v-icon>mdi-chart-bar</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                <v-list-item-title>Report</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
+                <v-list-item link to="/report">
+                    <v-list-item-action>
+                    <v-icon>mdi-chart-bar</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                    <v-list-item-title>Report</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
 
-            <v-list-item link to="/user" v-if="auth.role_id == 1">
-                <v-list-item-action>
-                <v-icon>mdi-account-multiple</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                <v-list-item-title>Users</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
+                <v-list-item link to="/user" v-if="auth.role_id == 1">
+                    <v-list-item-action>
+                    <v-icon>mdi-account-multiple</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                    <v-list-item-title>Users</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
 
-            <v-list-item link to="/account">
-                <v-list-item-action>
-                <v-icon>mdi-account-cog</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                <v-list-item-title>Account</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
+                <v-list-item link to="/account">
+                    <v-list-item-action>
+                    <v-icon>mdi-account-cog</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                    <v-list-item-title>Account</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
             </v-list>
+
+            <template v-slot:append>
+                <v-btn block small depressed class="my-2" color="blue-grey lighten-4" @click="logout">
+                    sign out
+                    <v-icon small>mdi-logout-variant</v-icon>
+                </v-btn>
+            </template>
+
         </v-navigation-drawer>
 
         <!-- app-bar -->
@@ -130,21 +138,69 @@
             ></v-app-bar-nav-icon>
 
             <v-toolbar-title class="grey--text text--darken-2 font-weight-medium">
-            <small>Absence Management</small>
+                <!-- <small>Absence Management</small> -->
+                <h5>{{ $t('app.title') }}</h5>
             </v-toolbar-title>
 
             <v-spacer></v-spacer>
 
-            <h4 class="mr-6 grey--text text--darken-1 mt-1 font-weight-medium d-none d-sm-flex">
-            <v-chip label outlined color="grey--text text--darken-2" small @click="openDialog">
-                {{ formatDate(new Date()) }}
-            </v-chip>
-            </h4>
+            <!-- content-class="elevation-0" -->
+            <v-menu
+                offset-y
+                open-on-hover
+            >
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        v-bind="attrs"
+                        v-on="on"
+                        depressed
+                        text
+                        rounded
+                        class="text-lowercase font-weight-regular"
+                    >
+                        <v-icon small>mdi-translate</v-icon>
+                        <!-- <span v-for="locale in $i18n.locale" :key="`locale-${locale}`">
+                            {{ locale[0] }}
+                        </span> -->
+                        <!-- language -->
+                        {{ $t('languages.language') }}
+                    </v-btn>
+                </template>
+                <v-list>
+                    <v-list-item link>
+                        <v-img
+                            height="20"
+                            width="20"
+                            :src="'/image/englishflag.png'"
+                        ></v-img>
+                        <v-list-item-title @click="$i18n.locale = 'english'" class="ml-1">
+                            {{ $t('languages.english') }}
+                        </v-list-item-title>
+                    </v-list-item>
+                    <v-list-item link>
+                        <v-img
+                            height="20"
+                            width="20"
+                            :src="'/image/cambodaiflag.png'"
+                        ></v-img>
+                        <v-list-item-title @click="$i18n.locale = 'khmer'" class="ml-1">
+                            {{ $t('languages.khmer') }}
+                        </v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
 
-            <v-btn text color="grey darken-1" @click="logout" small>
-            sign out
-            <v-icon>mdi-login-variant</v-icon>
+            <v-btn
+                color="grey lighten-2 indigo--text"
+                depressed
+                small
+                @click="openDialog"
+            >
+                {{ formatDate(new Date()) }}
             </v-btn>
+
+
+
         </v-app-bar>
 
         <!-- content -->
@@ -166,7 +222,7 @@
         >
             <v-card flat>
                 <v-toolbar
-                    color="indigo lighten-1"
+                    class="khawin-background-color"
                     dark
                     extended
                     flat
@@ -182,20 +238,22 @@
                 >
                     <v-toolbar flat>
                         <v-toolbar-title class="blue-grey--text text--darken-2">
-                            <v-icon color="blue-grey darken-1">mdi-calendar-month</v-icon>
-                             Cambodia Public holiday
-                            <v-chip
-                                class="ma-1 font-weight-medium"
-                                color="indigo"
-                                text-color="indigo"
-                                outlined
-                            >
-                                {{ new Date().getFullYear() }}
-                            </v-chip>
+                            <div class="d-inline-flex align-center">
+                                <v-icon small color="blue-grey darken-1">mdi-calendar-month</v-icon>
+                                <h5>Cambodia Public holiday for </h5>
+                                <v-chip
+                                    class="ml-1 pa-1 font-weight-bold"
+                                    label
+                                    text-color="light-blue darken-3"
+                                    @click="chooseHolidayYear"
+                                >
+                                    {{ new Date().getFullYear() }}
+                                </v-chip>
+                            </div>
                         </v-toolbar-title>
                         <v-spacer></v-spacer>
 
-                        <v-btn depressed color="indigo lighten-1" small dark @click="openDialogInsertForm()">
+                        <v-btn depressed class="khawin-background-color" small dark @click="openDialogInsertForm()">
                             <v-icon left>mdi-plus-circle</v-icon>
                             add holiday
                         </v-btn>
@@ -293,7 +351,7 @@
         <!-- --------Absent-Insert-Form------ -->
         <v-dialog v-model="holidayForm" width="500" persistent overlay-opacity="0">
             <v-card>
-                <v-toolbar dense flat color="indigo lighten-1" class="user-form-dialog">
+                <v-toolbar dense flat color="lighten-1" class="user-form-dialog khawin-background-color">
                     <span v-if="editMode === false" class="white--text">
                         <v-icon left color="white">mdi-calendar-month</v-icon>
                         {{ formTitle }}
@@ -314,6 +372,7 @@
                                 <v-text-field
                                     :value="computedDateFormattedMomentjs"
                                     label="Holiday Date"
+                                    color="cyan darken-1"
                                     prepend-inner-icon="mdi-calendar"
                                     readonly
                                     v-bind="attrs"
@@ -331,6 +390,7 @@
                         <v-textarea
                             v-model="form.holiday"
                             outlined
+                            color="cyan darken-1"
                             label="Holiday Detail"
                             rows="3"
                             prepend-inner-icon="mdi-calendar-text"
@@ -343,7 +403,7 @@
                         <v-btn small color="grey lighten-2" depressed @click="closeDialog">
                             cancel
                         </v-btn>
-                        <v-btn color="primary" small depressed type="submit" :loading="btnSaveLoading">
+                        <v-btn class="khawin-background-color" dark small depressed type="submit" :loading="btnSaveLoading">
                             save
                         </v-btn>
                     </v-card-actions>
@@ -548,26 +608,30 @@ export default {
     methods: {
 
         formatDate(value) {
-        return moment(value).format("dddd, DD-MM-YYYY");
+        return moment(value).format("dddd, DD/MM/YYYY");
+        },
+
+        chooseHolidayYear(){
+            console.log('hello')
         },
 
         login() {
-        if (this.email.length == 0 || this.password.length == 0) {
-            this.errorsMessage.email = "The email field is required.";
-            this.errorsMessage.password = "The password field is required.";
-        } else {
-            this.btnLoading = true;
-            this.cardLoading = true;
+            if (this.email.length == 0 || this.password.length == 0) {
+                this.errorsMessage.email = "The email field is required.";
+                this.errorsMessage.password = "The password field is required.";
+            } else {
+                this.btnLoading = true;
+                this.cardLoading = true;
 
-            setTimeout(
-            () => ((this.btnLoading = false), (this.cardLoading = false)),
-                3000
-            );
-            this.$store.dispatch("token", {
-                email: this.email,
-                password: this.password,
-            });
-        }
+                setTimeout(
+                () => ((this.btnLoading = false), (this.cardLoading = false)),
+                    3000
+                );
+                this.$store.dispatch("token", {
+                    email: this.email,
+                    password: this.password,
+                });
+            }
         },
 
         logout() {

@@ -14,10 +14,6 @@ class AbsentController extends Controller
 {
     public function read()
     {
-        // return Absent::orderBy('date')->get()->groupBy('date');
-
-        // ====================
-
         $absents = Absent::with(['employee' => function($q){
             $q->where('is_inactive', false);
         }])
@@ -34,6 +30,7 @@ class AbsentController extends Controller
                     'absent_time' => $absent->absent_time,
                     'day' => $absent->day,
                     'date' => $absent->date,
+                    'year_month' => $absent->year_month,
                     'description' => $absent->description,
                     'employee' => [
                         'id' => $absent->employee->id,
@@ -45,12 +42,10 @@ class AbsentController extends Controller
             }
         }
         return $absentData;
-        // return new absentData(Absent::orderBy('id', 'DESC')->get());
     }
 
     public function create(Request $request)
     {
-
         $this->validate($request, [
             'employee_id' => 'required|integer',
             'absent' => 'in:fullday,halfday',
@@ -86,6 +81,7 @@ class AbsentController extends Controller
         $absent->absent_time = $request->absent_time;
         $absent->absent = $request->absent;
         $absent->description = $request->description;
+        $absent->year_month = $day->format('Y-m');
         $absent->save();
         return response()->json(['message' => 'Absent save successfully.'], 200);
     }
@@ -129,6 +125,7 @@ class AbsentController extends Controller
         $absent->employee_id = $request->employee_id;
         $absent->date = $request->date;
         $absent->description = $request->description;
+        $absent->year_month = $day->format('Y-m');
         $absent->save();
         return response()->json(['message' => 'Absent update successfully.'], 200);
     }

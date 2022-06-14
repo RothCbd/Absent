@@ -7,6 +7,14 @@
 // Bootstrap
 // @import '~bootstrap/scss/bootstrap';
 
+.khawin-background-color {
+    background-color: #3a9dca !important;
+}
+
+.khawin-color {
+    color: #3a9dca !important;
+}
+
 ::-webkit-scrollbar {
     width: 0px;
 }
@@ -24,7 +32,11 @@
     border-color: #3a9dca !important;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Khmer&display=swap');
+
 .v-main {
+    font-family: 'Noto Sans Khmer', sans-serif !important;
     background-color: #f1f2f6 !important;
 }
 
@@ -288,6 +300,11 @@ h2 {
     height: 30px !important;
 }
 
+.v-input--selection-controls .v-input__slot>.v-label,
+.v-input--selection-controls .v-radio>.v-label {
+    font-family: "Noto Sans Khmer", sans-serif !important;
+}
+
 // ===============employee============
 @import url('https://fonts.googleapis.com/css2?family=Fredoka&family=Roboto&display=swap');
 
@@ -296,7 +313,9 @@ h2 {
 }
 
 #employee .tab span {
-    font-family: 'Roboto', sans-serif;
+    // font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    font-family: 'Noto Sans Khmer', sans-serif !important;
 }
 
 #employee .v-tab--active {
@@ -319,6 +338,11 @@ h2 {
 
 .employee-name {
     font-size: 90%;
+}
+
+.v-input--selection-controls .v-input__slot>.v-label,
+.v-input--selection-controls .v-radio>.v-label {
+    font-family: "Noto Sans Khmer", sans-serif !important;
 }
 
 .start-date {

@@ -21,7 +21,7 @@ class employeeData extends ResourceCollection
                     'name' => $employee->name,
                     'email' => $employee->email,
                     'gender' => $employee->gender,
-                    'position' => $employee->position->title,
+                    'position' => $employee->position,
                     'start_date' => $employee->start_date,
                     'phone_number' => $employee->phone_number,
                     'image' => $employee->pic,

@@ -16,8 +16,7 @@
         <v-col cols="sm-4" class="text-right">
           <v-btn
             small
-            color="indigo"
-            class="add-user white--text font-weight-regular"
+            class="add-user white--text font-weight-regular khawin-background-color"
             @click="openDialog"
             ><v-icon left>mdi-plus</v-icon> Add User</v-btn
           >
@@ -128,8 +127,8 @@
           <v-toolbar
             dense
             flat
-            color="indigo lighten-1"
-            class="user-form-dialog"
+            color="lighten-1"
+            class="user-form-dialog khawin-background-color"
           >
             <span v-if="editMode === false" class="white--text">
               <v-icon left color="white">mdi-account-plus</v-icon>
@@ -154,6 +153,7 @@
                     item-value="value"
                     label="Role"
                     dense
+                    color="cyan darken-1"
                     prepend-icon="mdi-account-star"
                     :error-messages="errorsMessage.role_id"
                   >
@@ -162,6 +162,7 @@
                   <v-text-field
                     v-model="form.name"
                     label="Name"
+                    color="cyan darken-1"
                     prepend-icon="mdi-account-edit"
                     :error-messages="errorsMessage.name"
                   ></v-text-field>
@@ -169,6 +170,7 @@
                   <v-text-field
                     v-model="form.email"
                     label="Email"
+                    color="cyan darken-1"
                     prepend-icon="mdi-email"
                     :error-messages="errorsMessage.email"
                   ></v-text-field>
@@ -183,6 +185,7 @@
                         <v-text-field
                           v-model="number.phone"
                           label="Phone Number"
+                          color="cyan darken-1"
                           prepend-icon="mdi-phone"
                           v-mask="'###-###-####'"
                         ></v-text-field>
@@ -217,6 +220,7 @@
 
                   <v-text-field
                     v-model="form.password"
+                    color="cyan darken-1"
                     :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                     :type="showPassword ? 'text' : 'password'"
                     label="Password"
@@ -227,6 +231,7 @@
 
                   <v-text-field
                     v-model="form.password_confirmation"
+                    color="cyan darken-1"
                     :append-icon="
                       showPasswordConfirm ? 'mdi-eye' : 'mdi-eye-off'
                     "
@@ -285,7 +290,7 @@
               <v-btn
                 depressed
                 dark
-                color="indigo"
+                class="khawin-background-color"
                 small
                 type="submit"
                 :loading="btnSaveLoading"

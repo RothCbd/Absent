@@ -24,12 +24,16 @@ class HolidayController extends Controller
         foreach($holidays as $holiday){
             $getDates[] = $holiday->date;
         }
-
         return $getDates;
     }
 
     public function create(Request $request)
     {
+        // $year = new DateTime($request->date);
+        // if($year->format('Y') < Carbon::now()->year){
+        //     return 'holiday year must equal current year or greater than current year';
+        // }
+
         $this->validate($request, [
             'date' => 'required|date_format:Y-m-d|unique:holidays,date',
             'holiday' => 'required|min:3'

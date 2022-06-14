@@ -1,7 +1,7 @@
 <template>
   <div id="account">
-    <v-tabs v-model="tab">
-      <v-tabs-slider color="indigo"></v-tabs-slider>
+    <v-tabs v-model="tab" color="cyan darken-1">
+      <v-tabs-slider color="cyan darken-1"></v-tabs-slider>
       <v-tab key="username" class="font-weight-bold text-capitalize"
         ><v-icon>mdi-account</v-icon> Profile</v-tab
       >
@@ -23,7 +23,7 @@
             :indeterminate="loading"
             absolute
             top
-            color="indigo"
+            color="cyan darken-1"
           ></v-progress-linear>
 
           <v-form
@@ -58,6 +58,7 @@
             <v-card-text>
               <v-text-field
                 v-model="form.name"
+                color="cyan darken-1"
                 label="User Name"
                 outlined
                 prepend-inner-icon="mdi-account"
@@ -66,6 +67,7 @@
 
               <v-text-field
                 v-model="form.email"
+                color="cyan darken-1"
                 label="Email"
                 outlined
                 prepend-inner-icon="mdi-email"
@@ -76,7 +78,7 @@
                 depressed
                 small
                 block
-                color="indigo"
+                color="cyan darken-1"
                 type="submit"
                 :loading="btnLoading"
                 dark
@@ -94,7 +96,7 @@
             :indeterminate="loading"
             absolute
             top
-            color="indigo"
+            color="cyan darken-1"
           ></v-progress-linear>
 
           <v-form
@@ -116,6 +118,7 @@
 
               <v-text-field
                 v-model="formPassword.old_password"
+                color="cyan darken-1"
                 :append-icon="password ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="password ? 'text' : 'password'"
                 label="Password"
@@ -125,6 +128,7 @@
 
               <v-text-field
                 v-model="formPassword.password"
+                color="cyan darken-1"
                 :append-icon="confirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="confirmPassword ? 'text' : 'password'"
                 label="New Password"
@@ -134,6 +138,7 @@
 
               <v-text-field
                 v-model="formPassword.password_confirmation"
+                color="cyan darken-1"
                 :append-icon="newPassword ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="newPassword ? 'text' : 'password'"
                 label="Confirm Password "
@@ -145,7 +150,7 @@
                 depressed
                 small
                 block
-                color="indigo"
+                color="cyan darken-1"
                 type="submit"
                 :loading="btnLoading"
                 dark

@@ -3,26 +3,32 @@
         <v-row>
             <v-col cols="12" sm="6">
                 <v-row>
-                    <v-col cols="12" sm="12" md="4">
+                    <v-col cols="12" sm="12" md="5">
                         <h3 class="grey--text text--darken-2">
                             <v-icon class="mb-1" color="grey darken-2">mdi-badge-account-outline</v-icon>
-                            <span class="text-decoration-underline">Position List</span>
+                            <span class="text-decoration-underline">{{ $t('position.titleList') }}</span>
                             <v-chip color="grey lighten-2 grey--text text--darken-3">{{
-                                    positionCount
+                                positionCount
                             }}</v-chip>
                         </h3>
                     </v-col>
-                    <v-col cols="12" sm="12" md="6">
-                        <v-text-field v-model="searchAbsent" append-icon="mdi-magnify" class="txt-search" label="Search"
-                            single-line></v-text-field>
+                    <v-col cols="12" sm="12" md="7">
+                        <v-text-field
+                            v-model="searchAbsent"
+                            append-icon="mdi-magnify"
+                            class="txt-search"
+                            single-line
+                            v-bind:label="$t('position.search')"
+                        >
+                        </v-text-field>
                     </v-col>
                 </v-row>
             </v-col>
 
             <v-col cols="12" sm="6" class="text-end">
-                <v-btn small color="indigo" class="add-user white--text pa-2 font-weight-regular mb-2"
+                <v-btn small class="add-user white--text pa-2 font-weight-regular mb-2 khawin-background-color"
                     @click="openDialog">
-                    <v-icon left>mdi-clipboard-account</v-icon> Add position
+                    <v-icon left>mdi-clipboard-account</v-icon> {{ $t('position.addPosition') }}
                 </v-btn>
             </v-col>
         </v-row>
@@ -38,6 +44,9 @@
                 :expanded.sync="expanded"
                 show-expand
                 loading-text="Loading users data"
+                :footer-props="{
+                    'items-per-page-text':$t('position.tablePagination')
+                }"
             >
                 <template v-slot:expanded-item="{ headers, item }">
                     <td class="pa-3 employee_count_by_position" :colspan="headers.length">
@@ -54,10 +63,10 @@
                                                 #
                                             </th>
                                             <th class="text-left">
-                                                Profile
+                                                {{ $t('position.positionEmpProfile') }}
                                             </th>
                                             <th class="text-left">
-                                                Name
+                                                {{ $t('position.positionEmpName') }}
                                             </th>
                                         </tr>
                                     </thead>
@@ -145,19 +154,25 @@
                     <v-icon small class="mr-2" @click="editPosition(item)">mdi-pencil</v-icon>
                     <v-icon small class="mr-2" @click="deletePosition(item.id, item.title)">mdi-delete</v-icon>
                 </template>
+
+                <template v-slot:no-results>
+                    <span>{{ $t('position.tabelNotFound') }}</span>
+                </template>
+
             </v-data-table>
         </v-card>
 
         <!-- --------Absent-Insert-Form------ -->
         <v-dialog v-model="positionForm" width="500" persistent overlay-opacity="0">
             <v-card>
-                <v-toolbar dense flat color="indigo lighten-1" class="user-form-dialog">
+                <v-toolbar dense flat color="lighten-1" class="user-form-dialog khawin-background-color">
                     <span v-if="editMode === false" class="white--text">
                         <v-icon left color="white">mdi-badge-account-outline</v-icon>
-                        {{ formTitle }}
+                        {{ $t('position.formTitleAdd') }}
                     </span>
                     <span v-else class="white--text">
-                        <v-icon left dark>mdi-badge-account-outline</v-icon>{{ formTitle }}
+                        <v-icon left dark>mdi-badge-account-outline</v-icon>
+                         {{ $t('position.formTitleEdit') }}
                     </span>
                 </v-toolbar>
 
@@ -165,20 +180,21 @@
                     <v-card-text>
                         <v-text-field
                             v-model="form.title"
-                            label="Position Name"
+                            v-bind:label="$t('position.txtPosition')"
                             outlined
                             prepend-inner-icon="mdi-account-star"
                             :error-messages="errorsMessage.title"
                         ></v-text-field>
+
                     </v-card-text>
 
                     <v-card-actions class="card-action">
                         <v-spacer></v-spacer>
                         <v-btn small color="grey lighten-2" depressed @click="closeDialog">
-                            cancel
+                            {{ $t('position.btnCancel') }}
                         </v-btn>
-                        <v-btn color="primary" small depressed type="submit" :loading="btnSaveLoading">
-                            save
+                        <v-btn class="khawin-background-color" dark small depressed type="submit" :loading="btnSaveLoading">
+                            {{ $t('position.btnSave') }}
                         </v-btn>
                     </v-card-actions>
                 </form>
@@ -202,19 +218,19 @@
                     <v-sheet class="px-7 pt-7 pb-4 mx-auto text-center d-inline-block">
                         <v-icon class="text-center pb-3" x-large color="red lighten-2">mdi-alert</v-icon>
                         <div class="grey--text text--darken-3 text-body-2 mb-4">
-                            Are you sure delete position
+                            {{ $t('position.deleteMessage') }}
                             <b class="red--text tex--lighten-2">{{ positionTitle }}</b>
                             ?
-                            <p>All employee in this positon will be delete too!</p>
+                            <p>{{ $t('position.deleteMessageWarning') }}!</p>
                         </div>
 
                         <v-btn :disabled="btnLoading" class="ma-1" depressed small @click="dialogDelete = false">
-                            Cancel
+                            {{ $t('position.btnCancel') }}
                         </v-btn>
 
                         <v-btn :loading="btnLoading" class="ma-1" dark color="red" small depressed
                             @click="submitDelete">
-                            Delete
+                            {{ $t('position.btnDelete') }}
                         </v-btn>
                     </v-sheet>
                 </div>
@@ -235,11 +251,11 @@ export default {
             snackbar: false,
             editMode: false,
             tableLoading: true,
-            headers: [
-                { text: "Title", value: "title" },
-                { text: "Employee", value: "employee_count" },
-                { text: "Action", sortable: false, align: "center", value: "actions" },
-            ],
+            // headers: [
+            //     { text: this.$t('position.positionTable'), value: "title" },
+            //     { text: "Employee", value: "employee_count" },
+            //     { text: "Action", sortable: false, align: "center", value: "actions" },
+            // ],
             absentData: [],
             employeeData: [],
             positionCount: "",
@@ -265,10 +281,21 @@ export default {
                 ? moment(this.form.date).format("dddd, DD/ MM/ YYYY")
                 : "";
         },
+
+        // ====================================
+        headers(){
+            return [
+                { text: this.$t('position.positionTable'), value: 'title' },
+                { text: this.$t('position.employeeCountTable'), value: 'employee_count' },
+                { text: this.$t('position.edit_delete'), sortable: false, align: "center", value: "actions" },
+            ]
+        }
     },
     mounted() {
         this.ReadPosition();
         this.activateMultipleDraggableDialogs();
+
+        // console.log(this.$i18n.locale);
     },
 
     methods: {

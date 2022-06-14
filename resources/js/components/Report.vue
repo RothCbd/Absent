@@ -138,11 +138,12 @@
             </v-autocomplete>
 
             <v-btn
-              color="primary"
-              small
-              type="submit"
-              :loading="btnSaveLoading"
-              block
+                class="khawin-background-color"
+                small
+                dark
+                type="submit"
+                :loading="btnSaveLoading"
+                block
             >
               <v-icon left> mdi-chart-bar </v-icon>
               report
