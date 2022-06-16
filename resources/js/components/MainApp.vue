@@ -56,13 +56,13 @@
             </v-card>
 
             <!-- ------list------ -->
-            <v-list dense class="menu-icon">
+            <v-list dense class="menu-icon khmer-font font-weight-bold">
                 <v-list-item link to="/">
                     <v-list-item-action>
                     <v-icon>mdi-view-dashboard</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                    <v-list-item-title>Dashboard</v-list-item-title>
+                    <v-list-item-title>{{ $t('menu.dashboard') }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
 
@@ -71,7 +71,7 @@
                     <v-icon x-small>mdi-badge-account-outline</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                    <v-list-item-title>Position</v-list-item-title>
+                    <v-list-item-title>{{ $t('menu.position') }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
 
@@ -80,7 +80,7 @@
                     <v-icon>mdi-account-tie</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                    <v-list-item-title>Employees</v-list-item-title>
+                    <v-list-item-title>{{ $t('menu.employee') }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
 
@@ -89,7 +89,7 @@
                     <v-icon>mdi-account-cancel</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                    <v-list-item-title>Absent</v-list-item-title>
+                    <v-list-item-title>{{ $t('menu.absent') }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
 
@@ -98,7 +98,7 @@
                     <v-icon>mdi-chart-bar</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                    <v-list-item-title>Report</v-list-item-title>
+                    <v-list-item-title>{{ $t('menu.report') }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
 
@@ -107,7 +107,7 @@
                     <v-icon>mdi-account-multiple</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                    <v-list-item-title>Users</v-list-item-title>
+                    <v-list-item-title>{{ $t('menu.user') }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
 
@@ -116,14 +116,14 @@
                     <v-icon>mdi-account-cog</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                    <v-list-item-title>Account</v-list-item-title>
+                    <v-list-item-title>{{ $t('menu.account') }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
 
             <template v-slot:append>
                 <v-btn block small depressed class="my-2" color="blue-grey lighten-4" @click="logout">
-                    sign out
+                    {{ $t('menu.signout') }}
                     <v-icon small>mdi-logout-variant</v-icon>
                 </v-btn>
             </template>

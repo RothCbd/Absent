@@ -68,6 +68,13 @@
     color: #4b6584 !important;
 }
 
+#main-app .menu-icon .v-list-item--dense .v-list-item__title,
+.v-list-item--dense .v-list-item__subtitle,
+.v-list--dense .v-list-item .v-list-item__title,
+.v-list--dense .v-list-item .v-list-item__subtitle {
+    font-size: 0.9rem !important;
+}
+
 #main-app .menu-icon .v-icon.v-icon {
     font-size: 26px !important;
 }
@@ -534,6 +541,7 @@ h2 {
 }
 
 #report .date-chip {
+    font-size: 13px;
     height: 16px !important;
 }
 

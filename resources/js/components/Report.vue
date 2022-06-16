@@ -2,7 +2,7 @@
   <div id="report">
     <h3 class="grey--text text--darken-2">
       <v-icon class="mb-1" color="grey darken-2">mdi-chart-bar</v-icon>
-      <span class="text-decoration-underline">Report {{ countReport }}</span>
+      <span class="text-decoration-underline">{{ $t('report.title') }} {{ countReport }}</span>
 
       <v-btn
         v-if="reportData.length > 0"
@@ -23,36 +23,36 @@
         <v-card class="pa-5">
           <v-alert
             v-model="alert"
-            class="alert-report-message"
+            class="alert-report-message font-weight-bold"
             text
             prominent
             type="error"
             icon="mdi-cloud-alert"
           >
-            {{ alertMessageText }}
+            {{ $t('report.smgAlert') }}
           </v-alert>
 
           <form @submit.prevent="getReport()">
             <v-menu
-              v-model="menu2"
-              :close-on-content-click="false"
-              :nudge-right="40"
-              :nudge-top="40"
-              transition="scale-transition"
-              offset-y
-              min-width="auto"
+                v-model="menu2"
+                :close-on-content-click="false"
+                :nudge-right="40"
+                :nudge-top="40"
+                transition="scale-transition"
+                offset-y
+                min-width="auto"
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
-                  :value="dateRangeText"
-                  label="Choose Date"
-                  prepend-inner-icon="mdi-calendar"
-                  readonly
-                  v-bind="attrs"
-                  v-on="on"
-                  outlined
-                  clearable
-                  @click:clear="clearDate()"
+                    :value="dateRangeText"
+                    v-bind:label="$t('report.txtDate')"
+                    prepend-inner-icon="mdi-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                    outlined
+                    clearable
+                    @click:clear="clearDate()"
                 ></v-text-field>
               </template>
               <v-date-picker
@@ -63,16 +63,16 @@
             </v-menu>
 
             <v-autocomplete
-              v-model="form.employee_id"
-              :items="employeeData"
-              :item-text="(item) => item.name"
-              item-value="id"
-              clearable
-              label="Select Employee"
-              prepend-inner-icon="mdi-account-tie"
-              outlined
-              multiple
-              @click:clear="clearEmployee()"
+                v-model="form.employee_id"
+                :items="employeeData"
+                :item-text="(item) => item.name"
+                item-value="id"
+                clearable
+                v-bind:label="$t('report.txtSelectEmp')"
+                prepend-inner-icon="mdi-account-tie"
+                outlined
+                multiple
+                @click:clear="clearEmployee()"
             >
               <template v-slot:selection="data">
                 <v-chip
@@ -131,7 +131,7 @@
                 <v-list-item-content>
                   <v-list-item-title>
                     {{ data.item.name }} -
-                    <v-chip small label> {{ data.item.position }} </v-chip>
+                    <v-chip small label> {{ data.item.position.title }} </v-chip>
                   </v-list-item-title>
                 </v-list-item-content>
               </template>
@@ -202,14 +202,14 @@
                 class="
                   pa-2
                   count_chip
-                  font-weight-medium
+                  font-weight-bold
                   orange--text
                   text--darken-3
                 "
                 small
                 outlined
               >
-                {{ item.item.absent_total }} day
+                {{ item.item.absent_total }} {{ $t('report.day') }}
               </v-chip>
             </template>
 
@@ -236,10 +236,10 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Absent</th>
-                        <th>Day</th>
-                        <th>Date</th>
-                        <th>Description</th>
+                        <th>{{ $t('report.tbAbsent') }}</th>
+                        <th>{{ $t('report.tbDay') }}</th>
+                        <th>{{ $t('report.tbDate') }}</th>
+                        <th>{{ $t('report.tbDescription') }}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -253,9 +253,9 @@
                           <span
                             v-if="data.absent == 'fullday'"
                             class="deep-orange--text"
-                            >full day</span
+                            >{{ $t('report.fullDay') }}</span
                           >
-                          <span v-else class="blue-grey--text">half day</span>
+                          <span v-else class="blue-grey--text">{{ $t('report.halfDay') }}</span>
                           <span v-if="data.absent_time">
                             <v-chip
                               v-if="data.absent_time == 'morning'"
@@ -265,7 +265,7 @@
                               outlined
                               color="indigo"
                             >
-                              {{ data.absent_time }}
+                             {{ $t('report.morning') }}
                             </v-chip>
 
                             <v-chip
@@ -276,27 +276,93 @@
                               outlined
                               color="orange darken-3"
                             >
-                              {{ data.absent_time }}
+                              {{ $t('report.afternoon') }}
                             </v-chip>
                           </span>
                         </td>
                         <td class="text-lowercase">
-                          <v-chip
-                            color="grey lighten-4"
-                            class="pa-1 date-chip font-weight-medium"
-                            small
-                            label
-                            >{{ data.day }}</v-chip
-                          >
+                            <v-chip
+                                color="grey lighten-4"
+                                class="pa-1 date-chip font-weight-medium"
+                                small
+                                label
+                            >
+                                <span v-if="data.day == 'Monday'">{{ $t('report.monday') }}</span>
+                                <span v-if="data.day == 'Tuesday'">{{ $t('report.tuesday') }}</span>
+                                <span v-if="data.day == 'Wednesday'">{{ $t('report.wednesday') }}</span>
+                                <span v-if="data.day == 'Thursday'">{{ $t('report.thursday') }}</span>
+                                <span v-if="data.day == 'Friday'">{{ $t('report.friday') }}</span>
+                                <span v-if="data.day == 'Saturday'">{{ $t('report.saturday') }}</span>
+                                <span v-if="data.day == 'Sunday'">{{ $t('report.sunday') }}</span>
+                            </v-chip>
                         </td>
                         <td>
                           <v-chip
                             color="grey lighten-4"
-                            class="pa-1 date-chip pink--text font-weight-medium"
+                            class="pa-1 date-chip pink--text font-weight-bold"
                             small
                             label
                           >
-                            {{ formatDate(data.date) }}
+                            <span v-if="data.date.split('-')[1] == 1">
+                                {{ formatDate(data.date).split('-')[0] }}
+                                -{{ $t('report.january') }}
+                                -{{ formatDate(data.date).split('-')[2] }}
+                            </span>
+                            <span v-if="data.date.split('-')[1] == 2">
+                                {{ formatDate(data.date).split('-')[0] }}
+                                -{{ $t('report.february') }}
+                                -{{ formatDate(data.date).split('-')[2] }}
+                            </span>
+                            <span v-if="data.date.split('-')[1] == 3">
+                                {{ formatDate(data.date).split('-')[0] }}
+                                -{{ $t('report.march') }}
+                                -{{ formatDate(data.date).split('-')[2] }}
+                            </span>
+                            <span v-if="data.date.split('-')[1] == 4">
+                                {{ formatDate(data.date).split('-')[0] }}
+                                -{{ $t('report.april') }}
+                                -{{ formatDate(data.date).split('-')[2] }}
+                            </span>
+                            <span v-if="data.date.split('-')[1] == 5">
+                                {{ formatDate(data.date).split('-')[0] }}
+                                -{{ $t('report.may') }}
+                                -{{ formatDate(data.date).split('-')[2] }}
+                            </span>
+                            <span v-if="data.date.split('-')[1] == 6">
+                                {{ formatDate(data.date).split('-')[0] }}
+                                -{{ $t('report.june') }}
+                                -{{ formatDate(data.date).split('-')[2] }}
+                            </span>
+                            <span v-if="data.date.split('-')[1] == 7">
+                                {{ formatDate(data.date).split('-')[0] }}
+                                -{{ $t('report.july') }}
+                                -{{ formatDate(data.date).split('-')[2] }}
+                            </span>
+                            <span v-if="data.date.split('-')[1] == 8">
+                                {{ formatDate(data.date).split('-')[0] }}
+                                -{{ $t('report.august') }}
+                                -{{ formatDate(data.date).split('-')[2] }}
+                            </span>
+                            <span v-if="data.date.split('-')[1] == 9">
+                                {{ formatDate(data.date).split('-')[0] }}
+                                -{{ $t('report.september') }}
+                                -{{ formatDate(data.date).split('-')[2] }}
+                            </span>
+                            <span v-if="data.date.split('-')[1] == 10">
+                                {{ formatDate(data.date).split('-')[0] }}
+                                -{{ $t('report.october') }}
+                                -{{ formatDate(data.date).split('-')[2] }}
+                            </span>
+                            <span v-if="data.date.split('-')[1] == 11">
+                                {{ formatDate(data.date).split('-')[0] }}
+                                -{{ $t('report.november') }}
+                                -{{ formatDate(data.date).split('-')[2] }}
+                            </span>
+                            <span v-if="data.date.split('-')[1] == 12">
+                                {{ formatDate(data.date).split('-')[0] }}
+                                -{{ $t('report.december') }}
+                                -{{ formatDate(data.date).split('-')[2] }}
+                            </span>
                           </v-chip>
                         </td>
                         <td>{{ data.description }}</td>
@@ -306,6 +372,11 @@
                 </v-simple-table>
               </td>
             </template>
+
+            <template slot="no-data">
+                please select date or employee
+            </template>
+
           </v-data-table>
 
           <!-- <v-data-table
@@ -593,8 +664,8 @@
             <section slot="pdf-content">
               <!-- PDF Content Here -->
               <section class="pdf-item" id="pdf-content">
-                <h1 class="title-hearder">
-                  <v-icon>mdi-file-document-outline</v-icon> Absent Report
+                <h1 class="title-hearder khmer-font">
+                  <v-icon>mdi-file-document-outline</v-icon> {{ $t('report.pdfTitle') }}
                 </h1>
                 <p class="report-date" v-if="form.dates[0]">
                   Date : {{ formatDate(form.dates[0]) }}
@@ -605,11 +676,11 @@
 
                 <div class="report-date-time">
                   <p>
-                    Report By:
+                    {{ $t('report.pdfReportBy') }}:
                     {{ authData.name }}
                   </p>
                   <p>
-                    Report Date:
+                    {{ $t('report.pdfDateReport') }}:
                     <v-icon small>mdi-calendar-month</v-icon>
                     {{
                       formatDate(
@@ -637,7 +708,7 @@
                           <span class="count-absent-chip-report">{{
                             items[0].absent_total
                           }}</span
-                          >day</v-chip
+                          >{{ $t('report.day') }}</v-chip
                         >
                       </td>
                     </template>
@@ -654,9 +725,9 @@
                               </td>
                               <td>
                                 <span v-if="data.absent == 'fullday'"
-                                  >full day</span
+                                  >{{ $t('report.fullDay') }}</span
                                 >
-                                <span v-else>half day</span>
+                                <span v-else>{{ $t('report.halfDay') }}</span>
                                 <span v-if="data.absent_time">
                                   <v-chip
                                     v-if="data.absent_time == 'morning'"
@@ -665,7 +736,7 @@
                                     label
                                     outlined
                                   >
-                                    {{ data.absent_time }}
+                                    {{ $t('report.morning') }}
                                   </v-chip>
 
                                   <v-chip
@@ -674,13 +745,81 @@
                                     small
                                     outlined
                                   >
-                                    {{ data.absent_time }}
+                                    {{ $t('report.afternoon') }}
                                   </v-chip>
                                 </span>
                               </td>
-                              <td class="pdf-report-day">{{ data.day }}</td>
+
+                                <td class="pdf-report-day">
+                                    <span v-if="data.day == 'Monday'">{{ $t('report.monday') }}</span>
+                                    <span v-if="data.day == 'Tuesday'">{{ $t('report.tuesday') }}</span>
+                                    <span v-if="data.day == 'Wednesday'">{{ $t('report.wednesday') }}</span>
+                                    <span v-if="data.day == 'Thursday'">{{ $t('report.thursday') }}</span>
+                                    <span v-if="data.day == 'Friday'">{{ $t('report.friday') }}</span>
+                                    <span v-if="data.day == 'Saturday'">{{ $t('report.saturday') }}</span>
+                                    <span v-if="data.day == 'Sunday'">{{ $t('report.sunday') }}</span>
+                                </td>
                               <td>
-                                {{ formatDate(data.date) }}
+                                <span v-if="data.date.split('-')[1] == 1">
+                                    {{ formatDate(data.date).split('-')[0] }}
+                                    -{{ $t('report.january') }}
+                                    -{{ formatDate(data.date).split('-')[2] }}
+                                </span>
+                                <span v-if="data.date.split('-')[1] == 2">
+                                    {{ formatDate(data.date).split('-')[0] }}
+                                    -{{ $t('report.february') }}
+                                    -{{ formatDate(data.date).split('-')[2] }}
+                                </span>
+                                <span v-if="data.date.split('-')[1] == 3">
+                                    {{ formatDate(data.date).split('-')[0] }}
+                                    -{{ $t('report.march') }}
+                                    -{{ formatDate(data.date).split('-')[2] }}
+                                </span>
+                                <span v-if="data.date.split('-')[1] == 4">
+                                    {{ formatDate(data.date).split('-')[0] }}
+                                    -{{ $t('report.april') }}
+                                    -{{ formatDate(data.date).split('-')[2] }}
+                                </span>
+                                <span v-if="data.date.split('-')[1] == 5">
+                                    {{ formatDate(data.date).split('-')[0] }}
+                                    -{{ $t('report.may') }}
+                                    -{{ formatDate(data.date).split('-')[2] }}
+                                </span>
+                                <span v-if="data.date.split('-')[1] == 6">
+                                    {{ formatDate(data.date).split('-')[0] }}
+                                    -{{ $t('report.june') }}
+                                    -{{ formatDate(data.date).split('-')[2] }}
+                                </span>
+                                <span v-if="data.date.split('-')[1] == 7">
+                                    {{ formatDate(data.date).split('-')[0] }}
+                                    -{{ $t('report.july') }}
+                                    -{{ formatDate(data.date).split('-')[2] }}
+                                </span>
+                                <span v-if="data.date.split('-')[1] == 8">
+                                    {{ formatDate(data.date).split('-')[0] }}
+                                    -{{ $t('report.august') }}
+                                    -{{ formatDate(data.date).split('-')[2] }}
+                                </span>
+                                <span v-if="data.date.split('-')[1] == 9">
+                                    {{ formatDate(data.date).split('-')[0] }}
+                                    -{{ $t('report.september') }}
+                                    -{{ formatDate(data.date).split('-')[2] }}
+                                </span>
+                                <span v-if="data.date.split('-')[1] == 10">
+                                    {{ formatDate(data.date).split('-')[0] }}
+                                    -{{ $t('report.october') }}
+                                    -{{ formatDate(data.date).split('-')[2] }}
+                                </span>
+                                <span v-if="data.date.split('-')[1] == 11">
+                                    {{ formatDate(data.date).split('-')[0] }}
+                                    -{{ $t('report.november') }}
+                                    -{{ formatDate(data.date).split('-')[2] }}
+                                </span>
+                                <span v-if="data.date.split('-')[1] == 12">
+                                    {{ formatDate(data.date).split('-')[0] }}
+                                    -{{ $t('report.december') }}
+                                    -{{ formatDate(data.date).split('-')[2] }}
+                                </span>
                               </td>
                               <td>{{ data.description }}</td>
                             </tr>
@@ -716,25 +855,21 @@ export default {
       btnPDF: false,
       alertMessageText: "",
       btnSaveLoading: false,
-      // =====================================
-      headers: [
-        { text: "Employee", value: "name" },
-        {
-          text: "Absent Count",
-          value: "absent_count",
-          align: "left",
-        },
-        { text: "Total Absent", value: "absent_total" },
-        { text: "Position", value: "position" },
-      ],
+        // =====================================
+        //   headers: [
+        //     { text: "Employee", value: "name" },
+        //     { text: "Absent Count", value: "absent_count", align: "left"},
+        //     { text: "Total Absent", value: "absent_total" },
+        //     { text: "Position", value: "position" },
+        //   ],
 
-      headersPdf: [
-        {
-          align: "start",
-          value: "id",
-        },
-        { text: "Absence List", value: "name" },
-      ],
+    //   headersPdf: [
+    //     {
+    //       align: "start",
+    //       value: "id",
+    //     },
+    //     { text: "Absence List", value: "name" },
+    //   ],
       reportData: [],
       employeeData: [],
       countReport: "",
@@ -765,6 +900,22 @@ export default {
     authData() {
       return JSON.parse(localStorage.getItem("auth"));
     },
+
+    headers(){
+        return[
+            { text: this.$t('report.tbEmployee'), value: "name" },
+            { text: this.$t('report.tbAbsentCount'), value: "absent_count", align: "center"},
+            { text: this.$t('report.tbTotalAbsent'), value: "absent_total" },
+            { text: this.$t('report.tbPosition'), value: "position" },
+        ]
+    },
+
+    headersPdf(){
+        return[
+            { align: "start", value: "id"},
+            { text: this.$t('report.pdfHeaderTb'), value: "name" },
+        ]
+    }
   },
   mounted() {
     this.ReadEmployee();
@@ -824,7 +975,7 @@ export default {
     },
 
     formatDate(value) {
-      return moment(value).format("DD/MM/YYYY");
+      return moment(value).format("DD-MM-YYYY");
     },
 
     clearDate() {

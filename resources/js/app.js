@@ -174,7 +174,18 @@ const messages = {
     english: {
 
         app: {
-            title: 'Absence Management'
+            title: 'Absence Management',
+        },
+
+        menu: {
+            dashboard: 'Dashboard',
+            position: 'Position',
+            employee: 'Employees',
+            absent: 'Absent',
+            report: 'Report',
+            user: 'users',
+            account: 'Account',
+            signout: 'sign out'
         },
 
         languages: {
@@ -286,6 +297,59 @@ const messages = {
             october: 'October',
             november: 'November',
             december: 'December',
+
+            deleteMsgQ: 'Are you sure?',
+            deleteMsgAlert: 'Delete',
+            deleteMsgAlertAbsen: "'s absent",
+            btnCancel: 'cancel',
+            btnDelete: 'Delete',
+        },
+
+        report: {
+            title:  'Report',
+            tbEmployee: 'Employee',
+            tbAbsentCount: 'Absent Count',
+            tbTotalAbsent: 'Total Absent',
+            tbPosition: 'Position',
+            tbAbsent: 'Absent',
+            tbDay: 'Day',
+            tbDate: 'Date',
+            tbDescription: 'Description',
+
+            txtDate: 'Choose Date',
+            txtSelectEmp: 'Select Employee',
+            smgAlert: 'Please choose any Date or Employee.',
+
+            fullDay: 'full day',
+            halfDay: 'half day',
+            morning: 'morning',
+            afternoon: 'afternoon',
+            day: 'day',
+            monday: 'Monday',
+            tuesday: 'Tuesday',
+            wednesday: 'Wednesday',
+            thursday: 'Thursday',
+            friday: 'Friday',
+            saturday: 'Saturday',
+            sunday: 'Sunday',
+
+            january: '01',
+            february: '02',
+            march: '03',
+            april: '04',
+            may: '05',
+            june: '06',
+            july: '07',
+            august: '08',
+            september: '09',
+            october: '10',
+            november: '11',
+            december: '12',
+
+            pdfHeaderTb: 'Absent List',
+            pdfTitle: 'Absent Report',
+            pdfReportBy: 'Report By',
+            pdfDateReport:'Report Date'
         }
     },
 
@@ -294,6 +358,17 @@ const messages = {
 
         app: {
             title: 'គ្រប់គ្រង អវត្តន៏មាន'
+        },
+
+        menu: {
+            dashboard: 'ផ្ទាំងគ្រប់គ្រង',
+            position: 'មុខដំណែង',
+            employee: 'បុគ្គលិក',
+            absent: 'អវត្តន៏មាន',
+            report: 'របាយការណ៍',
+            user: 'អ្នកប្រើប្រាស់',
+            account: 'គណនី',
+            signout: 'ចាកចេញ'
         },
 
         languages: {
@@ -354,8 +429,6 @@ const messages = {
             empImage: 'ជ្រើសរើសរូបបុគ្គលិក',
             isInactive: 'ឈប់ពីការងារ',
             leavedDate: 'ថ្ងៃឈប់ពីការងា',
-
-            deleteMsg: 'Are you sure delete this absent?'
         },
 
         absent: {
@@ -407,6 +480,59 @@ const messages = {
             october: 'តុលា',
             november: 'វិច្ឆកា',
             december: 'ធ្នូ',
+
+            deleteMsgQ: 'តើអ្នកប្រាកដដែរឬទេ?',
+            deleteMsgAlert: 'លុបអវត្តន៏មានរបស់',
+            deleteMsgAlertAbsen: "",
+            btnCancel: 'បោះបង់',
+            btnDelete: 'លុប'
+        },
+
+        report: {
+            title: 'របាយការណ៍',
+            tbEmployee: 'បុគ្គលិក',
+            tbAbsentCount: 'ចំនួន អវត្តន៏មាន',
+            tbTotalAbsent: 'អវត្តន៏មានសរុប(ថ្ងៃ)',
+            tbPosition: 'មុខដំណែង',
+            tbAbsent: 'អវត្តន៏មាន',
+            tbDay: 'ថ្ងៃ',
+            tbDate: 'ថ្ងៃខែឆ្នាំ',
+            tbDescription: 'ពិពណ៌នា',
+
+            txtDate: 'ជ្រើសរើសថ្ងៃខែ',
+            txtSelectEmp: 'ជ្រើសរើសបុគ្គលិក',
+            smgAlert: 'សូមជ្រើសរើស ថ្ងៃខែណាមួយឬបុគ្គលិកណាម្នាក់',
+
+            fullDay: 'ពេញមួយថ្ងៃ',
+            halfDay: 'កន្លះថ្ងៃ',
+            morning: 'ពេលព្រឹក',
+            afternoon: 'ពេលរសៀល',
+            day: 'ថ្ងៃ',
+            monday: 'ថ្ងៃចន្ទ',
+            tuesday: 'ថ្ងៃអង្គារ',
+            wednesday: 'ថ្ងៃពុធ',
+            thursday: 'ថ្ងៃព្រហស្បតិ៍',
+            friday: 'ថ្ងៃសុក្រ',
+            saturday: 'ថ្ងៃសៅរ៍',
+            sunday: 'ថ្ងៃអាទិត្យ',
+
+            january: 'មករា',
+            february: 'កុម្ភះ',
+            march: 'មិនា',
+            april: 'មេសា',
+            may: 'ឧសភា',
+            june: 'មិថុនា',
+            july: 'កក្កដា',
+            august: 'សីហា',
+            september: 'កញ្ញា',
+            october: 'តុលា',
+            november: 'វិច្ឆកា',
+            december: 'ធ្នូ',
+
+            pdfHeaderTb: 'តារាងអវត្តន៏មាន',
+            pdfTitle: 'របាយការណ៍ អវត្តន៏មាន',
+            pdfReportBy: 'ចេញរបាយការណ៍ដោយ',
+            pdfDateReport:'ថ្ងៃខែចេញរបាយការណ៍'
         }
 
     }

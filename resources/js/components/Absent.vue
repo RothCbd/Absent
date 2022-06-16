@@ -454,38 +454,35 @@
     <v-dialog v-model="dialogDelete" max-width="330px">
       <v-card>
         <div class="text-center">
-          <v-sheet class="px-7 pt-7 pb-4 mx-auto text-center d-inline-block">
-            <v-icon class="text-center pb-3" x-large color="red lighten-2"
-              >mdi-alert</v-icon
-            >
-            <div class="grey--text text--darken-3 text-body-2 mb-4">
-              Are you sure delete
-              <b class="red--text tex--lighten-2">{{ employeeName }}</b>'s absent
-              ?
-            </div>
+            <v-sheet class="px-7 pt-7 pb-4 mx-auto text-center d-inline-block">
+                <v-icon class="text-center pb-3" x-large color="red lighten-2">mdi-alert</v-icon>
+                <h3 class="grey--text text--darken-2 khmer-font">{{ $t('absent.deleteMsgQ') }}</h3>
+                <p class="khmer-font">{{ $t('absent.deleteMsgAlert') }}
+                    <span class="font-weight-medium">{{ employeeName }}</span>
+                    {{ $t('absent.deleteMsgAlertAbsen') }}
+                </p>
+                <v-btn
+                    :disabled="btnLoading"
+                    class="ma-1 khmer-font"
+                    depressed
+                    small
+                    @click="dialogDelete = false"
+                >
+                    {{ $t('absent.btnCancel') }}
+                </v-btn>
 
-            <v-btn
-              :disabled="btnLoading"
-              class="ma-1"
-              depressed
-              small
-              @click="dialogDelete = false"
-            >
-              Cancel
-            </v-btn>
-
-            <v-btn
-              :loading="btnLoading"
-              class="ma-1"
-              dark
-              color="red"
-              small
-              depressed
-              @click="submitDelete"
-            >
-              Delete
-            </v-btn>
-          </v-sheet>
+                <v-btn
+                    :loading="btnLoading"
+                    class="ma-1 khmer-font"
+                    dark
+                    color="red"
+                    small
+                    depressed
+                    @click="submitDelete"
+                >
+                    {{ $t('absent.btnDelete') }}
+                </v-btn>
+            </v-sheet>
         </div>
       </v-card>
     </v-dialog>
