@@ -30,6 +30,10 @@
   border-color: #3a9dca !important;
 }
 
+.khmer-font {
+  font-family: "Noto Sans Khmer", sans-serif !important;
+}
+
 .v-main {
   font-family: "Noto Sans Khmer", sans-serif !important;
   background-color: #f1f2f6 !important;
@@ -447,7 +451,7 @@ h2 {
 }
 
 #absent .v-data-table > .v-data-table__wrapper > table > tbody > tr > td {
-  height: 42px !important;
+  height: 38px !important;
 }
 
 #absent-type {

@@ -462,11 +462,11 @@
             color="lighten-1"
             class="user-form-dialog khawin-background-color"
           >
-            <span v-if="editMode === false" class="white--text">
+            <span v-if="editMode === false" class="white--text khmer-font">
                 <v-icon left color="white">mdi-account-plus</v-icon>
                 {{ $t('employee.frmAddEmp') }}
             </span>
-            <span v-else class="white--text"
+            <span v-else class="white--text khmer-font"
               ><v-icon left dark>mdi-account-edit</v-icon>
                 {{ $t('employee.frmEditEmp') }}
               </span
@@ -484,6 +484,7 @@
                             v-model="form.name"
                             v-bind:label="$t('employee.txtName')"
                             color="cyan darken-1"
+                            class="khmer-font"
                             prepend-icon="mdi-account-tie"
                             :error-messages="errorsMessage.name"
                         ></v-text-field>
@@ -502,6 +503,7 @@
                             v-model="form.email"
                             v-bind:label="$t('employee.txtEmail')"
                             color="cyan darken-1"
+                            class="khmer-font"
                             prepend-icon="mdi-email"
                             :error-messages="errorsMessage.email"
                         ></v-text-field>
@@ -512,6 +514,7 @@
                             :items="positionData"
                             :item-text="(item) => item.title"
                             item-value="id"
+                            class="khmer-font"
                             clearable
                             v-bind:label="$t('employee.selectPosition')"
                             color="cyan darken-1"
@@ -541,6 +544,7 @@
                             <v-text-field
                                 v-bind:label="$t('employee.txtStartDate')"
                                 color="cyan darken-1"
+                                class="khmer-font"
                                 :value="computedDateFormattedMomentjs"
                                 prepend-icon="mdi-calendar"
                                 readonly
@@ -565,6 +569,7 @@
                                 <v-text-field
                                     v-model="number.phone"
                                     color="cyan darken-1"
+                                    class="khmer-font"
                                     v-bind:label="$t('employee.txtPhoneNum')"
                                     prepend-icon="mdi-phone"
                                     v-mask="'###-###-####'"
@@ -586,7 +591,7 @@
                             v-if="editMode == true"
                             color="red lighten-4"
                             dense
-                            class="red--text text--darken-2"
+                            class="red--text text--darken-2 khmer-font"
                         >
                            <v-checkbox
                                 v-model="form.is_inactived"
@@ -629,12 +634,12 @@
                             size="150"
                             color="grey lighten-2"
                             height="180"
-                            class="rounded-sm"
+                            class="rounded-sm khmer-font"
                         >
                             <v-img
-                            v-if="preview_profile"
-                            :src="preview_profile"
-                            class="img-fluid rounded-sm"
+                                v-if="preview_profile"
+                                :src="preview_profile"
+                                class="img-fluid rounded-sm khmer-font"
                             ></v-img>
 
                             <v-img
@@ -642,14 +647,15 @@
                                     preview_profile_edit &&
                                     preview_profile_edit != 'default.png'
                                 "
-                            :src="'/employees/' + preview_profile_edit"
-                            class="img-fluid rounded-sm"
+                                :src="'/employees/' + preview_profile_edit"
+                                class="img-fluid rounded-sm khmer-font"
                             ></v-img>
                         </v-list-item-avatar>
                         <v-file-input
                             show-size
                             v-model="form.image"
                             @change="onFileChange"
+                            class="khmer-font"
                             prepend-icon="mdi-image-multiple"
                             v-bind:label="$t('employee.empImage')"
                             @click:clear="clearImage()"
@@ -664,6 +670,7 @@
               <v-btn
                 small
                 color="grey lighten-2"
+                class="khmer-font"
                 depressed
                 @click="closeDialog"
               >
@@ -674,7 +681,7 @@
                 depressed
                 type="submit"
                 :loading="btnSaveLoading"
-                class="khawin-background-color"
+                class="khawin-background-color khmer-font"
                 dark
               >
                 {{ $t('employee.btnSave') }}

@@ -166,11 +166,11 @@
         <v-dialog v-model="positionForm" width="500" persistent overlay-opacity="0">
             <v-card>
                 <v-toolbar dense flat color="lighten-1" class="user-form-dialog khawin-background-color">
-                    <span v-if="editMode === false" class="white--text">
+                    <span v-if="editMode === false" class="white--text khmer-font">
                         <v-icon left color="white">mdi-badge-account-outline</v-icon>
                         {{ $t('position.formTitleAdd') }}
                     </span>
-                    <span v-else class="white--text">
+                    <span v-else class="white--text khmer-font">
                         <v-icon left dark>mdi-badge-account-outline</v-icon>
                          {{ $t('position.formTitleEdit') }}
                     </span>
@@ -183,17 +183,18 @@
                             v-bind:label="$t('position.txtPosition')"
                             outlined
                             prepend-inner-icon="mdi-account-star"
+                            class="khmer-font"
                             :error-messages="errorsMessage.title"
                         ></v-text-field>
 
                     </v-card-text>
 
-                    <v-card-actions class="card-action">
+                    <v-card-actions class="card-action khmer-font">
                         <v-spacer></v-spacer>
                         <v-btn small color="grey lighten-2" depressed @click="closeDialog">
                             {{ $t('position.btnCancel') }}
                         </v-btn>
-                        <v-btn class="khawin-background-color" dark small depressed type="submit" :loading="btnSaveLoading">
+                        <v-btn class="khawin-background-color khmer-font" dark small depressed type="submit" :loading="btnSaveLoading">
                             {{ $t('position.btnSave') }}
                         </v-btn>
                     </v-card-actions>
