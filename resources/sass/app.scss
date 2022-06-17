@@ -330,7 +330,8 @@ h2 {
 }
 
 #employee .v-tab--active {
-    background-color: #f1f2f6;
+    background-color: #78909C;
+    color: #ffffff;
 }
 
 #employee .v-chip.v-size--small {
@@ -533,6 +534,7 @@ h2 {
 
 #report .absent_total-chip {
     height: 20px !important;
+    font-size: 13px !important;
 }
 
 #report .absent_count_chip {

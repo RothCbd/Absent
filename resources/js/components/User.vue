@@ -7,7 +7,7 @@
             <v-icon class="mb-1" color="grey darken-2"
               >mdi-account-multiple</v-icon
             >
-            <span class="text-decoration-underline">User List</span>
+            <span class="text-decoration-underline">{{ $t('user.listTitle') }}</span>
             <v-chip color="grey lighten-2 grey--text text--darken-3">{{
               userCount
             }}</v-chip>
@@ -18,7 +18,7 @@
             small
             class="add-user white--text font-weight-regular khawin-background-color"
             @click="openDialog"
-            ><v-icon left>mdi-plus</v-icon> Add User</v-btn
+            ><v-icon left>mdi-plus</v-icon>{{ $t('user.btnAdd') }}</v-btn
           >
         </v-col>
       </v-row>
@@ -26,11 +26,14 @@
       <!-- -------table---- -->
       <v-card class="mx-auto table-card">
         <v-data-table
-          :headers="headers"
-          :items="userData"
-          :search="search"
-          :loading="tableLoading"
-          loading-text="Loading users data"
+            :headers="headers"
+            :items="userData"
+            :search="search"
+            :loading="tableLoading"
+            loading-text="Loading users data"
+            :footer-props="{
+                'items-per-page-text':$t('user.tbPagination')
+            }"
         >
           <template v-slot:[`item.id`]="item">
             {{ item.index + 1 }}
@@ -57,7 +60,7 @@
 
             <small
               class="
-                font-weight-medium
+                font-weight-bold
                 blue-grey--text
                 text--darken-3 text-capitalize
                 user-name
@@ -130,12 +133,12 @@
             color="lighten-1"
             class="user-form-dialog khawin-background-color"
           >
-            <span v-if="editMode === false" class="white--text">
+            <span v-if="editMode === false" class="white--text khmer-font">
               <v-icon left color="white">mdi-account-plus</v-icon>
-              {{ formTitle }}
+                {{ $t('user.frmTitleAdd') }}
             </span>
-            <span v-else class="white--text"
-              ><v-icon left dark>mdi-account-edit</v-icon>{{ formTitle }}</span
+            <span v-else class="white--text khmer-font"
+              ><v-icon left dark>mdi-account-edit</v-icon>{{ $t('user.frmTitleAdd') }}</span
             >
           </v-toolbar>
 
@@ -151,7 +154,8 @@
                     v-model="form.role_id"
                     :items="role"
                     item-value="value"
-                    label="Role"
+                    v-bind:label="$t('user.txtRole')"
+                    class="khmer-font"
                     dense
                     color="cyan darken-1"
                     prepend-icon="mdi-account-star"
@@ -161,7 +165,8 @@
 
                   <v-text-field
                     v-model="form.name"
-                    label="Name"
+                    v-bind:label="$t('user.txtName')"
+                    class="khmer-font"
                     color="cyan darken-1"
                     prepend-icon="mdi-account-edit"
                     :error-messages="errorsMessage.name"
@@ -169,7 +174,8 @@
 
                   <v-text-field
                     v-model="form.email"
-                    label="Email"
+                    v-bind:label="$t('user.txtEmail')"
+                    class="khmer-font"
                     color="cyan darken-1"
                     prepend-icon="mdi-email"
                     :error-messages="errorsMessage.email"
@@ -183,11 +189,12 @@
                         :key="index"
                       >
                         <v-text-field
-                          v-model="number.phone"
-                          label="Phone Number"
-                          color="cyan darken-1"
-                          prepend-icon="mdi-phone"
-                          v-mask="'###-###-####'"
+                            v-model="number.phone"
+                            v-bind:label="$t('user.txtPhone')"
+                            class="khmer-font"
+                            color="cyan darken-1"
+                            prepend-icon="mdi-phone"
+                            v-mask="'###-###-####'"
                         ></v-text-field>
                         <small v-if="index !== 0" class="btn-remove-phoneNum">
                           <v-btn
@@ -223,7 +230,8 @@
                     color="cyan darken-1"
                     :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                     :type="showPassword ? 'text' : 'password'"
-                    label="Password"
+                    v-bind:label="$t('user.txtPassword')"
+                    class="khmer-font"
                     hint="At least 8 characters"
                     prepend-icon="mdi-key-variant"
                     @click:append="showPassword = !showPassword"
@@ -236,7 +244,8 @@
                       showPasswordConfirm ? 'mdi-eye' : 'mdi-eye-off'
                     "
                     :type="showPasswordConfirm ? 'text' : 'password'"
-                    label="Password Confirmation"
+                    v-bind:label="$t('user.txtPasswordConfir')"
+                    class="khmer-font"
                     hint="At least 8 characters"
                     prepend-icon="mdi-key-variant"
                     @click:append="showPasswordConfirm = !showPasswordConfirm"
@@ -271,7 +280,8 @@
                     v-model="form.image"
                     @change="onFileChange"
                     prepend-icon="mdi-camera"
-                    label="profile image"
+                    v-bind:label="$t('user.txtImage')"
+                    class="khmer-font"
                     @click:clear="clearImage()"
                     :error-messages="errorsMessage.image"
                   />
@@ -285,7 +295,7 @@
                 color="grey lighten-1"
                 small
                 @click="closeDialog"
-                >cancel</v-btn
+                >{{ $t('user.btnCancel') }}</v-btn
               >
               <v-btn
                 depressed
@@ -294,7 +304,7 @@
                 small
                 type="submit"
                 :loading="btnSaveLoading"
-                >save</v-btn
+                >{{ $t('user.btnSave') }}</v-btn
               >
             </v-card-actions>
           </form>
@@ -391,18 +401,18 @@ export default {
       tableLoading: true,
       showPassword: false,
       showPasswordConfirm: false,
-      headers: [
-        {
-          text: "No.",
-          align: "start",
-          value: "id",
-        },
-        { text: "Name", value: "name" },
-        { text: "Email", value: "email" },
-        { text: "Role", value: "role" },
-        { text: "Phone", value: "phone" },
-        { text: "Action", sortable: false, align: "center", value: "actions" },
-      ],
+    //   headers: [
+    //     {
+    //       text: "No.",
+    //       align: "start",
+    //       value: "id",
+    //     },
+    //     { text: "Name", value: "name" },
+    //     { text: "Email", value: "email" },
+    //     { text: "Role", value: "role" },
+    //     { text: "Phone", value: "phone" },
+    //     { text: "Action", sortable: false, align: "center", value: "actions" },
+    //   ],
 
       userData: [],
       userCount: "",
@@ -434,178 +444,194 @@ export default {
     };
   },
 
-  computed: {
-    formTitle() {
-      return this.editMode === false ? "Add User" : "Edit User";
-    },
-  },
-  mounted() {
-    this.ReadUser();
-    this.activateMultipleDraggableDialogs();
-  },
+    computed: {
+        formTitle() {
+            return this.editMode === false ? "Add User" : "Edit User";
+        },
 
-  methods: {
-    ReadUser() {
-      axios
-        .get("http://127.0.0.1:8000/api/read-user", {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("access_token"),
-          },
-        })
-        .then((response) => {
-          this.userData = response.data.data;
-          this.userCount = response.data.data.length;
-          this.tableLoading = false;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        headers(){
+            return[
+                {
+                    text: "#",
+                    align: "start",
+                    value: "id",
+                },
+                { text: this.$t('user.tbName'), value: "name" },
+                { text: this.$t('user.tbEmail'), value: "email" },
+                { text: this.$t('user.tbRole'), value: "role" },
+                { text: this.$t('user.tbPhoneNum'), value: "phone" },
+                { text: this.$t('user.tbUpdate_Delete'), sortable: false, align: "center", value: "actions" },
+            ]
+        }
     },
 
-    openDialog() {
-      this.userForm = true;
+    mounted() {
+        this.ReadUser();
+        this.activateMultipleDraggableDialogs();
     },
 
-    closeDialog() {
-      this.editMode = false;
-      this.userForm = false;
-      this.form.role_id = "";
-      this.form.name = "";
-      this.form.email = "";
-      this.form.phone_number = [{ phone: "" }];
-      this.form.image = null;
-      this.preview_profile = null;
-      this.preview_profile_edit = null;
-      this.form.password = "";
-      this.form.password_confirmation = "";
-      this.tableLoading = false;
-      this.errorsMessage = "";
-      this.btnSaveLoading = false;
-    },
+    methods: {
+        ReadUser() {
+        axios
+            .get("http://127.0.0.1:8000/api/read-user", {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("access_token"),
+            },
+            })
+            .then((response) => {
+            this.userData = response.data.data;
+            this.userCount = response.data.data.length;
+            this.tableLoading = false;
+            })
+            .catch((error) => {
+            console.log(error);
+            });
+        },
 
-    addPhone: function () {
-      this.form.phone_number.push({ phone: "" });
-    },
+        openDialog() {
+        this.userForm = true;
+        },
 
-    removePhone(index) {
-      this.form.phone_number.splice(index, 1);
-    },
-    // ---------------------------------
-    createImage(file) {
-      const reader = new FileReader();
+        closeDialog() {
+        this.editMode = false;
+        this.userForm = false;
+        this.form.role_id = "";
+        this.form.name = "";
+        this.form.email = "";
+        this.form.phone_number = [{ phone: "" }];
+        this.form.image = null;
+        this.preview_profile = null;
+        this.preview_profile_edit = null;
+        this.form.password = "";
+        this.form.password_confirmation = "";
+        this.tableLoading = false;
+        this.errorsMessage = "";
+        this.btnSaveLoading = false;
+        },
 
-      reader.onload = (e) => {
-        this.preview_profile = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    },
-    onFileChange(file) {
-      if (!file) {
-        return;
-      }
-      this.createImage(file);
-    },
+        addPhone: function () {
+        this.form.phone_number.push({ phone: "" });
+        },
 
-    clearImage() {
-      this.preview_profile = null;
-      this.form.image = null;
-    },
-    // ---------------------------------
+        removePhone(index) {
+        this.form.phone_number.splice(index, 1);
+        },
+        // ---------------------------------
+        createImage(file) {
+        const reader = new FileReader();
 
-    createPost() {
-      this.btnSaveLoading = true;
-      this.tableLoading = true;
-      this.form
-        .post("api/create-user", {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("access_token"),
-          },
-        })
-        .then((response) => {
-          this.ReadUser();
-          this.closeDialog();
-          this.alertSnackbarMsg = response.data.message;
-          this.snackbar = true;
-          this.btnSaveLoading = false;
-          this.tableLoading = false;
-        })
-        .catch((errors) => {
-          this.errorsMessage = errors.response.data.errors;
-          this.btnSaveLoading = false;
-          this.tableLoading = false;
-        });
-    },
+        reader.onload = (e) => {
+            this.preview_profile = e.target.result;
+        };
+        reader.readAsDataURL(file);
+        },
+        onFileChange(file) {
+        if (!file) {
+            return;
+        }
+        this.createImage(file);
+        },
 
-    editUser(user) {
-      this.editMode = true;
-      console.log(user);
-      this.form.id = user.id;
-      if (user.role == "admin") {
-        this.form.role_id = 1;
-      } else if (user.role == "user") {
-        this.form.role_id = 2;
-      }
-      this.form.name = user.name;
-      this.form.email = user.email;
-      this.form.phone_number = user.phone;
-      this.preview_profile_edit = user.profile;
-      this.userForm = true;
-    },
+        clearImage() {
+        this.preview_profile = null;
+        this.form.image = null;
+        },
+        // ---------------------------------
 
-    async updateUser() {
-      this.btnSaveLoading = true;
-      this.tableLoading = true;
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      this.form
-        .post("/api/update-user/" + this.form.id, {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("access_token"),
-          },
-        })
-        .then((response) => {
-          this.ReadUser();
-          this.closeDialog();
-          this.alertSnackbarMsg = response.data.message;
-          this.snackbar = true;
-          this.btnSaveLoading = false;
-          this.tableLoading = false;
-        })
-        .catch((errors) => {
-          this.errorsMessage = errors.response.data.errors;
-          this.btnSaveLoading = false;
-          this.tableLoading = false;
-        });
-    },
+        createPost() {
+        this.btnSaveLoading = true;
+        this.tableLoading = true;
+        this.form
+            .post("api/create-user", {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("access_token"),
+            },
+            })
+            .then((response) => {
+            this.ReadUser();
+            this.closeDialog();
+            this.alertSnackbarMsg = response.data.message;
+            this.snackbar = true;
+            this.btnSaveLoading = false;
+            this.tableLoading = false;
+            })
+            .catch((errors) => {
+            this.errorsMessage = errors.response.data.errors;
+            this.btnSaveLoading = false;
+            this.tableLoading = false;
+            });
+        },
 
-    deleteUser(user, name) {
-      this.form.id = user;
-      this.userNameDelete = name;
-      this.dialogDelete = true;
-    },
+        editUser(user) {
+        this.editMode = true;
+        console.log(user);
+        this.form.id = user.id;
+        if (user.role == "admin") {
+            this.form.role_id = 1;
+        } else if (user.role == "user") {
+            this.form.role_id = 2;
+        }
+        this.form.name = user.name;
+        this.form.email = user.email;
+        this.form.phone_number = user.phone;
+        this.preview_profile_edit = user.profile;
+        this.userForm = true;
+        },
 
-    async submitDelete() {
-      this.btnLoading = true;
-      this.tableLoading = true;
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      axios
-        .delete("/api/delete-user/" + this.form.id, {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("access_token"),
-          },
-        })
-        .then((response) => {
-          this.ReadUser();
-          this.dialogDelete = false;
-          this.alertSnackbarMsg = response.data.message;
-          this.snackbar = true;
-          this.btnLoading = false;
-          this.tableLoading = false;
-        })
-        .catch((error) => {
-          this.btnLoading = false;
-          this.tableLoading = false;
-        });
+        async updateUser() {
+        this.btnSaveLoading = true;
+        this.tableLoading = true;
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        this.form
+            .post("/api/update-user/" + this.form.id, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("access_token"),
+            },
+            })
+            .then((response) => {
+            this.ReadUser();
+            this.closeDialog();
+            this.alertSnackbarMsg = response.data.message;
+            this.snackbar = true;
+            this.btnSaveLoading = false;
+            this.tableLoading = false;
+            })
+            .catch((errors) => {
+            this.errorsMessage = errors.response.data.errors;
+            this.btnSaveLoading = false;
+            this.tableLoading = false;
+            });
+        },
+
+        deleteUser(user, name) {
+        this.form.id = user;
+        this.userNameDelete = name;
+        this.dialogDelete = true;
+        },
+
+        async submitDelete() {
+        this.btnLoading = true;
+        this.tableLoading = true;
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        axios
+            .delete("/api/delete-user/" + this.form.id, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("access_token"),
+            },
+            })
+            .then((response) => {
+            this.ReadUser();
+            this.dialogDelete = false;
+            this.alertSnackbarMsg = response.data.message;
+            this.snackbar = true;
+            this.btnLoading = false;
+            this.tableLoading = false;
+            })
+            .catch((error) => {
+            this.btnLoading = false;
+            this.tableLoading = false;
+            });
+        },
     },
-  },
 };
 </script>

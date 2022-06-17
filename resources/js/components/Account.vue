@@ -3,10 +3,10 @@
     <v-tabs v-model="tab" color="cyan darken-1">
       <v-tabs-slider color="cyan darken-1"></v-tabs-slider>
       <v-tab key="username" class="font-weight-bold text-capitalize"
-        ><v-icon>mdi-account</v-icon> Profile</v-tab
+        ><v-icon>mdi-account</v-icon> {{ $t('account.tabAccount') }}</v-tab
       >
       <v-tab key="password" class="font-weight-bold text-capitalize"
-        ><v-icon>mdi-lock</v-icon> Password</v-tab
+        ><v-icon>mdi-lock</v-icon> {{ $t('account.tabPassword') }}</v-tab
       >
     </v-tabs>
 
@@ -59,7 +59,8 @@
               <v-text-field
                 v-model="form.name"
                 color="cyan darken-1"
-                label="User Name"
+                v-bind:label="$t('account.txtName')"
+                class="khmer-font"
                 outlined
                 prepend-inner-icon="mdi-account"
                 :error-messages="errorsMessage.name"
@@ -68,7 +69,8 @@
               <v-text-field
                 v-model="form.email"
                 color="cyan darken-1"
-                label="Email"
+                v-bind:label="$t('account.txtEmail')"
+                class="khmer-font"
                 outlined
                 prepend-inner-icon="mdi-email"
                 :error-messages="errorsMessage.email"
@@ -82,7 +84,7 @@
                 type="submit"
                 :loading="btnLoading"
                 dark
-                >save</v-btn
+                >{{ $t('account.btnSave') }}</v-btn
               >
             </v-card-text>
           </v-form>
@@ -103,7 +105,7 @@
             @submit.prevent="PasswordUpdate()"
             enctype="multipart/form-data"
           >
-            <v-card-title>Password</v-card-title>
+            <v-card-title>{{ $t('account.Password') }}</v-card-title>
             <v-card-text>
               <v-alert
                 v-if="msgResponse"
@@ -121,7 +123,8 @@
                 color="cyan darken-1"
                 :append-icon="password ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="password ? 'text' : 'password'"
-                label="Password"
+                v-bind:label="$t('account.txtPassword')"
+                class="khmer-font"
                 @click:append="password = !password"
                 :error-messages="errorsMessage.old_password"
               ></v-text-field>
@@ -131,7 +134,8 @@
                 color="cyan darken-1"
                 :append-icon="confirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="confirmPassword ? 'text' : 'password'"
-                label="New Password"
+                v-bind:label="$t('account.txtNewPassword')"
+                class="khmer-font"
                 @click:append="confirmPassword = !confirmPassword"
                 :error-messages="errorsMessage.password"
               ></v-text-field>
@@ -141,7 +145,8 @@
                 color="cyan darken-1"
                 :append-icon="newPassword ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="newPassword ? 'text' : 'password'"
-                label="Confirm Password "
+                v-bind:label="$t('account.txtConfirPassword')"
+                class="khmer-font"
                 @click:append="newPassword = !newPassword"
                 :error-messages="errorsMessage.password_confirmation"
               ></v-text-field>
@@ -154,7 +159,7 @@
                 type="submit"
                 :loading="btnLoading"
                 dark
-                >save</v-btn
+                >{{ $t('account.btnSave') }}</v-btn
               >
             </v-card-text>
           </v-form>

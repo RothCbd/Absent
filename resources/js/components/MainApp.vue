@@ -173,7 +173,11 @@
                             width="20"
                             :src="'/image/englishflag.png'"
                         ></v-img>
-                        <v-list-item-title @click="$i18n.locale = 'english'" class="ml-1">
+                        <!-- <v-list-item-title @click="$i18n.locale = 'english'" class="ml-1">
+                            {{ $t('languages.english') }}
+                        </v-list-item-title> -->
+
+                        <v-list-item-title @click="langChanged('english')" class="ml-1">
                             {{ $t('languages.english') }}
                         </v-list-item-title>
                     </v-list-item>
@@ -183,7 +187,11 @@
                             width="20"
                             :src="'/image/cambodaiflag.png'"
                         ></v-img>
-                        <v-list-item-title @click="$i18n.locale = 'khmer'" class="ml-1">
+                        <!-- <v-list-item-title @click="$i18n.locale = 'khmer'" class="ml-1">
+                            {{ $t('languages.khmer') }}
+                        </v-list-item-title> -->
+
+                        <v-list-item-title @click="langChanged('khmer')" class="ml-1">
                             {{ $t('languages.khmer') }}
                         </v-list-item-title>
                     </v-list-item>
@@ -603,12 +611,19 @@ export default {
     mounted() {
         this.ReadHoliday();
         this.ReadHolidayDates();
+
+        if(localStorage.Lang!=null) this.$i18n.locale=localStorage.Lang;
     },
 
     methods: {
 
+        langChanged(lang){
+            this.$i18n.locale = lang;
+            localStorage.Lang=lang
+        },
+
         formatDate(value) {
-        return moment(value).format("dddd, DD/MM/YYYY");
+            return moment(value).format("dddd, DD/MM/YYYY");
         },
 
         chooseHolidayYear(){

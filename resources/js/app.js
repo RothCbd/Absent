@@ -223,6 +223,8 @@ const messages = {
             inctiveEmp: 'Inactive Employee',
             tbName: 'Name',
             tbGender: 'Gender',
+            tbGenderM: 'male',
+            tbGenderF: 'female',
             tbEmail: 'Email',
             tbPosition: 'Position',
             tbStartDate: 'Start Date',
@@ -246,6 +248,19 @@ const messages = {
             empImage: 'Employee Image',
             isInactive: 'Is Inactive',
             leavedDate: 'Leave Date',
+
+            january: '01',
+            february: '02',
+            march: '03',
+            april: '04',
+            may: '05',
+            june: '06',
+            july: '07',
+            august: '08',
+            september: '09',
+            october: '10',
+            november: '11',
+            december: '12',
         },
 
         absent: {
@@ -315,10 +330,13 @@ const messages = {
             tbDay: 'Day',
             tbDate: 'Date',
             tbDescription: 'Description',
+            notReport: 'please select date or employee',
 
             txtDate: 'Choose Date',
             txtSelectEmp: 'Select Employee',
             smgAlert: 'Please choose any Date or Employee.',
+            btnReport: 'Report',
+            tbPagination: 'Rows per page',
 
             fullDay: 'full day',
             halfDay: 'half day',
@@ -350,6 +368,43 @@ const messages = {
             pdfTitle: 'Absent Report',
             pdfReportBy: 'Report By',
             pdfDateReport:'Report Date'
+        },
+
+        user: {
+            listTitle: 'User List',
+            btnAdd: 'add user',
+            tbName: 'User',
+            tbEmail: 'Email',
+            tbRole: 'Role',
+            tbPhoneNum: 'Phone Number',
+            tbUpdate_Delete: 'Edit | Delete',
+            tbPagination: 'Rows per page',
+
+            frmTitleAdd: 'Add User',
+            txtRole: 'Role',
+            txtName: 'Name',
+            txtEmail: 'Email',
+            txtPhone: 'Phone Number',
+            txtPassword: 'Password',
+            txtPasswordConfir: 'Password Confirmation',
+            txtImage: 'select image',
+            btnCancel: 'cancel',
+            btnSave: 'save',
+
+
+        },
+
+        account: {
+            tabAccount: 'Account',
+            tabPassword: 'Password',
+
+            txtName: 'Name',
+            txtEmail: 'Email',
+            Password: 'Password',
+            txtPassword: 'Password',
+            txtNewPassword: 'New Password',
+            txtConfirPassword: 'Confirm Password',
+            btnSave: 'save',
         }
     },
 
@@ -406,6 +461,8 @@ const messages = {
             inctiveEmp: 'បុគ្គលិក លាឈប់',
             tbName: 'ឈ្មោះ',
             tbGender: 'ភេទ',
+            tbGenderM: 'ប្រុស',
+            tbGenderF: 'ស្រី',
             tbEmail: 'អ៊ីម៉ែល',
             tbPosition: 'មុខដំណែង',
             tbStartDate: 'ថ្ងៃចូលធ្វើការ',
@@ -429,6 +486,19 @@ const messages = {
             empImage: 'ជ្រើសរើសរូបបុគ្គលិក',
             isInactive: 'ឈប់ពីការងារ',
             leavedDate: 'ថ្ងៃឈប់ពីការងា',
+
+            january: 'មករា',
+            february: 'កុម្ភះ',
+            march: 'មិនា',
+            april: 'មេសា',
+            may: 'ឧសភា',
+            june: 'មិថុនា',
+            july: 'កក្កដា',
+            august: 'សីហា',
+            september: 'កញ្ញា',
+            october: 'តុលា',
+            november: 'វិច្ឆកា',
+            december: 'ធ្នូ',
         },
 
         absent: {
@@ -498,10 +568,13 @@ const messages = {
             tbDay: 'ថ្ងៃ',
             tbDate: 'ថ្ងៃខែឆ្នាំ',
             tbDescription: 'ពិពណ៌នា',
+            tbPagination: 'ចំនួនជួរនៃមួយទំព័រ',
+            notReport: 'សូមជ្រើសរើស ថ្ងៃខែឬបុគ្គលិក ដើម្បីបង្ហាញលទ្ធផល',
 
             txtDate: 'ជ្រើសរើសថ្ងៃខែ',
             txtSelectEmp: 'ជ្រើសរើសបុគ្គលិក',
             smgAlert: 'សូមជ្រើសរើស ថ្ងៃខែណាមួយឬបុគ្គលិកណាម្នាក់',
+            btnReport: 'របាយការណ៍',
 
             fullDay: 'ពេញមួយថ្ងៃ',
             halfDay: 'កន្លះថ្ងៃ',
@@ -533,6 +606,41 @@ const messages = {
             pdfTitle: 'របាយការណ៍ អវត្តន៏មាន',
             pdfReportBy: 'ចេញរបាយការណ៍ដោយ',
             pdfDateReport:'ថ្ងៃខែចេញរបាយការណ៍'
+        },
+
+        user: {
+            listTitle: 'តារាងអ្នកប្រើប្រាស់',
+            btnAdd: 'បន្ថែម អ្នកប្រើប្រាស់',
+            tbName: 'អ្នកប្រើប្រាស់',
+            tbEmail: 'អ៊ីមែល',
+            tbRole: 'តួនាទី',
+            tbPhoneNum: 'លេខទូរស័ព្ទ',
+            tbUpdate_Delete: 'កែប្រែ | លុប',
+            tbPagination: 'ចំនួនជួរនៃមួយទំព័រ',
+
+            frmTitleAdd: 'បន្ថែម អ្នកប្រើប្រាស់',
+            txtRole: 'តួនាទី',
+            txtName: 'ឈ្មោះ',
+            txtEmail: 'អ៊ីមែល',
+            txtPhone: 'លេខទូរស័ព្ទ',
+            txtPassword: 'ពាក្យសម្ងាត់',
+            txtPasswordConfir: 'បញ្ជាក់ ពាក្យសម្ងាត់',
+            txtImage: 'ជ្រើសរើសរូបភាព',
+            btnCancel: 'បោះបង់',
+            btnSave: 'រក្សាទុក',
+        },
+
+        account: {
+            tabAccount: 'គណនី',
+            tabPassword: 'ពាក្យសម្ងាត់',
+
+            txtName: 'ឈ្មោះ',
+            txtEmail: 'អ៊ីមែល',
+            Password: 'ពាក្យសម្ងាត់',
+            txtPassword: 'ពាក្យសម្ងាត់',
+            txtNewPassword: 'ពាក្យសម្ងាត់ថ្មី',
+            txtConfirPassword: 'បញ្ជាក់ ពាក្យសម្ងាត់',
+            btnSave: 'រក្សាទុក',
         }
 
     }

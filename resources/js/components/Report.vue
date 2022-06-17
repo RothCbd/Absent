@@ -146,7 +146,7 @@
                 block
             >
               <v-icon left> mdi-chart-bar </v-icon>
-              report
+              {{ $t('report.btnReport') }}
             </v-btn>
           </form>
         </v-card>
@@ -162,6 +162,9 @@
             item-key="name"
             show-expand
             class="data-table"
+            :footer-props="{
+                'items-per-page-text':$t('report.tbPagination')
+            }"
           >
             <template v-slot:[`item.absent_count`]="item">
               <v-chip
@@ -200,11 +203,12 @@
             <template v-slot:[`item.absent_total`]="item">
               <v-chip
                 class="
-                  pa-2
-                  count_chip
-                  font-weight-bold
-                  orange--text
-                  text--darken-3
+                    absent_total-chip
+                    pa-2
+                    total-day
+                    font-weight-bold
+                    orange--text
+                    text--darken-3
                 "
                 small
                 outlined
@@ -282,18 +286,18 @@
                         </td>
                         <td class="text-lowercase">
                             <v-chip
-                                color="grey lighten-4"
-                                class="pa-1 date-chip font-weight-medium"
-                                small
-                                label
+                              color="grey lighten-4"
+                              class="pa-1 date-chip font-weight-medium"
+                              small
+                              label
                             >
-                                <span v-if="data.day == 'Monday'">{{ $t('report.monday') }}</span>
-                                <span v-if="data.day == 'Tuesday'">{{ $t('report.tuesday') }}</span>
-                                <span v-if="data.day == 'Wednesday'">{{ $t('report.wednesday') }}</span>
-                                <span v-if="data.day == 'Thursday'">{{ $t('report.thursday') }}</span>
-                                <span v-if="data.day == 'Friday'">{{ $t('report.friday') }}</span>
-                                <span v-if="data.day == 'Saturday'">{{ $t('report.saturday') }}</span>
-                                <span v-if="data.day == 'Sunday'">{{ $t('report.sunday') }}</span>
+                              <span v-if="data.day == 'Monday'">{{ $t('report.monday') }}</span>
+                              <span v-if="data.day == 'Tuesday'">{{ $t('report.tuesday') }}</span>
+                              <span v-if="data.day == 'Wednesday'">{{ $t('report.wednesday') }}</span>
+                              <span v-if="data.day == 'Thursday'">{{ $t('report.thursday') }}</span>
+                              <span v-if="data.day == 'Friday'">{{ $t('report.friday') }}</span>
+                              <span v-if="data.day == 'Saturday'">{{ $t('report.saturday') }}</span>
+                              <span v-if="data.day == 'Sunday'">{{ $t('report.sunday') }}</span>
                             </v-chip>
                         </td>
                         <td>
@@ -374,7 +378,7 @@
             </template>
 
             <template slot="no-data">
-                please select date or employee
+                {{ $t('report.notReport') }}
             </template>
 
           </v-data-table>

@@ -43,14 +43,14 @@
         <v-tab class="text-capitalize tab" key="activeEmployee">
           <v-icon class="mr-2" left>mdi-account-multiple</v-icon>
           <span class="font-weight-medium">{{ $t('employee.activeEmp') }}</span>
-          <v-chip small class="ml-2 font-weight-bold indigo--text">{{
+          <v-chip small class="ml-2 font-weight-medium blue-grey--text text--darken-2">{{
             employeeActiveCount
           }}</v-chip>
         </v-tab>
         <v-tab class="text-capitalize tab" key="inactiveEmployee">
           <v-icon class="mr-2" left>mdi-account-multiple-minus</v-icon>
           <span class="font-weight-medium">{{ $t('employee.inctiveEmp') }}</span>
-          <v-chip small class="ml-2 font-weight-bold indigo--text">{{
+          <v-chip small class="ml-2 font-weight-medium blue-grey--text text--darken-2">{{
             employeeInactiveCount
           }}</v-chip>
         </v-tab>
@@ -121,30 +121,29 @@
               <template v-slot:[`item.gender`]="{ item }">
                 <v-chip
                   v-if="item.gender == 'male'"
-                    class="pa-1 gender-chip ma-0"
                     small
                     color="indigo"
                     text-color="white"
-                    label
+                    class="pl-1 py-0"
+
                 >
-                  <v-avatar left class="mr-0">
+                  <v-avatar>
                     <v-icon x-small>mdi-human-male</v-icon>
                   </v-avatar>
-                  {{ item.gender }}
+                  {{ $t('employee.tbGenderM') }}
                 </v-chip>
 
                 <v-chip
                     v-else
-                    class="p-1 gender-chip"
                     small
                     color="pink"
                     text-color="white"
-                    label
+                    class="pl-1 py-0"
                 >
-                    <v-avatar left class="mr-0">
+                    <v-avatar>
                         <v-icon x-small>mdi-human-female</v-icon>
                     </v-avatar>
-                    {{ item.gender }}
+                    {{ $t('employee.tbGenderF') }}
                 </v-chip>
               </template>
 
@@ -172,10 +171,69 @@
                         text-color="white"
                         label
                     >
-                    <v-avatar left class="mr-0">
+                    <v-avatar left>
                         <v-icon x-small>mdi-calendar-month</v-icon>
                     </v-avatar>
-                    {{ formatDate(item.start_date) }}
+                        <span v-if="formatDate(item.start_date).split('/')[1] == 1">
+                            {{ formatDate(item.start_date).split('/')[0] }}
+                            / {{ $t('employee.january') }}
+                            / {{ formatDate(item.start_date).split('/')[2] }}
+                        </span>
+                        <span v-if="formatDate(item.start_date).split('/')[1] == 2">
+                            {{ formatDate(item.start_date).split('/')[0] }}
+                            / {{ $t('employee.february') }}
+                            / {{ formatDate(item.start_date).split('/')[2] }}
+                        </span>
+                        <span v-if="formatDate(item.start_date).split('/')[1] == 3">
+                            {{ formatDate(item.start_date).split('/')[0] }}
+                            / {{ $t('employee.march') }}
+                            / {{ formatDate(item.start_date).split('/')[2] }}
+                        </span>
+                        <span v-if="formatDate(item.start_date).split('/')[1] == 4">
+                            {{ formatDate(item.start_date).split('/')[0] }}
+                            / {{ $t('employee.april') }}
+                            / {{ formatDate(item.start_date).split('/')[2] }}
+                        </span>
+                        <span v-if="formatDate(item.start_date).split('/')[1] == 5">
+                            {{ formatDate(item.start_date).split('/')[0] }}
+                            / {{ $t('employee.may') }}
+                            / {{ formatDate(item.start_date).split('/')[2] }}
+                        </span>
+                        <span v-if="formatDate(item.start_date).split('/')[1] == 6">
+                            {{ formatDate(item.start_date).split('/')[0] }}
+                            / {{ $t('employee.june') }}
+                            / {{ formatDate(item.start_date).split('/')[2] }}
+                        </span>
+                        <span v-if="formatDate(item.start_date).split('/')[1] == 7">
+                            {{ formatDate(item.start_date).split('/')[0] }}
+                            / {{ $t('employee.july') }}
+                            / {{ formatDate(item.start_date).split('/')[2] }}
+                        </span>
+                        <span v-if="formatDate(item.start_date).split('/')[1] == 8">
+                            {{ formatDate(item.start_date).split('/')[0] }}
+                            / {{ $t('employee.august') }}
+                            / {{ formatDate(item.start_date).split('/')[2] }}
+                        </span>
+                        <span v-if="formatDate(item.start_date).split('/')[1] == 9">
+                            {{ formatDate(item.start_date).split('/')[0] }}
+                            / {{ $t('employee.september') }}
+                            / {{ formatDate(item.start_date).split('/')[2] }}
+                        </span>
+                        <span v-if="formatDate(item.start_date).split('/')[1] == 10">
+                            {{ formatDate(item.start_date).split('/')[0] }}
+                            / {{ $t('employee.october') }}
+                            / {{ formatDate(item.start_date).split('/')[2] }}
+                        </span>
+                        <span v-if="formatDate(item.start_date).split('/')[1] == 11">
+                            {{ formatDate(item.start_date).split('/')[0] }}
+                            / {{ $t('employee.november') }}
+                            / {{ formatDate(item.start_date).split('/')[2] }}
+                        </span>
+                         <span v-if="formatDate(item.start_date).split('/')[1] == 12">
+                            {{ formatDate(item.start_date).split('/')[0] }}
+                            / {{ $t('employee.december') }}
+                            / {{ formatDate(item.start_date).split('/')[2] }}
+                        </span>
                     </v-chip>
                 </template>
 
@@ -337,58 +395,56 @@
 
                 <template v-slot:[`item.gender`]="{ item }">
                     <v-chip
-                        v-if="item.gender == 'male'"
-                        class="p-1 gender-chip"
+                    v-if="item.gender == 'male'"
                         small
                         color="indigo"
                         text-color="white"
-                        label
+                        class="pl-1 py-0"
+
                     >
-                        <v-avatar left class="mr-0">
-                            <v-icon x-small>mdi-gender-male</v-icon>
-                        </v-avatar>
-                    {{ item.gender }}
+                    <v-avatar>
+                        <v-icon x-small>mdi-human-male</v-icon>
+                    </v-avatar>
+                        {{ $t('employee.tbGenderM') }}
                     </v-chip>
 
                     <v-chip
                         v-else
-                        class="p-1 gender-chip"
                         small
                         color="pink"
                         text-color="white"
-                        label
+                        class="pl-1 py-0"
                     >
-                    <v-avatar left class="mr-0">
-                        <v-icon x-small>mdi-gender-female</v-icon>
-                    </v-avatar>
-                        {{ item.gender }}
+                        <v-avatar>
+                            <v-icon x-small>mdi-human-female</v-icon>
+                        </v-avatar>
+                        {{ $t('employee.tbGenderF') }}
                     </v-chip>
                 </template>
 
-                <template v-slot:[`item.position`]="{ item }">
-                    <v-chip
+                <template v-slot:[`item.position.title`]="{ item }">
+                     <v-chip
                         label
                         dark
                         color="blue-grey darken-2"
                         class="text-capitalize pa-1 font-weight-medium"
                         small
-                        outlined
+
                     >
                         <v-avatar left>
                             <v-icon small>mdi-account-star</v-icon>
                         </v-avatar>
-                        {{ item.position }}
+                        {{ item.position.title }}
                     </v-chip>
                 </template>
 
                 <template v-slot:[`item.start_date`]="{ item }">
-
                     <v-chip
-                        class="p-1 start-date mt-1"
+                        class="p-1 start-date mt-1 font-weight-bold"
                         small
                         color="teal"
-                        text-color="white"
                         label
+                        outlined
                     >
                         <v-avatar left class="mr-0">
                             <v-icon small>mdi-calendar-arrow-right</v-icon>
@@ -399,11 +455,11 @@
                     <!-- =======LEAVE==DATE====== -->
                     <br>
                     <v-chip
-                        class="p-1 start-date mt-1 mb-1"
+                        class="p-1 start-date mt-1 mb-1 font-weight-bold"
                         small
                         color="orange darken-3"
-                        text-color="white"
                         label
+                        outlined
                     >
                         <v-avatar left class="mr-0">
                             <v-icon small>mdi-calendar-arrow-left</v-icon>
@@ -414,20 +470,20 @@
 
                 <template v-slot:[`item.phone_number`]="{ item }">
                     <span v-for="number in item.phone_number" :key="number.id">
-                    <v-chip
-                        v-if="number.phone != null"
-                        class="p-1 start-date"
-                        small
-                        color="grey lighten-2"
-                        text-color="blue-grey darken-3"
-                        label
-                    >
-                        {{ number.phone }}
-                        <v-avatar class="mr-0">
-                        <v-icon x-small>mdi-phone</v-icon>
-                        </v-avatar>
-                    </v-chip>
-                    <br />
+                        <v-chip
+                            v-if="number.phone != null"
+                            class="p-1 start-date"
+                            small
+                            color="grey lighten-2"
+                            text-color="blue-grey darken-3"
+                            label
+                        >
+                            {{ number.phone }}
+                            <v-avatar class="mr-0">
+                            <v-icon x-small>mdi-phone</v-icon>
+                            </v-avatar>
+                        </v-chip>
+                        <br />
                     </span>
                 </template>
 
