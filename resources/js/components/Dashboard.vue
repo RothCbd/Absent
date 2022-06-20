@@ -2,7 +2,7 @@
   <div id="dashboard">
     <h3 class="grey--text text--darken-2 mb-2">
       <v-icon class="mb-1" color="grey darken-2">mdi-view-dashboard</v-icon>
-      <span class="text-decoration-underline">Dashboard</span>
+      <span class="text-decoration-underline">{{ $t('dashboard.title') }}</span>
     </h3>
 
     <!-- ===========skeleton=============== -->
@@ -92,7 +92,7 @@
       <v-col cols="12" sm="12" md="4">
         <v-card class="dashboard-card user" elevation="1" height="180">
           <v-card-title class="grey--text text--darken-2">
-            <h4 class="indigo--text">USERS</h4>
+            <h4 class="indigo--text">{{ $t('dashboard.users') }}</h4>
             <v-spacer></v-spacer>
             <h2 v-if="user.all < 10" class="indigo--text">0{{ user.all }}</h2>
             <h2 v-else class="indigo--text">{{ user.all }}</h2>
@@ -126,7 +126,7 @@
       <v-col cols="12" sm="12" md="4">
         <v-card class="dashboard-card employee" elevation="1" height="180">
           <v-card-title class="grey--text text--darken-2">
-            <h4 class="teal--text">EMPLOYEES</h4>
+            <h4 class="teal--text">{{ $t('dashboard.employee') }}</h4>
             <v-spacer></v-spacer>
             <h2 class="teal--text" v-if="employee.all < 10">
               0{{ employee.all }}
@@ -160,7 +160,7 @@
       <v-col cols="12" sm="12" md="4">
         <v-card class="dashboard-card absent" elevation="1" height="180">
           <v-card-title class="grey--text text--darken-2">
-            <h4 class="orange--text text--darken-3">ABSENT</h4>
+            <h4 class="orange--text text--darken-3">{{ $t('dashboard.absent') }}</h4>
             <v-spacer></v-spacer>
             <h2 class="orange--text text--darken-3">
               <span v-if="absent.all > 10">{{ absent.all }}</span>
@@ -177,24 +177,24 @@
               </v-col>
               <v-col cols="8" class="text-right">
                 <h3 class="font-weight-medium blue-grey--text text--darken-1" v-if="absent.weekCount < 10">
-                  this Week : 0{{ absent.weekCount }}
+                  {{ $t('dashboard.weekly') }} : 0{{ absent.weekCount }}
                 </h3>
                 <h3 class="font-weight-medium blue-grey--text text--darken-1" v-else>
-                  this Week : {{ absent.weekCount }}
+                  {{ $t('dashboard.weekly') }} : {{ absent.weekCount }}
                 </h3>
 
                 <h3 class="font-weight-medium blue-grey--text text--darken-1" v-if="absent.monthly < 10">
-                  this Month : 0{{ absent.monthly }}
+                  {{ $t('dashboard.monthly') }} : 0{{ absent.monthly }}
                 </h3>
                 <h3 class="font-weight-medium blue-grey--text text--darken-1" v-else>
-                  this Month : {{ absent.monthly }}
+                  {{ $t('dashboard.monthly') }} : {{ absent.monthly }}
                 </h3>
 
                 <h3 class="font-weight-medium blue-grey--text text--darken-1" v-if="absent.year < 10">
-                  this Year : 0{{ absent.year }}
+                  {{ $t('dashboard.yearly') }} : 0{{ absent.year }}
                 </h3>
                 <h3 class="font-weight-medium blue-grey--text text--darken-1" v-else>
-                  this Year : {{ absent.year }}
+                  {{ $t('dashboard.yearly') }} : {{ absent.year }}
                 </h3>
               </v-col>
             </v-row>
@@ -207,7 +207,7 @@
     <v-card class="mt-5">
       <v-card-title>
         <h5 class="grey--text text--darken-2 font-weight-medium">
-          <v-icon>mdi-account-cancel</v-icon> Absence Summary
+          <v-icon>mdi-account-cancel</v-icon> {{ $t('dashboard.absenceSummary') }}
         </h5>
       </v-card-title>
       <v-card-text>
@@ -216,7 +216,7 @@
           <v-col cols="12" sm="12" md="4">
             <v-card class="mx-auto" outlined>
               <div class="ma-2">
-                <v-icon small>mdi-table-account</v-icon> this Week
+                <v-icon small>mdi-table-account</v-icon> {{ $t('dashboard.weekly') }}
               </div>
               <v-data-table
                 :headers="headers"
@@ -247,19 +247,25 @@
                               <span
                                 v-if="data.absent == 'fullday'"
                                 class="deep-orange--text"
-                                >full day</span
+                                >{{ $t('dashboard.fullDay') }}</span
                               >
                               <span v-else class="blue-grey--text"
-                                >half day</span
+                                >{{ $t('dashboard.halfDay') }}</span
                               >
                             </td>
-                            <td class="text-lowercase">
-                              {{ data.day }}
+                            <td class="text-lowercase" :class="getColor(data.day)+'--text'">
+                                <span v-if="data.day == 'Monday'">{{ $t('dashboard.monday') }}</span>
+                                <span v-if="data.day == 'Tuesday'">{{ $t('dashboard.tuesday') }}</span>
+                                <span v-if="data.day == 'Wednesday'">{{ $t('dashboard.wednesday') }}</span>
+                                <span v-if="data.day == 'Thursday'">{{ $t('dashboard.thursday') }}</span>
+                                <span v-if="data.day == 'Friday'">{{ $t('dashboard.friday') }}</span>
+                                <span v-if="data.day == 'Saturday'">{{ $t('dashboard.saturday') }}</span>
+                                <span v-if="data.day == 'Sunday'">{{ $t('dashboard.sunday') }}</span>
                             </td>
                             <td>
                               <span>{{ formatDate(data.date) }}</span>
                             </td>
-                            <td>{{ data.description }}</td>
+
                           </tr>
                         </tbody>
                       </template>
@@ -295,8 +301,8 @@
                     small
                     outlined
                   >
-                    <span class="font-weight-medium orange--text text--darken-3"
-                      >{{ item.item.absent_total }} day</span
+                    <span class="font-weight-bold orange--text text--darken-3"
+                      >{{ item.item.absent_total }} {{ $t('dashboard.day') }}</span
                     >
                   </v-chip>
                 </template>
@@ -308,7 +314,7 @@
           <v-col cols="12" sm="12" md="4">
             <v-card class="mx-auto" outlined>
               <div class="ma-2">
-                <v-icon small>mdi-table-account</v-icon> this Month
+                <v-icon small>mdi-table-account</v-icon> {{ $t('dashboard.monthly') }}
               </div>
               <v-data-table
                 :headers="headers"
@@ -339,19 +345,25 @@
                               <span
                                 v-if="data.absent == 'fullday'"
                                 class="deep-orange--text"
-                                >full day</span
+                                >{{ $t('dashboard.fullDay') }}</span
                               >
                               <span v-else class="blue-grey--text"
-                                >half day</span
+                                >{{ $t('dashboard.halfDay') }}</span
                               >
                             </td>
-                            <td class="text-lowercase">
-                              {{ data.day }}
+                            <td class="text-lowercase" :class="getColor(data.day)+'--text'">
+                                <span v-if="data.day == 'Monday'">{{ $t('dashboard.monday') }}</span>
+                                <span v-if="data.day == 'Tuesday'">{{ $t('dashboard.tuesday') }}</span>
+                                <span v-if="data.day == 'Wednesday'">{{ $t('dashboard.wednesday') }}</span>
+                                <span v-if="data.day == 'Thursday'">{{ $t('dashboard.thursday') }}</span>
+                                <span v-if="data.day == 'Friday'">{{ $t('dashboard.friday') }}</span>
+                                <span v-if="data.day == 'Saturday'">{{ $t('dashboard.saturday') }}</span>
+                                <span v-if="data.day == 'Sunday'">{{ $t('dashboard.sunday') }}</span>
                             </td>
                             <td>
                               {{ formatDate(data.date) }}
                             </td>
-                            <td>{{ data.description }}</td>
+
                           </tr>
                         </tbody>
                       </template>
@@ -387,8 +399,8 @@
                     small
                     outlined
                   >
-                    <span class="font-weight-medium orange--text text--darken-3"
-                      >{{ item.item.absent_total }} day</span
+                    <span class="font-weight-bold orange--text text--darken-3"
+                      >{{ item.item.absent_total }} {{ $t('dashboard.day') }}</span
                     >
                   </v-chip>
                 </template>
@@ -400,7 +412,7 @@
           <v-col cols="12" sm="12" md="4">
             <v-card class="mx-auto" outlined>
               <div class="ma-2">
-                <v-icon left small>mdi-table-account</v-icon> this Year
+                <v-icon left small>mdi-table-account</v-icon> {{ $t('dashboard.yearly') }}
               </div>
               <v-data-table
                 :headers="headers"
@@ -431,19 +443,25 @@
                               <span
                                 v-if="data.absent == 'fullday'"
                                 class="deep-orange--text"
-                                >full day</span
+                                >{{ $t('dashboard.fullDay') }}</span
                               >
                               <span v-else class="blue-grey--text"
-                                >half day</span
+                                >{{ $t('dashboard.halfDay') }}</span
                               >
                             </td>
-                            <td class="text-lowercase">
-                              {{ data.day }}
+                            <td class="text-lowercase" :class="getColor(data.day)+'--text'">
+                                <span v-if="data.day == 'Monday'">{{ $t('dashboard.monday') }}</span>
+                                <span v-if="data.day == 'Tuesday'">{{ $t('dashboard.tuesday') }}</span>
+                                <span v-if="data.day == 'Wednesday'">{{ $t('dashboard.wednesday') }}</span>
+                                <span v-if="data.day == 'Thursday'">{{ $t('dashboard.thursday') }}</span>
+                                <span v-if="data.day == 'Friday'">{{ $t('dashboard.friday') }}</span>
+                                <span v-if="data.day == 'Saturday'">{{ $t('dashboard.saturday') }}</span>
+                                <span v-if="data.day == 'Sunday'">{{ $t('dashboard.sunday') }}</span>
                             </td>
                             <td>
                               {{ formatDate(data.date) }}
                             </td>
-                            <td>{{ data.description }}</td>
+
                           </tr>
                         </tbody>
                       </template>
@@ -479,8 +497,8 @@
                     small
                     outlined
                   >
-                    <span class="font-weight-medium orange--text text--darken-3"
-                      >{{ item.item.absent_total }} day</span
+                    <span class="font-weight-bold orange--text text--darken-3"
+                      >{{ item.item.absent_total }} {{ $t('dashboard.day') }}</span
                     >
                   </v-chip>
                 </template>
@@ -539,6 +557,16 @@ export default {
   methods: {
     formatDate(value) {
       return moment(value).format("DD-MM-YYYY");
+    },
+
+    getColor(day) {
+        if (day == "Monday") return "orange";
+        else if (day == "Tuesday") return "purple";
+        else if (day == "Wednesday") return "light-green";
+        else if (day == "Thursday") return "green";
+        else if (day == "Friday") return "blue";
+        else if (day == "Saturday") return "pink";
+        else if (day == "Sunday") return "red";
     },
 
     getReport() {

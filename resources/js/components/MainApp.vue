@@ -35,11 +35,11 @@
                         </v-avatar>
                         <h5
                             class="
-                            mt-2
-                            mb-0
-                            white--text
-                            text--darken-1
-                            font-weight-regular
+                                mt-2
+                                mb-0
+                                white--text
+                                text--darken-1
+                                font-weight-regular
                             "
                         >
                             {{ auth.name }}
@@ -122,7 +122,7 @@
             </v-list>
 
             <template v-slot:append>
-                <v-btn block small depressed class="my-2" color="blue-grey lighten-4" @click="logout">
+                <v-btn block small depressed class="my-2 khmer-font" color="blue-grey lighten-4" @click="logout">
                     {{ $t('menu.signout') }}
                     <v-icon small>mdi-logout-variant</v-icon>
                 </v-btn>
@@ -139,7 +139,7 @@
 
             <v-toolbar-title class="grey--text text--darken-2 font-weight-medium">
                 <!-- <small>Absence Management</small> -->
-                <h5>{{ $t('app.title') }}</h5>
+                <h4 class="khmer-font">{{ $t('app.title') }}</h4>
             </v-toolbar-title>
 
             <v-spacer></v-spacer>
@@ -156,13 +156,9 @@
                         depressed
                         text
                         rounded
-                        class="text-lowercase font-weight-regular"
+                        class="text-lowercase font-weight-regular khmer-font"
                     >
                         <v-icon small>mdi-translate</v-icon>
-                        <!-- <span v-for="locale in $i18n.locale" :key="`locale-${locale}`">
-                            {{ locale[0] }}
-                        </span> -->
-                        <!-- language -->
                         {{ $t('languages.language') }}
                     </v-btn>
                 </template>
@@ -173,11 +169,7 @@
                             width="20"
                             :src="'/image/englishflag.png'"
                         ></v-img>
-                        <!-- <v-list-item-title @click="$i18n.locale = 'english'" class="ml-1">
-                            {{ $t('languages.english') }}
-                        </v-list-item-title> -->
-
-                        <v-list-item-title @click="langChanged('english')" class="ml-1">
+                        <v-list-item-title @click="langChanged('english')" class="ml-1 khmer-font">
                             {{ $t('languages.english') }}
                         </v-list-item-title>
                     </v-list-item>
@@ -187,11 +179,8 @@
                             width="20"
                             :src="'/image/cambodaiflag.png'"
                         ></v-img>
-                        <!-- <v-list-item-title @click="$i18n.locale = 'khmer'" class="ml-1">
-                            {{ $t('languages.khmer') }}
-                        </v-list-item-title> -->
 
-                        <v-list-item-title @click="langChanged('khmer')" class="ml-1">
+                        <v-list-item-title @click="langChanged('khmer')" class="ml-1 khmer-font">
                             {{ $t('languages.khmer') }}
                         </v-list-item-title>
                     </v-list-item>
@@ -199,6 +188,7 @@
             </v-menu>
 
             <v-btn
+                class="text-capitalize"
                 color="grey lighten-2 indigo--text"
                 depressed
                 small

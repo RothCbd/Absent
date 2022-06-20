@@ -280,7 +280,7 @@
                 <v-card
                     v-for="(item, index) in employeeActiveData"
                     :key="index"
-                    class="ma-3 employeeCard"
+                    class="ma-3 employeeCard khawin-background-color"
                     width="344"
                     height="210"
                     max-width="344"
@@ -311,25 +311,27 @@
                             </v-img>
 
                         </v-col>
-                        <v-col cols="7" class="cardDetail pa-0">
-                            <div class="cardNum">{{ index + 1 }}</div>
-                            <h5 class="cardPosition">Junior Software Development</h5>
+                        <v-col cols="7" class="cardDetail pa-0 grey--text text--lighten-4">
+                            <div class="cardNum cyan--text text--darken-2">{{ index + 1 }}</div>
+                            <h5 class="cardPosition khawin-background-color grey--text text--lighten-4">
+                                {{ item.position.title }}
+                            </h5>
                             <h4>{{ item.name }}</h4>
-                            <p><v-icon x-small>mdi-email</v-icon> {{ item.email }}</p>
-                            <p v-if="item.gender == 'male'"><v-icon small>mdi-human-male</v-icon> {{ item.gender }}</p>
-                            <p v-if="item.gender == 'female'"><v-icon small>mdi-human-female</v-icon> {{ item.gender }}</p>
-                            <p><v-icon x-small>mdi-calendar-month</v-icon> {{ formatDate(item.start_date) }}</p>
+                            <p><v-icon dark x-small>mdi-email</v-icon> {{ item.email }}</p>
+                            <p v-if="item.gender == 'male'"><v-icon dark small>mdi-human-male</v-icon> {{ item.gender }}</p>
+                            <p v-if="item.gender == 'female'"><v-icon dark small>mdi-human-female</v-icon> {{ item.gender }}</p>
+                            <p><v-icon dark x-small>mdi-calendar-month</v-icon> {{ formatDate(item.start_date) }}</p>
                             <span v-for="number in item.phone_number" :key="number.id">
-                                <p v-if="number.phone != null" class="cardPhoneNum"><v-icon x-small>mdi-phone</v-icon> {{ number.phone }}</p>
+                                <p v-if="number.phone != null" class="cardPhoneNum"><v-icon dark x-small>mdi-phone</v-icon> {{ number.phone }}</p>
                             </span>
 
                             <!-- SHAPE -->
-                            <div style="position: absolute; bottom: -40px; right: -30px; height: 100px; width: 100px; border-radius: 50%; background: rgb(63 81 181 / 7%);"></div>
-                            <div style="position: absolute; bottom: 30px; right: 20px; height: 120px; width: 120px; border-radius: 50%; background: rgb(63 81 181 / 7%);"></div>
-                            <div style="position: absolute; bottom: -30px; left: 20px; height: 150px; width: 150px; border-radius: 50%; background: rgb(63 81 181 / 7%); z-index: -1;"></div>
+                            <div style="position: absolute; bottom: -40px; right: -30px; height: 100px; width: 100px; border-radius: 50%; background: rgb(255 255 255 / 10%);"></div>
+                            <div style="position: absolute; bottom: 30px; right: 20px; height: 120px; width: 120px; border-radius: 50%; background: rgb(255 255 255 / 10%);"></div>
+                            <div style="position: absolute; bottom: -30px; left: 20px; height: 150px; width: 150px; border-radius: 50%; background: rgb(255 255 255 / 10%); z-index: -1;"></div>
 
                             <div class="cardAction">
-                                <v-icon small class="mr-2" @click="editEmployee(item)">mdi-pencil</v-icon>
+                                <v-icon dark small class="mr-2" @click="editEmployee(item)">mdi-pencil</v-icon>
                                 <v-icon
                                     small
                                     class="mr-2"

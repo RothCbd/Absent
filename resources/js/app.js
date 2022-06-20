@@ -194,6 +194,42 @@ const messages = {
             'khmer': 'Khmer',
         },
 
+        dashboard: {
+            title: 'Dashboard',
+            users: 'Users',
+            employee: 'Employees',
+            absent: 'Absent',
+
+            weekly: 'This Week',
+            monthly: 'This Month',
+            yearly: 'This Year',
+            absenceSummary: 'Absence Summary',
+
+            day: 'day',
+            fullDay: 'full day',
+            halfDay: 'half day',
+            monday: 'Monday',
+            tuesday: 'Tuesday',
+            wednesday: 'Wednesday',
+            thursday: 'Thursday',
+            friday: 'Friday',
+            saturday: 'Saturday',
+            sunday: 'Sunday',
+
+            january: 'January',
+            february: 'February',
+            march: 'March',
+            april: 'April',
+            may: 'May',
+            june: 'June',
+            july: 'July',
+            august: 'August',
+            september: 'September',
+            october: 'October',
+            november: 'November',
+            december: 'December',
+        },
+
         position: {
             titleList: 'Position List',
             search: 'Search',
@@ -430,6 +466,45 @@ const messages = {
             language: 'ភាសារ',
             'english': 'អងគ្លេស',
             'khmer': 'ខ្មែរ',
+        },
+
+        dashboard: {
+            title: 'ផ្ទាំងទិន្នន័យ',
+            users: 'អ្នកប្រើប្រាស់',
+
+            employee: 'បុគ្គលិក',
+            absent: 'អវត្តន៏មាន',
+
+            weekly: 'សប្តាហ៍នេះ',
+            monthly: 'ខែនេះ',
+            yearly: 'ឆ្នាំនេះ',
+            absenceSummary: 'សង្ខេបអវត្តមាន',
+
+            day: 'ថ្ងៃ',
+            fullDay: 'មួយថ្ងៃ',
+            halfDay: 'កន្លះថ្ងៃ',
+            morning: 'ពេលព្រឹក',
+            afternoon: 'ពេលរសៀល',
+            monday: 'ចន្ទ',
+            tuesday: 'អង្គារ',
+            wednesday: 'ពុធ',
+            thursday: 'ព្រហស្បតិ៍',
+            friday: 'សុក្រ',
+            saturday: 'សៅរ៍',
+            sunday: 'អាទិត្យ',
+
+            january: 'មករា',
+            february: 'កុម្ភះ',
+            march: 'មិនា',
+            april: 'មេសា',
+            may: 'ឧសភា',
+            june: 'មិថុនា',
+            july: 'កក្កដា',
+            august: 'សីហា',
+            september: 'កញ្ញា',
+            october: 'តុលា',
+            november: 'វិច្ឆកា',
+            december: 'ធ្នូ',
         },
 
         position: {
