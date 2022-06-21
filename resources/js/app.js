@@ -175,6 +175,63 @@ const messages = {
 
         app: {
             title: 'Absence Management',
+            monday: 'Monday',
+            tuesday: 'Tuesday',
+            wednesday: 'Wednesday',
+            thursday: 'Thursday',
+            friday: 'Friday',
+            saturday: 'Saturday',
+            sunday: 'Sunday',
+
+            january: 'January',
+            february: 'February',
+            march: 'March',
+            april: 'April',
+            may: 'May',
+            june: '/06',
+            july: 'July',
+            august: 'August',
+            september: 'September',
+            october: 'October',
+            november: 'November',
+            december: 'December',
+        },
+
+        holiday: {
+            title: 'Cambodia Public holiday for',
+            addHoliday: 'add holiday',
+            tbDay: 'Day',
+            tbDate: 'Date',
+            tbHoliday: 'Holiday',
+            tbAction: 'Edit | Delete',
+
+            frmtitleAdd: 'Add Holiday',
+            frmtitleEdit: 'Edit Holiday',
+            txtHolidayDate: 'Holiday Date',
+            txtHolidayDetail: 'Holiday Detail',
+            btnCancel: 'cancel',
+            btnSave: 'save',
+
+            monday: 'Monday',
+            tuesday: 'Tuesday',
+            wednesday: 'Wednesday',
+            thursday: 'Thursday',
+            friday: 'Friday',
+            saturday: 'Saturday',
+            sunday: 'Sunday',
+
+            january: 'January',
+            february: 'February',
+            march: 'March',
+            april: 'April',
+            may: 'May',
+            june: 'June',
+            july: 'July',
+            august: 'August',
+            september: 'September',
+            october: 'October',
+            november: 'November',
+            december: 'December',
         },
 
         menu: {
@@ -244,11 +301,16 @@ const messages = {
             formTitleAdd: 'Add Position',
             formTitleEdit: 'Edit Position',
             txtPosition: 'Position Name',
-            btnCancel: 'ancel',
+            btnCancel: 'cancel',
             btnSave: 'save',
             btnDelete: 'delete',
             deleteMessage: 'Are you sure delete position',
             deleteMessageWarning: 'All employee in this positon will be delete too',
+
+            msgClose:'close',
+            savedMsg: 'Position has been saved.',
+            updateMsg: 'Position has been updated.',
+            deleteMsg: 'Position has been deleted.',
         },
 
         employee: {
@@ -297,6 +359,13 @@ const messages = {
             october: '10',
             november: '11',
             december: '12',
+
+            btnDelete: 'delete',
+            deleteMessage: 'Are you sure delete employee',
+            msgClose:'close',
+            savedMsg: 'Position has been saved.',
+            updateMsg: 'Position has been updated.',
+            deleteMsg: 'Position has been deleted.',
         },
 
         absent: {
@@ -354,6 +423,12 @@ const messages = {
             deleteMsgAlertAbsen: "'s absent",
             btnCancel: 'cancel',
             btnDelete: 'Delete',
+
+            deleteMessage: 'Are you sure delete employee',
+            msgClose:'close',
+            savedMsg: 'Absent has been saved.',
+            updateMsg: 'Absent has been updated.',
+            deleteMsg: 'Absent has been deleted.',
         },
 
         report: {
@@ -427,7 +502,12 @@ const messages = {
             btnCancel: 'cancel',
             btnSave: 'save',
 
-
+            btnDelete: 'Delete',
+            deleteMessage: 'Are you sure delete user',
+            msgClose:'close',
+            savedMsg: 'User has been saved.',
+            updateMsg: 'User has been updated.',
+            deleteMsg: 'User has been deleted.',
         },
 
         account: {
@@ -441,6 +521,9 @@ const messages = {
             txtNewPassword: 'New Password',
             txtConfirPassword: 'Confirm Password',
             btnSave: 'save',
+            msgClose:'close',
+            updateMsg: 'Profile has been updated.',
+            passUpdateMsg: 'Password updated please login again.'
         }
     },
 
@@ -448,7 +531,64 @@ const messages = {
     khmer: {
 
         app: {
-            title: 'គ្រប់គ្រង អវត្តន៏មាន'
+            title: 'គ្រប់គ្រង អវត្តន៏មាន',
+            monday: 'ថ្ងៃចន្ទ',
+            tuesday: 'អង្គារ',
+            wednesday: 'ពុធ',
+            thursday: 'ព្រហស្បតិ៍',
+            friday: 'សុក្រ',
+            saturday: 'សៅរ៍',
+            sunday: 'អាទិត្យ',
+
+            january: 'ខែមករា',
+            february: 'ខែកុម្ភះ',
+            march: 'ខែមិនា',
+            april: 'ខែមេសា',
+            may: 'ខែឧសភា',
+            june: 'ខែមិថុនា',
+            july: 'ខែកក្កដា',
+            august: 'ខែសីហា',
+            september: 'ខែកញ្ញា',
+            october: 'ខែតុលា',
+            november: 'ខែវិច្ឆកា',
+            december: 'ខែធ្នូ',
+        },
+
+        holiday: {
+            title: 'ថ្ងៃបុណ្យជាតិឈប់សំរាកសំរាប់ឆ្នាំ',
+            addHoliday: 'បន្ថែមថ្ងៃឈប់សំរាក',
+            tbDay: 'ថ្ងៃ',
+            tbDate: 'ថ្ងៃខែឆ្នាំ',
+            tbHoliday: 'ឈប់សំរាក',
+            tbAction: 'កែប្រែ | លុប',
+
+            frmtitleAdd: 'បន្ថែមថ្ងៃឈប់សំរាក',
+            frmtitleEdit: 'កែប្រែថ្ងៃឈប់សំរាក',
+            txtHolidayDate: 'កាលបរិច្ឆេទ ថ្ងៃឈប់សំរាក',
+            txtHolidayDetail: 'ព័ត៌មានលម្អិតនៃថ្ងៃឈប់សម្រាក',
+            btnCancel: 'បោះបង់',
+            btnSave: 'រក្សាទុក',
+
+            monday: 'ថ្ងៃចន្ទ',
+            tuesday: 'អង្គារ',
+            wednesday: 'ពុធ',
+            thursday: 'ព្រហស្បតិ៍',
+            friday: 'សុក្រ',
+            saturday: 'សៅរ៍',
+            sunday: 'អាទិត្យ',
+
+            january: 'ខែមករា',
+            february: 'ខែកុម្ភះ',
+            march: 'ខែមិនា',
+            april: 'ខែមេសា',
+            may: 'ខែឧសភា',
+            june: 'ខែមិថុនា',
+            july: 'ខែកក្កដា',
+            august: 'ខែសីហា',
+            september: 'ខែកញ្ញា',
+            october: 'ខែតុលា',
+            november: 'ខែវិច្ឆកា',
+            december: 'ខែធ្នូ',
         },
 
         menu: {
@@ -526,14 +666,19 @@ const messages = {
             btnDelete: 'លុប',
             deleteMessage: 'តើអ្នកពិតជាច្បាស់ថានិងលុប មុខដំណែង',
             deleteMessageWarning: 'បុគ្គលិកទាំងអស់ដែរកាន់មុខដំណែងនេះ និងត្រូវលុបទាំងអស់ផងដែរ',
+
+            msgClose:'បិត',
+            savedMsg: 'មុខដំណែងត្រូវបានរក្សាទុក',
+            updateMsg: 'មុខដំណែងត្រូវបានកែប្រែ',
+            deleteMsg: 'មុខដំណែងត្រូវបានលុប',
         },
 
         employee: {
             list: 'តារាងបុគ្គលិក',
             search: 'ស្វែងរក',
             btnAddEmp: 'បន្ថែម បុគ្គលិក',
-            activeEmp: 'បុគ្គលិក នៅបំរើការ',
-            inctiveEmp: 'បុគ្គលិក លាឈប់',
+            activeEmp: 'បុគ្គលិក នៅបំរើការងារ',
+            inctiveEmp: 'បុគ្គលិក ឈប់ពីការងារ',
             tbName: 'ឈ្មោះ',
             tbGender: 'ភេទ',
             tbGenderM: 'ប្រុស',
@@ -574,6 +719,13 @@ const messages = {
             october: 'តុលា',
             november: 'វិច្ឆកា',
             december: 'ធ្នូ',
+
+            btnDelete: 'លុប',
+            deleteMessage: 'តើអ្នកពិតជាច្បាស់ថានិងលុបបុគ្គលិក',
+            msgClose:'បិត',
+            savedMsg: 'បុគ្គលិកត្រូវបានរក្សាទុក',
+            updateMsg: 'បុគ្គលិកត្រូវបានកែប្រែ',
+            deleteMsg: 'បុគ្គលិកត្រូវបានលុប',
         },
 
         absent: {
@@ -630,7 +782,12 @@ const messages = {
             deleteMsgAlert: 'លុបអវត្តន៏មានរបស់',
             deleteMsgAlertAbsen: "",
             btnCancel: 'បោះបង់',
-            btnDelete: 'លុប'
+            btnDelete: 'លុប',
+
+            msgClose:'បិត',
+            savedMsg: 'អវត្តន៏មានត្រូវបានរក្សាទុក',
+            updateMsg: 'អវត្តន៏មានត្រូវបានកែប្រែ',
+            deleteMsg: 'អវត្តន៏មានត្រូវបានលុប',
         },
 
         report: {
@@ -703,6 +860,13 @@ const messages = {
             txtImage: 'ជ្រើសរើសរូបភាព',
             btnCancel: 'បោះបង់',
             btnSave: 'រក្សាទុក',
+
+            btnDelete: 'លុប',
+            deleteMessage: 'តើអ្នកពិតជាច្បាស់ថានិងអ្នកប្រើប្រាស់',
+            msgClose:'បិត',
+            savedMsg: 'អ្នកប្រើប្រាស់ត្រូវបានរក្សាទុក',
+            updateMsg: 'អ្នកប្រើប្រាស់ត្រូវបានកែប្រែ',
+            deleteMsg: 'អ្នកប្រើប្រាស់ត្រូវបានលុប',
         },
 
         account: {
@@ -716,6 +880,10 @@ const messages = {
             txtNewPassword: 'ពាក្យសម្ងាត់ថ្មី',
             txtConfirPassword: 'បញ្ជាក់ ពាក្យសម្ងាត់',
             btnSave: 'រក្សាទុក',
+
+            msgClose:'បិត',
+            updateMsg: 'គណនីត្រូវបានកែប្រែ',
+            passUpdateMsg: 'ពាក្យសម្ងាត់ត្រូវបានកែប្រែ សូមធ្វើការចូលប្រព័ន្ធម្តងទៀត'
         }
 
     }

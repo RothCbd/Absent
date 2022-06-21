@@ -203,11 +203,11 @@
         </v-dialog>
 
         <!-- ---------------Snacbar--------------- -->
-        <v-snackbar v-model="snackbar" color="indigo lighten-1" dark>
+        <v-snackbar v-model="snackbar" color="cyan darken-2" dark>
             {{ alertSnackbarMsg }}
             <template v-slot:action="{ attrs }">
                 <v-btn dark text v-bind="attrs" @click="snackbar = false" small>
-                    close
+                    {{ $t('position.msgClose') }}
                 </v-btn>
             </template>
         </v-snackbar>
@@ -252,11 +252,6 @@ export default {
             snackbar: false,
             editMode: false,
             tableLoading: true,
-            // headers: [
-            //     { text: this.$t('position.positionTable'), value: "title" },
-            //     { text: "Employee", value: "employee_count" },
-            //     { text: "Action", sortable: false, align: "center", value: "actions" },
-            // ],
             absentData: [],
             employeeData: [],
             positionCount: "",
@@ -295,8 +290,6 @@ export default {
     mounted() {
         this.ReadPosition();
         this.activateMultipleDraggableDialogs();
-
-        // console.log(this.$i18n.locale);
     },
 
     methods: {
@@ -341,7 +334,8 @@ export default {
                 .then((response) => {
                     this.ReadPosition();
                     this.closeDialog();
-                    this.alertSnackbarMsg = response.data.message;
+                    // this.alertSnackbarMsg = response.data.message;
+                    this.alertSnackbarMsg = this.$t('position.savedMsg');
                     this.snackbar = true;
                     this.btnSaveLoading = false;
                     this.tableLoading = false;
@@ -373,7 +367,8 @@ export default {
                 .then((response) => {
                     this.ReadPosition();
                     this.closeDialog();
-                    this.alertSnackbarMsg = response.data.message;
+                    // this.alertSnackbarMsg = response.data.message;
+                    this.alertSnackbarMsg = this.$t('position.updateMsg');
                     this.snackbar = true;
                     this.btnSaveLoading = false;
                     this.tableLoading = false;
@@ -404,7 +399,8 @@ export default {
                 .then((response) => {
                     this.ReadPosition();
                     this.dialogDelete = false;
-                    this.alertSnackbarMsg = response.data.message;
+                    // this.alertSnackbarMsg = response.data.message;
+                    this.alertSnackbarMsg = this.$t('position.deleteMsg');
                     this.snackbar = true;
                     this.btnLoading = false;
                     this.tableLoading = false;

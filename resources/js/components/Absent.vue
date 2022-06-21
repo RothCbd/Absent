@@ -445,7 +445,7 @@
       {{ alertSnackbarMsg }}
       <template v-slot:action="{ attrs }">
         <v-btn dark text v-bind="attrs" @click="snackbar = false" small>
-          close
+          {{ $t('absent.msgClose') }}
         </v-btn>
       </template>
     </v-snackbar>
@@ -636,7 +636,8 @@ export default {
         .then((response) => {
             this.ReadAbsent();
             this.closeDialog();
-            this.alertSnackbarMsg = response.data.message;
+            // this.alertSnackbarMsg = response.data.message;
+            this.alertSnackbarMsg = this.$t('absent.savedMsg');
             this.snackbar = true;
             this.btnSaveLoading = false;
             this.tableLoading = false;
@@ -649,9 +650,6 @@ export default {
     },
 
     editAbsent(absent) {
-
-        console.log(absent.employee)
-
       this.editMode = true;
       this.form.id = absent.id;
       this.form.employee_id = absent.employee.id;
@@ -676,7 +674,8 @@ export default {
         .then((response) => {
           this.ReadAbsent();
           this.closeDialog();
-          this.alertSnackbarMsg = response.data.message;
+            //   this.alertSnackbarMsg = response.data.message;
+            this.alertSnackbarMsg = this.$t('absent.updateMsg');
           this.snackbar = true;
           this.btnSaveLoading = false;
           this.tableLoading = false;
@@ -707,7 +706,8 @@ export default {
         .then((response) => {
           this.ReadAbsent();
           this.dialogDelete = false;
-          this.alertSnackbarMsg = response.data.message;
+            //   this.alertSnackbarMsg = response.data.message;
+            this.alertSnackbarMsg = this.$t('absent.deleteMsg');
           this.snackbar = true;
           this.btnLoading = false;
           this.tableLoading = false;

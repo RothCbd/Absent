@@ -311,25 +311,25 @@
         </v-card>
       </v-dialog>
       <!-- ---------------Snacbar--------------- -->
-      <v-snackbar v-model="snackbar" color="indigo lighten-1" dark>
+      <v-snackbar v-model="snackbar" color="cyan darken-2" dark>
         {{ alertSnackbarMsg }}
         <template v-slot:action="{ attrs }">
           <v-btn dark text v-bind="attrs" @click="snackbar = false" small>
-            close
+            {{ $t('user.msgClose') }}
           </v-btn>
         </template>
       </v-snackbar>
 
       <!-- ----------dialogDelete------------ -->
-      <v-dialog v-model="dialogDelete" max-width="330px">
+      <v-dialog v-model="dialogDelete" max-width="350px">
         <v-card>
           <div class="text-center">
-            <v-sheet class="px-7 pt-7 pb-4 mx-auto text-center d-inline-block">
+            <v-sheet class="px-5 pt-7 pb-4 mx-auto text-center d-inline-block">
               <v-icon class="text-center pb-3" x-large color="red lighten-2"
                 >mdi-alert</v-icon
               >
               <div class="grey--text text--darken-3 text-body-2 mb-4">
-                Are you sure to delete
+                {{ $t('user.deleteMessage') }}
                 <b class="red--text tex--lighten-2">{{ userNameDelete }}</b> ?
               </div>
 
@@ -340,7 +340,7 @@
                 small
                 @click="dialogDelete = false"
               >
-                Cancel
+                {{ $t('user.btnCancel') }}
               </v-btn>
 
               <v-btn
@@ -352,7 +352,7 @@
                 depressed
                 @click="submitDelete"
               >
-                Delete
+                {{ $t('user.btnDelete') }}
               </v-btn>
             </v-sheet>
           </div>
@@ -401,19 +401,6 @@ export default {
       tableLoading: true,
       showPassword: false,
       showPasswordConfirm: false,
-    //   headers: [
-    //     {
-    //       text: "No.",
-    //       align: "start",
-    //       value: "id",
-    //     },
-    //     { text: "Name", value: "name" },
-    //     { text: "Email", value: "email" },
-    //     { text: "Role", value: "role" },
-    //     { text: "Phone", value: "phone" },
-    //     { text: "Action", sortable: false, align: "center", value: "actions" },
-    //   ],
-
       userData: [],
       userCount: "",
       userForm: false,
@@ -474,14 +461,14 @@ export default {
         ReadUser() {
         axios
             .get("http://127.0.0.1:8000/api/read-user", {
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("access_token"),
-            },
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("access_token"),
+                },
             })
             .then((response) => {
-            this.userData = response.data.data;
-            this.userCount = response.data.data.length;
-            this.tableLoading = false;
+                this.userData = response.data.data;
+                this.userCount = response.data.data.length;
+                this.tableLoading = false;
             })
             .catch((error) => {
             console.log(error);
@@ -493,20 +480,20 @@ export default {
         },
 
         closeDialog() {
-        this.editMode = false;
-        this.userForm = false;
-        this.form.role_id = "";
-        this.form.name = "";
-        this.form.email = "";
-        this.form.phone_number = [{ phone: "" }];
-        this.form.image = null;
-        this.preview_profile = null;
-        this.preview_profile_edit = null;
-        this.form.password = "";
-        this.form.password_confirmation = "";
-        this.tableLoading = false;
-        this.errorsMessage = "";
-        this.btnSaveLoading = false;
+            this.editMode = false;
+            this.userForm = false;
+            this.form.role_id = "";
+            this.form.name = "";
+            this.form.email = "";
+            this.form.phone_number = [{ phone: "" }];
+            this.form.image = null;
+            this.preview_profile = null;
+            this.preview_profile_edit = null;
+            this.form.password = "";
+            this.form.password_confirmation = "";
+            this.tableLoading = false;
+            this.errorsMessage = "";
+            this.btnSaveLoading = false;
         },
 
         addPhone: function () {
@@ -548,17 +535,18 @@ export default {
             },
             })
             .then((response) => {
-            this.ReadUser();
-            this.closeDialog();
-            this.alertSnackbarMsg = response.data.message;
-            this.snackbar = true;
-            this.btnSaveLoading = false;
-            this.tableLoading = false;
+                this.ReadUser();
+                this.closeDialog();
+                // this.alertSnackbarMsg = response.data.message;
+                this.alertSnackbarMsg = this.$t('user.savedMsg');
+                this.snackbar = true;
+                this.btnSaveLoading = false;
+                this.tableLoading = false;
             })
             .catch((errors) => {
-            this.errorsMessage = errors.response.data.errors;
-            this.btnSaveLoading = false;
-            this.tableLoading = false;
+                this.errorsMessage = errors.response.data.errors;
+                this.btnSaveLoading = false;
+                this.tableLoading = false;
             });
         },
 
@@ -589,17 +577,18 @@ export default {
             },
             })
             .then((response) => {
-            this.ReadUser();
-            this.closeDialog();
-            this.alertSnackbarMsg = response.data.message;
-            this.snackbar = true;
-            this.btnSaveLoading = false;
-            this.tableLoading = false;
+                this.ReadUser();
+                this.closeDialog();
+                // this.alertSnackbarMsg = response.data.message;
+                this.alertSnackbarMsg = this.$t('user.updateMsg');
+                this.snackbar = true;
+                this.btnSaveLoading = false;
+                this.tableLoading = false;
             })
             .catch((errors) => {
-            this.errorsMessage = errors.response.data.errors;
-            this.btnSaveLoading = false;
-            this.tableLoading = false;
+                this.errorsMessage = errors.response.data.errors;
+                this.btnSaveLoading = false;
+                this.tableLoading = false;
             });
         },
 
@@ -620,12 +609,13 @@ export default {
             },
             })
             .then((response) => {
-            this.ReadUser();
-            this.dialogDelete = false;
-            this.alertSnackbarMsg = response.data.message;
-            this.snackbar = true;
-            this.btnLoading = false;
-            this.tableLoading = false;
+                this.ReadUser();
+                this.dialogDelete = false;
+                // this.alertSnackbarMsg = response.data.message;
+                this.alertSnackbarMsg = this.$t('user.deleteMsg');;
+                this.snackbar = true;
+                this.btnLoading = false;
+                this.tableLoading = false;
             })
             .catch((error) => {
             this.btnLoading = false;

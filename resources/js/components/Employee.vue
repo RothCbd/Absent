@@ -750,25 +750,25 @@
       </v-dialog>
 
       <!-- ---------------Snacbar--------------- -->
-      <v-snackbar v-model="snackbar" color="indigo lighten-1" dark>
+      <v-snackbar v-model="snackbar" color="cyan darken-2" dark>
         {{ alertSnackbarMsg }}
         <template v-slot:action="{ attrs }">
           <v-btn dark text v-bind="attrs" @click="snackbar = false" small>
-            close
+            {{ $t('employee.msgClose') }}
           </v-btn>
         </template>
       </v-snackbar>
 
       <!-- ----------dialogDelete------------ -->
-      <v-dialog v-model="dialogDelete" max-width="330px">
+      <v-dialog v-model="dialogDelete" max-width="350px">
         <v-card>
           <div class="text-center">
-            <v-sheet class="px-7 pt-7 pb-4 mx-auto text-center d-inline-block">
+            <v-sheet class="px-3 pt-7 pb-4 mx-auto text-center d-inline-block">
               <v-icon class="text-center pb-3" x-large color="red lighten-2"
                 >mdi-alert</v-icon
               >
               <div class="grey--text text--darken-3 text-body-2 mb-4">
-                Are you sure to delete
+                {{ $t('employee.deleteMessage') }}
                 <b class="red--text tex--lighten-2">{{ userNameDelete }}</b> ?
               </div>
 
@@ -981,11 +981,6 @@ export default {
             this.cardView = this.cardView ? false : true;
         },
 
-        // randomColor() {
-        //   let getColor = "#" + ((Math.random() * 0xffffff) << 0).toString(16);
-        //   return "" + getColor + "";
-        // },
-
         formatDate(value) {
             return moment(value).format("DD/MM/YYYY");
         },
@@ -1063,7 +1058,8 @@ export default {
                     this.ReadEmployeeActive();
                     this.ReadEmployeeInactive();
                     this.closeDialog();
-                    this.alertSnackbarMsg = response.data.message;
+                    // this.alertSnackbarMsg = response.data.message;
+                    this.alertSnackbarMsg = this.$t('employee.savedMsg');
                     this.snackbar = true;
                     this.btnSaveLoading = false;
                     this.tableLoading = false;
@@ -1076,9 +1072,6 @@ export default {
         },
 
         editEmployee(employee) {
-
-            console.log(employee.position)
-
             this.editMode = true;
             this.form.id = employee.id;
             if (employee.gender == "male") {
@@ -1108,10 +1101,11 @@ export default {
                 },
                 })
                 .then((response) => {
-                this.ReadEmployeeActive();
+                    this.ReadEmployeeActive();
                     this.ReadEmployeeInactive();
                     this.closeDialog();
-                    this.alertSnackbarMsg = response.data.message;
+                    // this.alertSnackbarMsg = response.data.message;
+                    this.alertSnackbarMsg = this.$t('employee.updateMsg');
                     this.snackbar = true;
                     this.btnSaveLoading = false;
                     this.tableLoading = false;
@@ -1143,7 +1137,8 @@ export default {
                     this.ReadEmployeeActive();
                     this.ReadEmployeeInactive();
                     this.dialogDelete = false;
-                    this.alertSnackbarMsg = response.data.message;
+                    // this.alertSnackbarMsg = response.data.message;
+                    this.alertSnackbarMsg = this.$t('employee.deleteMsg');
                     this.snackbar = true;
                     this.btnLoading = false;
                     this.tableLoading = false;

@@ -168,11 +168,11 @@
     </v-tabs-items>
 
     <!-- ---------------Snacbar--------------- -->
-    <v-snackbar v-model="snackbar" color="indigo lighten-1" dark top right>
+    <v-snackbar v-model="snackbar" color="cyan darken-2" dark top right>
       {{ alertSnackbarMsg }}
       <template v-slot:action="{ attrs }">
         <v-btn dark text v-bind="attrs" @click="snackbar = false" small>
-          close
+          {{ $t('account.msgClose') }}
         </v-btn>
       </template>
     </v-snackbar>
@@ -258,7 +258,8 @@ export default {
               if (response.status == 200) {
                 this.btnLoading = false;
                 this.loading = false;
-                this.alertSnackbarMsg = response.data.message;
+                // this.alertSnackbarMsg = response.data.message;
+                this.alertSnackbarMsg = this.$t('account.updateMsg');
                 this.snackbar = true;
 
                 if (this.authData.email !== response.data.user.email) {
@@ -291,7 +292,7 @@ export default {
           if (response.data.message !== "Password update Success") {
             this.msgResponse = response.data.message;
           } else {
-            this.alertSnackbarMsg = "Password Updated login again.";
+            this.alertSnackbarMsg = this.$t('account.passUpdateMsg');
             this.snackbar = true;
             this.$store.dispatch("destroyToken").then(() => {
               this.$router.push({ name: "login" });
