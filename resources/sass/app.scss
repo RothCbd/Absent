@@ -133,6 +133,12 @@
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
 }
 
+.language-login {
+    position: absolute !important;
+    top: -15px;
+    right: 0;
+}
+
 // =============Dashboard==========
 @import url('https://fonts.googleapis.com/css2?family=Redressed&family=Roboto&display=swap');
 
@@ -679,3 +685,35 @@ h2 {
     -o-border-radius: 100%;
     box-shadow: rgb(0 0 0 / 5%) 0px 0px 0px 1px;
 }
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .login-logo {
+        display: none !important;
+    }
+
+    .forgot-pass-logo {
+        display: none !important;
+    }
+
+    #forgot-password .forgot-description {
+        font-style: 12px !important;
+    }
+
+    #forgot-password .action {
+        flex-direction: column-reverse !important;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}

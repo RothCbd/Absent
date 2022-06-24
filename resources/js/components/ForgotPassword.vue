@@ -1,90 +1,91 @@
 <template>
-  <v-row align="center" justify="center">
-    <v-col cols="12" md="6">
-      <v-card class="pa-5 card-background">
-        <v-card
-          v-show="!emailLinkSent"
-          height="350"
-          class="mt-3"
-          data-aos="zoom-in"
-          data-aos-duration="500"
-        >
-          <v-progress-linear
-            absolute
-            top
-            color="blue"
-            :active="cardLoading"
-            :indeterminate="cardLoading"
-          ></v-progress-linear>
+    <v-row align="center" justify="center" id="forgot-password">
+        <v-col cols="12" md="6">
+            <v-card class="pa-5 card-background">
+                <v-card
+                    v-show="!emailLinkSent"
+                    height="350"
+                    class="mt-3"
+                    data-aos="zoom-in"
+                    data-aos-duration="500"
+                >
+                <v-progress-linear
+                    absolute
+                    top
+                    color="blue"
+                    :active="cardLoading"
+                    :indeterminate="cardLoading"
+                ></v-progress-linear>
 
-          <v-row>
-            <v-col cols="12" sm="5" class="d-flex justify-center align-center">
-              <v-img
-                max-height="300"
-                max-width="100%"
-                :src="'/image/83593-email-template.gif'"
-              ></v-img>
-            </v-col>
-            <v-col cols="12" sm="7" class="pa-0">
-              <v-card elevation="0" class="ma-5">
-                <v-card-title>Forgot your password?</v-card-title>
+                <v-row>
+                    <v-col cols="12" sm="5" class="d-flex justify-center align-center">
+                        <v-img
+                            class="forgot-pass-logo"
+                            max-height="300"
+                            max-width="100%"
+                            :src="'/image/83593-email-template.gif'"
+                        ></v-img>
+                    </v-col>
+                    <v-col cols="12" sm="7" class="pa-0">
+                        <v-card elevation="0" class="ma-5">
+                            <v-card-title>{{ $t('forgotPass.title') }}</v-card-title>
 
-                <v-card-text class="mt-2 pb-0">
-                  <p class="subtitle-1">
-                    Enter your email address that you used to login. <br />
-                    we'll send you a link to reset your password.
-                  </p>
+                            <v-card-text class="mt-1 pb-0">
+                                <p class="forgot-description">
+                                    {{ $t('forgotPass.description1') }} <br />
+                                    {{ $t('forgotPass.description2') }}
+                                </p>
 
-                  <v-text-field
-                    v-model="email"
-                    label="Email"
-                    type="text"
-                    outlined
-                    :rules="emailRules"
-                    prepend-inner-icon="mdi-email"
-                    :error-messages="errorsMessage.email"
-                  ></v-text-field>
+                                <v-text-field
+                                    v-model="email"
+                                    v-bind:label="$t('forgotPass.email')"
+                                    type="text"
+                                    outlined
+                                    :rules="emailRules"
+                                    prepend-inner-icon="mdi-email"
+                                    :error-messages="errorsMessage.email"
+                                ></v-text-field>
+                            </v-card-text>
+                            <v-card-actions class="ml-3 action">
+                            <router-link link to="login">
+                                <p class="subtitle-2 blue--text">{{ $t('forgotPass.backToLogin') }}</p>
+                            </router-link>
+                            <v-spacer></v-spacer>
+                            <v-btn
+                                color="info"
+                                depressed
+                                :loading="btnLoading"
+                                @click="submitResetPassword"
+                            >
+                                <v-icon left>mdi-send</v-icon>
+                                {{ $t('forgotPass.btnResetPass') }}
+                            </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-col>
+                </v-row>
+                </v-card>
+
+                <!-- ----------------------- -->
+                <v-card v-show="emailLinkSent" class="mt-3" height="350">
+                <v-card-text class="d-flex d-flex justify-center align-center">
+                    <div class="text-center">
+                    <v-img
+                        class="ma-auto"
+                        max-height="170"
+                        max-width="170"
+                        :src="'/image/69380-success-check.gif'"
+                    ></v-img>
+                    <span class="subtitle-1 font-weight-medium">
+                        Please check your email <br />
+                        {{ successMsg }}
+                    </span>
+                    </div>
                 </v-card-text>
-                <v-card-actions class="ml-3">
-                  <router-link link to="login">
-                    <p class="subtitle-2 blue--text">Back to Login</p>
-                  </router-link>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    color="info"
-                    depressed
-                    :loading="btnLoading"
-                    @click="submitResetPassword"
-                  >
-                    <v-icon left>mdi-send</v-icon>
-                    reset password
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-card>
-
-        <!-- ----------------------- -->
-        <v-card v-show="emailLinkSent" class="mt-3" height="350">
-          <v-card-text class="d-flex d-flex justify-center align-center">
-            <div class="text-center">
-              <v-img
-                class="ma-auto"
-                max-height="170"
-                max-width="170"
-                :src="'/image/69380-success-check.gif'"
-              ></v-img>
-              <span class="subtitle-1 font-weight-medium">
-                Please check your email <br />
-                {{ successMsg }}
-              </span>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-card>
-    </v-col>
-  </v-row>
+                </v-card>
+            </v-card>
+        </v-col>
+    </v-row>
 </template>
 
 <script>

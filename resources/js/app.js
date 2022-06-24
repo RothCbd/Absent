@@ -51,7 +51,7 @@ let routes = [
         component: Login,
         meta: {
             requiresVisitor: true,
-            title: 'Login'
+            title: 'Absence Management-Login'
         }
     },
 
@@ -81,7 +81,7 @@ let routes = [
         component: Dashboard,
         meta: {
             requiresAuth: true,
-            title: 'Dashboard',
+            title: 'Absence Management-Dashboard',
         }
     },
     {
@@ -90,7 +90,7 @@ let routes = [
         component: User,
         meta: {
             requiresAuth: true,
-            title: 'User'
+            title: 'Absence Management-User'
         }
     },
     {
@@ -99,7 +99,7 @@ let routes = [
         component: Position,
         meta: {
             requiresAuth: true,
-            title: 'Position'
+            title: 'Absence Management-Position'
         }
     },
     {
@@ -108,7 +108,7 @@ let routes = [
         component: Employee,
         meta: {
             requiresAuth: true,
-            title: 'Employee'
+            title: 'Absence Management-Employee'
         }
     },
     {
@@ -117,7 +117,7 @@ let routes = [
         component: Absent,
         meta: {
             requiresAuth: true,
-            title: 'Absent'
+            title: 'Absence Management-Absent'
         }
     },
     ,
@@ -127,7 +127,7 @@ let routes = [
         component: Report,
         meta: {
             requiresAuth: true,
-            title: 'Report'
+            title: 'Absence Management-Report'
         }
     },
     {
@@ -136,7 +136,7 @@ let routes = [
         component: Account,
         meta: {
             requiresAuth: true,
-            title: 'Account'
+            title: 'Absence Management-Account'
         }
     },
 ];
@@ -172,6 +172,26 @@ router.beforeEach((to, from, next) => {
 
 const messages = {
     english: {
+
+        login: {
+            title: 'ABSENCES MANAGERMENT',
+            description: 'Sign in with your email and password:',
+            email: 'Email',
+            password: 'password',
+            login: 'login',
+            forgotPass: 'Forgot Password?',
+            langKhmer: 'Khmer',
+            langEnglish: 'English'
+        },
+
+        forgotPass: {
+            title: "Forgot your password?",
+            description1: "Enter your email address that you used to login.",
+            description2: "we'll send you a link to reset your password.",
+            email: 'Email',
+            backToLogin: 'Back to Login',
+            btnResetPass: 'reset password'
+        },
 
         app: {
             title: 'Absence Management',
@@ -529,6 +549,26 @@ const messages = {
 
     // ============Khmer==============
     khmer: {
+
+        login: {
+            title: 'ប្រព័ន្ធគ្រប់គ្រង អវត្តន៏មាន',
+            description: 'បំពេញអ៊ីម៉ែល និងពាក្យសំមង្ងាត់របស់អ្នក',
+            email: 'អ៊ីម៉ែល',
+            password: 'ពាក្យសម្ងាត់',
+            login: 'ចូល',
+            forgotPass: 'ភ្លេចពាក្យសម្ងាត់?',
+            langKhmer: 'ខ្មែរ',
+            langEnglish: 'អងគ្លេស'
+        },
+
+        forgotPass: {
+            title: "ភ្លេចពាក្យសម្ងាត់របស់អ្នក?",
+            description1: "បញ្ចូលអ៊ីម៉ែលរបស់អ្នក ដែរអ្នកធ្លាប់ប្រើដើម្បីចូលប្រព័ន្ធ",
+            description2: "យើងនិងផ្ញើរដំណភ្ជាប់ទៅអ្នក ដើម្បីផ្លាស់ប្តូរពា្យសម្ងាត់របស់អ្នក",
+            email: 'អ៊ីម៉ែល',
+            backToLogin: 'ត្រឡប់ទៅទំព័រមុន',
+            btnResetPass: 'ផ្លាស់ប្តូរពាក្យសម្ងាត់'
+        },
 
         app: {
             title: 'គ្រប់គ្រង អវត្តន៏មាន',

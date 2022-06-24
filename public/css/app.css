@@ -120,6 +120,12 @@
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
 }
 
+.language-login {
+  position: absolute !important;
+  top: -15px;
+  right: 0;
+}
+
 #dashboard .widget-card {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
@@ -643,3 +649,26 @@ h2 {
   -o-border-radius: 100%;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
 }
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .login-logo {
+    display: none !important;
+  }
+
+  .forgot-pass-logo {
+    display: none !important;
+  }
+
+  #forgot-password .forgot-description {
+    font-style: 12px !important;
+  }
+
+  #forgot-password .action {
+    flex-direction: column-reverse !important;
+  }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+/* Medium devices (landscape tablets, 768px and up) */
+/* Large devices (laptops/desktops, 992px and up) */
+/* Extra large devices (large laptops and desktops, 1200px and up) */
