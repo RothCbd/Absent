@@ -18,7 +18,7 @@ Vue.use(VueMask);
 import mixins from 'vuetify-multiple-draggable-dialogs';
 Vue.mixin(mixins);
 
-import VueHtml2pdf from 'vue-html2pdf'
+import VueHtml2pdf from 'vue-html2pdf';
 Vue.use(VueHtml2pdf)
 
 import "chart.js";
@@ -33,9 +33,7 @@ window.Form = Form;
 
 import Login from './components/auth/Login';
 import ForgotPassword from './components/ForgotPassword';
-
 import ResetPassword from './components/auth/ResetPassword'
-
 import Dashboard from './components/Dashboard';
 import User from './components/User';
 import Position from './components/Position';
@@ -257,10 +255,10 @@ const messages = {
         menu: {
             dashboard: 'Dashboard',
             position: 'Position',
-            employee: 'Employees',
+            employee: 'Employee',
             absent: 'Absent',
             report: 'Report',
-            user: 'users',
+            user: 'User',
             account: 'Account',
             signout: 'sign out'
         },
