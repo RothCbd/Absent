@@ -2,10 +2,10 @@
   <div id="account">
     <v-tabs v-model="tab" color="cyan darken-1">
       <v-tabs-slider color="cyan darken-1"></v-tabs-slider>
-      <v-tab key="username" class="font-weight-bold text-capitalize"
+      <v-tab key="username" class="font-weight-medium text-capitalize"
         ><v-icon>mdi-account</v-icon> {{ $t('account.tabAccount') }}</v-tab
       >
-      <v-tab key="password" class="font-weight-bold text-capitalize"
+      <v-tab key="password" class="font-weight-medium text-capitalize"
         ><v-icon>mdi-lock</v-icon> {{ $t('account.tabPassword') }}</v-tab
       >
     </v-tabs>

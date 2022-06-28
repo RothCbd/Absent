@@ -137,9 +137,8 @@
                 color="blue-grey darken-3"
                 ></v-app-bar-nav-icon>
 
-                <v-toolbar-title class="grey--text text--darken-2 font-weight-medium">
-                    <!-- <small>Absence Management</small> -->
-                    <h4 class="khmer-font">{{ $t('app.title') }}</h4>
+                <v-toolbar-title class="grey--text text--darken-2">
+                    <h4 class="khmer-font font-weight-medium">{{ $t('app.title') }}</h4>
                 </v-toolbar-title>
 
                 <v-spacer></v-spacer>
@@ -188,12 +187,47 @@
                 </v-menu>
 
                 <v-btn
-                    class="text-capitalize khmer-font font-weight-bold pa-1 py-0"
+                    class="text-capitalize khmer-font pa-1 py-1 app-date"
                     color="grey lighten-2 indigo--text"
                     depressed
                     @click="openDialog"
                 >
-                    {{ formatDate(new Date()) }}
+                    <v-icon small left>mdi-calendar-month</v-icon>
+
+                    <span v-if="formatDate(new Date()).split(',')[0] == 'Monday'">
+                        <span :class="getColor(formatDate(new Date()).split(',')[0])+'--text'">{{ $t('app.monday') }},</span>
+                        {{ formatDate(new Date()).split(',')[1] }}
+                    </span>
+
+                    <span v-if="formatDate(new Date()).split(',')[0] == 'Tuesday'">
+                        <span :class="getColor(formatDate(new Date()).split(',')[0])+'--text'">{{ $t('app.tuesday') }},</span>
+                        {{ formatDate(new Date()).split(',')[1] }}
+                    </span>
+
+                    <span v-if="formatDate(new Date()).split(',')[0] == 'Wednesday'">
+                        <span :class="getColor(formatDate(new Date()).split(',')[0])+'--text'">{{ $t('app.wednesday') }},</span>
+                        {{ formatDate(new Date()).split(',')[1] }}
+                    </span>
+
+                    <span v-if="formatDate(new Date()).split(',')[0] == 'Thursday'">
+                        <span :class="getColor(formatDate(new Date()).split(',')[0])+'--text'">{{ $t('app.thursday') }},</span>
+                        {{ formatDate(new Date()).split(',')[1] }}
+                    </span>
+
+                    <span v-if="formatDate(new Date()).split(',')[0] == 'Friday'">
+                        <span :class="getColor(formatDate(new Date()).split(',')[0])+'--text'">{{ $t('app.friday') }},</span>
+                        {{ formatDate(new Date()).split(',')[1] }}
+                    </span>
+
+                    <span v-if="formatDate(new Date()).split(',')[0] == 'Saturday'">
+                        <span :class="getColor(formatDate(new Date()).split(',')[0])+'--text'">{{ $t('app.saturday') }},</span>
+                        {{ formatDate(new Date()).split(',')[1] }}
+                    </span>
+
+                    <span v-if="formatDate(new Date()).split(',')[0] == 'Sunday'">
+                        <span :class="getColor(formatDate(new Date()).split(',')[0])+'--text'">{{ $t('app.sunday') }},</span>
+                        {{ formatDate(new Date()).split(',')[1] }}
+                    </span>
                 </v-btn>
             </v-app-bar>
 
@@ -234,7 +268,7 @@
                         <v-toolbar-title class="blue-grey--text text--darken-2">
                             <div class="d-inline-flex align-center">
                                 <v-icon small color="blue-grey darken-1">mdi-calendar-month</v-icon>
-                                <h5 class="khmer-font">{{ $t('holiday.title') }} </h5>
+                                <h5 class="khmer-font font-weight-medium">{{ $t('holiday.title') }} </h5>
                                 <v-chip
                                     class="ml-1 pa-1 font-weight-bold"
                                     label
@@ -477,353 +511,363 @@
 </style>
 
 <script>
-import AOS from "aos";
-import "aos/dist/aos.css";
-import moment from "moment";
-AOS.init();
-export default {
-  data() {
-    return {
-        drawer: null,
-        btnLoading: false,
-        cardLoading: false,
-        showPassword: false,
-        email: "",
-        password: "",
-        errorsMessage: {
+    import AOS from "aos";
+    import "aos/dist/aos.css";
+    import moment from "moment";
+    AOS.init();
+    export default {
+    data() {
+        return {
+            drawer: null,
+            btnLoading: false,
+            cardLoading: false,
+            showPassword: false,
             email: "",
             password: "",
-        },
-        authData: "",
-        authName: "",
-
-        // ========Calendar==========
-        editMode: false,
-        holidayForm: false,
-        btnSaveLoading: false,
-        calendarDialog: false,
-        holidayDateChoose: false,
-        snackbar: false,
-        alertSnackbarMsg: "",
-        dialogDelete: false,
-        form: new Form({
-            id: "",
-            date: "",
-            holiday: "",
-        }),
-        holidayData: [],
-        holidayDates: [],
-        holidayDatesCount: "",
-
-        desserts: [
-          {
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-          },
-          {
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-          },
-          {
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-          },
-          {
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-          },
-          {
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-          },
-          {
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-          },
-          {
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-          },
-          {
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-          },
-          {
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-          },
-          {
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-          },
-        ],
-    };
-  },
-
-    computed: {
-        loggedIn() {
-            return this.$store.getters.loggedIn;
-        },
-
-        auth() {
-            return this.$store.state.auth;
-        },
-
-        formTitle() {
-            return this.editMode === false ? "Add Holiday" : "Edit Holiday";
-        },
-
-        computedDateFormattedMomentjs() {
-            return this.form.date
-                ? moment(this.form.date).format("dddd, DD/ MM/ YYYY")
-                : "";
-        },
-
-        headers(){
-            return [
-                {
-                    text: '#',
-                    align: 'start',
-                    value: 'id'
-                },
-                { text: this.$t('holiday.tbDay'), value: 'day' },
-                { text: this.$t('holiday.tbDate'), value: 'date' },
-                { text: this.$t('holiday.tbHoliday'), value: 'holiday' },
-                { text: this.$t('holiday.tbAction'), sortable: false, value: "actions" },
-            ]
-        }
-    },
-
-    mounted() {
-        if(localStorage.Lang!=null) this.$i18n.locale=localStorage.Lang;
-    },
-
-    methods: {
-
-        langChanged(lang){
-            this.$i18n.locale = lang;
-            localStorage.Lang = lang
-        },
-
-        formatDate(value) {
-            return moment(value).format("dddd, DD/MM/YYYY");
-        },
-
-        chooseHolidayYear(){
-            console.log('hello')
-        },
-
-        login() {
-            if (this.email.length == 0 || this.password.length == 0) {
-                this.errorsMessage.email = "The email field is required.";
-                this.errorsMessage.password = "The password field is required.";
-            } else {
-                this.btnLoading = true;
-                this.cardLoading = true;
-
-                setTimeout(
-                () => ((this.btnLoading = false), (this.cardLoading = false)),
-                    3000
-                );
-                this.$store.dispatch("token", {
-                    email: this.email,
-                    password: this.password,
-                });
-            }
-        },
-
-        logout() {
-        this.email = "";
-        this.password = "";
-        this.$store.dispatch("destroyToken").then(() => {
-            this.$router.push({ name: "login" });
-        });
-        },
-
-        // =====================HOLIDAY=======================
-        formatHolidayDate(value) {
-            return moment(value).format("DD/MM/YYYY");
-        },
-
-        formatCompareDate(value) {
-            return moment(value).format("YYYY-MM-DD");
-        },
-
-        getColor(day) {
-            if (day == "Monday") return "orange darken-2";
-            else if (day == "Tuesday") return "purple";
-            else if (day == "Wednesday") return "light-green";
-            else if (day == "Thursday") return "green";
-            else if (day == "Friday") return "blue";
-            else if (day == "Saturday") return "pink darken-2";
-            else if (day == "Sunday") return "red";
-        },
-
-        getDataHoliday(){
-            var token = localStorage.getItem("access_token");
-            if(token){
-                console.log('logged in');
-            }
-        },
-
-        ReadHoliday() {
-            axios
-            .get("http://127.0.0.1:8000/api/read-holiday", {
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem("access_token"),
-                },
-            })
-            .then((response) => {
-                this.holidayData = response.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        },
-
-        ReadHolidayDates() {
-            axios
-            .get("http://127.0.0.1:8000/api/read-holiday-date", {
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("access_token"),
+            errorsMessage: {
+                email: "",
+                password: "",
             },
-            })
-            .then((response) => {
-                this.holidayDates = response.data;
-                this.holidayDatesCount.length;
-            })
-            .catch((error) => {
-                console.log(error);
+            authData: "",
+            authName: "",
+
+            // ========Calendar==========
+            editMode: false,
+            holidayForm: false,
+            btnSaveLoading: false,
+            calendarDialog: false,
+            holidayDateChoose: false,
+            snackbar: false,
+            alertSnackbarMsg: "",
+            dialogDelete: false,
+            form: new Form({
+                id: "",
+                date: "",
+                holiday: "",
+            }),
+            holidayData: [],
+            holidayDates: [],
+            holidayDatesCount: "",
+
+            desserts: [
+            {
+                calories: 159,
+                fat: 6.0,
+                carbs: 24,
+                protein: 4.0,
+            },
+            {
+                calories: 237,
+                fat: 9.0,
+                carbs: 37,
+                protein: 4.3,
+            },
+            {
+                calories: 262,
+                fat: 16.0,
+                carbs: 23,
+                protein: 6.0,
+            },
+            {
+                calories: 305,
+                fat: 3.7,
+                carbs: 67,
+                protein: 4.3,
+            },
+            {
+                calories: 356,
+                fat: 16.0,
+                carbs: 49,
+                protein: 3.9,
+            },
+            {
+                calories: 375,
+                fat: 0.0,
+                carbs: 94,
+                protein: 0.0,
+            },
+            {
+                calories: 392,
+                fat: 0.2,
+                carbs: 98,
+                protein: 0,
+            },
+            {
+                calories: 408,
+                fat: 3.2,
+                carbs: 87,
+                protein: 6.5,
+            },
+            {
+                calories: 452,
+                fat: 25.0,
+                carbs: 51,
+                protein: 4.9,
+            },
+            {
+                calories: 518,
+                fat: 26.0,
+                carbs: 65,
+                protein: 7,
+            },
+            ],
+        };
+    },
+
+        computed: {
+            loggedIn() {
+                return this.$store.getters.loggedIn;
+            },
+
+            auth() {
+                return this.$store.state.auth;
+            },
+
+            formTitle() {
+                return this.editMode === false ? "Add Holiday" : "Edit Holiday";
+            },
+
+            computedDateFormattedMomentjs() {
+                return this.form.date
+                    ? moment(this.form.date).format("dddd, DD/ MM/ YYYY")
+                    : "";
+            },
+
+            headers(){
+                return [
+                    {
+                        text: '#',
+                        align: 'start',
+                        value: 'id'
+                    },
+                    { text: this.$t('holiday.tbDay'), value: 'day' },
+                    { text: this.$t('holiday.tbDate'), value: 'date' },
+                    { text: this.$t('holiday.tbHoliday'), value: 'holiday' },
+                    { text: this.$t('holiday.tbAction'), sortable: false, value: "actions" },
+                ]
+            }
+        },
+
+        mounted() {
+            if(localStorage.Lang!=null) this.$i18n.locale=localStorage.Lang;
+        },
+
+        methods: {
+
+            langChanged(lang){
+                this.$i18n.locale = lang;
+                localStorage.Lang = lang
+            },
+
+            getColor(day) {
+                if (day == "Monday") return "orange";
+                else if (day == "Tuesday") return "purple";
+                else if (day == "Wednesday") return "light-green";
+                else if (day == "Thursday") return "green";
+                else if (day == "Friday") return "blue";
+                else if (day == "Saturday") return "pink";
+                else if (day == "Sunday") return "red";
+            },
+
+            formatDate(value) {
+                return moment(value).format("dddd, DD/MM/YYYY");
+            },
+
+            chooseHolidayYear(){
+                console.log('hello')
+            },
+
+            login() {
+                if (this.email.length == 0 || this.password.length == 0) {
+                    this.errorsMessage.email = "The email field is required.";
+                    this.errorsMessage.password = "The password field is required.";
+                } else {
+                    this.btnLoading = true;
+                    this.cardLoading = true;
+
+                    setTimeout(
+                    () => ((this.btnLoading = false), (this.cardLoading = false)),
+                        3000
+                    );
+                    this.$store.dispatch("token", {
+                        email: this.email,
+                        password: this.password,
+                    });
+                }
+            },
+
+            logout() {
+            this.email = "";
+            this.password = "";
+            this.$store.dispatch("destroyToken").then(() => {
+                this.$router.push({ name: "login" });
             });
-        },
+            },
 
-        openDialog(){
-            this.ReadHoliday();
-            this.ReadHolidayDates();
-            this.calendarDialog = true;
-        },
+            // =====================HOLIDAY=======================
+            formatHolidayDate(value) {
+                return moment(value).format("DD/MM/YYYY");
+            },
 
-        openDialogInsertForm() {
-            this.holidayForm = true;
-        },
+            formatCompareDate(value) {
+                return moment(value).format("YYYY-MM-DD");
+            },
 
-        closeDialog() {
-            this.editMode = false;
-            this.holidayForm = false;
-            this.form.date = "";
-            this.form.holiday = "";
-        },
+            getColor(day) {
+                if (day == "Monday") return "orange darken-2";
+                else if (day == "Tuesday") return "purple";
+                else if (day == "Wednesday") return "light-green";
+                else if (day == "Thursday") return "green";
+                else if (day == "Friday") return "blue";
+                else if (day == "Saturday") return "pink darken-2";
+                else if (day == "Sunday") return "red";
+            },
 
-        createHoliday() {
-            this.btnSaveLoading = true;
-            this.tableLoading = true;
-            this.form
-                .post("api/create-holiday", {
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem("access_token"),
-                },
+            getDataHoliday(){
+                var token = localStorage.getItem("access_token");
+                if(token){
+                    console.log('logged in');
+                }
+            },
+
+            ReadHoliday() {
+                axios
+                .get("http://127.0.0.1:8000/api/read-holiday", {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("access_token"),
+                    },
                 })
                 .then((response) => {
-                    this.ReadHoliday();
-                    this.ReadHolidayDates();
-                    this.closeDialog();
-                    this.alertSnackbarMsg = response.data.message;
-                    this.snackbar = true;
-                    this.btnSaveLoading = false;
-                    this.tableLoading = false;
-                })
-                .catch((errors) => {
-                    this.errorsMessage = errors.response.data.errors;
-                    this.btnSaveLoading = false;
-                    this.tableLoading = false;
-                });
-        },
-
-        editHoliday(holiday) {
-            this.editMode = true;
-            this.form.id = holiday.id;
-            this.form.day = holiday.day;
-            this.form.date = holiday.date;
-            this.form.holiday = holiday.holiday;
-            this.holidayForm = true;
-        },
-
-        async updateHoliday() {
-            this.btnSaveLoading = true;
-            this.tableLoading = true;
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            this.form
-                .post("/api/update-holiday/" + this.form.id, {
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem("access_token"),
-                },
-                })
-                .then((response) => {
-                    this.ReadHoliday();
-                    this.ReadHolidayDates();
-                    this.closeDialog();
-                    this.alertSnackbarMsg = response.data.message;
-                    this.snackbar = true;
-                    this.btnSaveLoading = false;
-                    this.tableLoading = false;
-                })
-                .catch((errors) => {
-                    this.errorsMessage = errors.response.data.errors;
-                    this.btnSaveLoading = false;
-                    this.tableLoading = false;
-                });
-        },
-
-        deleteHoliday(holiday_id) {
-            this.form.id = holiday_id;
-            this.dialogDelete = true;
-        },
-
-        async submitDelete() {
-            this.btnLoading = true;
-            this.tableLoading = true;
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            axios
-                .delete("/api/delete-holiday/" + this.form.id, {
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem("access_token"),
-                },
-                })
-                .then((response) => {
-                    this.ReadHoliday();
-                    this.ReadHolidayDates();
-                    this.dialogDelete = false;
-                    this.alertSnackbarMsg = response.data.message;
-                    this.snackbar = true;
-                    this.btnLoading = false;
-                    this.tableLoading = false;
+                    this.holidayData = response.data;
                 })
                 .catch((error) => {
-                    this.btnLoading = false;
-                    this.tableLoading = false;
+                    console.log(error);
                 });
-        },
+            },
 
-    },
-};
+            ReadHolidayDates() {
+                axios
+                .get("http://127.0.0.1:8000/api/read-holiday-date", {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("access_token"),
+                },
+                })
+                .then((response) => {
+                    this.holidayDates = response.data;
+                    this.holidayDatesCount.length;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+
+            openDialog(){
+                this.ReadHoliday();
+                this.ReadHolidayDates();
+                this.calendarDialog = true;
+            },
+
+            openDialogInsertForm() {
+                this.holidayForm = true;
+            },
+
+            closeDialog() {
+                this.editMode = false;
+                this.holidayForm = false;
+                this.form.date = "";
+                this.form.holiday = "";
+            },
+
+            createHoliday() {
+                this.btnSaveLoading = true;
+                this.tableLoading = true;
+                this.form
+                    .post("api/create-holiday", {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("access_token"),
+                    },
+                    })
+                    .then((response) => {
+                        this.ReadHoliday();
+                        this.ReadHolidayDates();
+                        this.closeDialog();
+                        this.alertSnackbarMsg = response.data.message;
+                        this.snackbar = true;
+                        this.btnSaveLoading = false;
+                        this.tableLoading = false;
+                    })
+                    .catch((errors) => {
+                        this.errorsMessage = errors.response.data.errors;
+                        this.btnSaveLoading = false;
+                        this.tableLoading = false;
+                    });
+            },
+
+            editHoliday(holiday) {
+                this.editMode = true;
+                this.form.id = holiday.id;
+                this.form.day = holiday.day;
+                this.form.date = holiday.date;
+                this.form.holiday = holiday.holiday;
+                this.holidayForm = true;
+            },
+
+            async updateHoliday() {
+                this.btnSaveLoading = true;
+                this.tableLoading = true;
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+                this.form
+                    .post("/api/update-holiday/" + this.form.id, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("access_token"),
+                    },
+                    })
+                    .then((response) => {
+                        this.ReadHoliday();
+                        this.ReadHolidayDates();
+                        this.closeDialog();
+                        this.alertSnackbarMsg = response.data.message;
+                        this.snackbar = true;
+                        this.btnSaveLoading = false;
+                        this.tableLoading = false;
+                    })
+                    .catch((errors) => {
+                        this.errorsMessage = errors.response.data.errors;
+                        this.btnSaveLoading = false;
+                        this.tableLoading = false;
+                    });
+            },
+
+            deleteHoliday(holiday_id) {
+                this.form.id = holiday_id;
+                this.dialogDelete = true;
+            },
+
+            async submitDelete() {
+                this.btnLoading = true;
+                this.tableLoading = true;
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+                axios
+                    .delete("/api/delete-holiday/" + this.form.id, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("access_token"),
+                    },
+                    })
+                    .then((response) => {
+                        this.ReadHoliday();
+                        this.ReadHolidayDates();
+                        this.dialogDelete = false;
+                        this.alertSnackbarMsg = response.data.message;
+                        this.snackbar = true;
+                        this.btnLoading = false;
+                        this.tableLoading = false;
+                    })
+                    .catch((error) => {
+                        this.btnLoading = false;
+                        this.tableLoading = false;
+                    });
+            },
+
+        },
+    };
 </script>

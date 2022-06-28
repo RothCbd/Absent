@@ -7,7 +7,7 @@
             <v-icon class="mb-1" color="grey darken-2"
               >mdi-account-multiple</v-icon
             >
-            <span class="text-decoration-underline">{{ $t('user.listTitle') }}</span>
+            <span class="text-decoration-underline font-weight-medium">{{ $t('user.listTitle') }}</span>
             <v-chip color="grey lighten-2 grey--text text--darken-3">{{
               userCount
             }}</v-chip>

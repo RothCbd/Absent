@@ -168,6 +168,11 @@ h2 {
   border-top: none !important;
 }
 
+.app-date .v-btn__content .v-icon--left {
+  margin-left: 0px !important;
+  margin-top: 4px !important;
+}
+
 .v-skeleton-loader__card-heading .v-skeleton-loader__heading {
   margin: 0px !important;
 }

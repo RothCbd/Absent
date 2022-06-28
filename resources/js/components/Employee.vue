@@ -9,7 +9,7 @@
                 <v-icon class="mb-1" color="grey darken-2"
                   >mdi-account-tie</v-icon
                 >
-                <span class="text-decoration-underline">{{ $t('employee.list') }}</span>
+                <span class="text-decoration-underline font-weight-medium">{{ $t('employee.list') }}</span>
               </h3>
             </v-col>
             <v-col cols="12" sm="12" md="6">

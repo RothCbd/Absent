@@ -6,7 +6,7 @@
                     <v-col cols="12" sm="12" md="5">
                         <h3 class="grey--text text--darken-2">
                             <v-icon class="mb-1" color="grey darken-2">mdi-badge-account-outline</v-icon>
-                            <span class="text-decoration-underline">{{ $t('position.titleList') }}</span>
+                            <span class="text-decoration-underline font-weight-medium">{{ $t('position.titleList') }}</span>
                             <v-chip color="grey lighten-2 grey--text text--darken-3">{{
                                 positionCount
                             }}</v-chip>

@@ -51,6 +51,8 @@
     background-color: #f1f2f6 !important;
 }
 
+
+
 .theme--light.v-app-bar.v-toolbar.v-sheet {
     background-color: #f1f2f6 !important;
 }
@@ -188,6 +190,11 @@ h2 {
 #dashboard .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
     height: 30px !important;
     border-top: none !important;
+}
+
+.app-date .v-btn__content .v-icon--left {
+    margin-left: 0px !important;
+    margin-top: 4px !important;
 }
 
 .v-skeleton-loader__card-heading .v-skeleton-loader__heading {

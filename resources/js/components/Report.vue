@@ -2,7 +2,7 @@
   <div id="report">
     <h3 class="grey--text text--darken-2">
       <v-icon class="mb-1" color="grey darken-2">mdi-chart-bar</v-icon>
-      <span class="text-decoration-underline">{{ $t('report.title') }} {{ countReport }}</span>
+      <span class="text-decoration-underline font-weight-medium">{{ $t('report.title') }} {{ countReport }}</span>
 
       <v-btn
         v-if="reportData.length > 0"
