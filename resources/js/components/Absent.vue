@@ -115,14 +115,13 @@
 
             <template v-slot:[`item.employee.name`]="{ item }">
                 <v-chip
-                    class="font-weight-bold absent-employee-name"
-                    small
+                    class="font-weight-medium absent-employee-name"
                     label
                     color="transparent"
                 >
                     <v-avatar
                         left
-                        class="white--text font-weight-regular"
+                        class="white--text font-weight-regular absent-profile-avatar"
                         v-if="item.employee.image == 'default.png'"
                         :color="'#' + item.employee.profile_color"
                     >
@@ -182,6 +181,7 @@
                   :color="getColor(item.day)"
                   class="text-capitalize absent-day-chip"
                   small
+                  label
                 >
                   <span v-if="item.day == 'Monday'">{{ $t('absent.monday') }}</span>
                   <span v-if="item.day == 'Tuesday'">{{ $t('absent.tuesday') }}</span>
@@ -195,14 +195,15 @@
 
             <template v-slot:[`item.date`]="{ item }">
                 <v-chip
-                    class="pa-1 py-0 absent-date"
+                    class="pa-1 py-0 absent-date font-weight-bold"
                     small
-                    color="pink darken-3"
-                    text-color="white"
-                    label
+                    color="transparent"
+                    outlined
+                    text-color="pink"
+
                 >
                     <v-avatar left class="mr-0">
-                    <v-icon small>mdi-calendar-month</v-icon>
+                        <v-icon small>mdi-calendar-month</v-icon>
                     </v-avatar>
                     {{ formatDate(item.date) }}
                 </v-chip>

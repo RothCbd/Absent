@@ -518,6 +518,9 @@
     export default {
     data() {
         return {
+
+            selectedItem: 1,
+
             drawer: null,
             btnLoading: false,
             cardLoading: false,
@@ -650,6 +653,8 @@
 
         mounted() {
             if(localStorage.Lang!=null) this.$i18n.locale=localStorage.Lang;
+
+            document.addEventListener("keyup", this.nextItem);
         },
 
         methods: {
@@ -657,6 +662,14 @@
             langChanged(lang){
                 this.$i18n.locale = lang;
                 localStorage.Lang = lang
+            },
+
+            nextItem () {
+                if (event.keyCode == 38 && this.selectedItem > 0) {
+                    this.selectedItem--
+                } else if (event.keyCode== 40 && this.selectedItem < 3) {
+                    this.selectedItem++
+                }
             },
 
             getColor(day) {

@@ -121,9 +121,8 @@
               <template v-slot:[`item.gender`]="{ item }">
                 <v-chip
                   v-if="item.gender == 'male'"
-                    small
-                    color="indigo"
-                    text-color="white"
+                    color="transparent"
+                    text-color="grey darken-2"
                     class="pl-1 py-0"
 
                 >
@@ -135,7 +134,6 @@
 
                 <v-chip
                     v-else
-                    small
                     color="pink"
                     text-color="white"
                     class="pl-1 py-0"
@@ -153,8 +151,8 @@
                         dark
                         color="blue-grey darken-2"
                         class="text-capitalize pa-1 font-weight-medium"
+                        outlined
                         small
-
                     >
                         <v-avatar left>
                             <v-icon small>mdi-account-star</v-icon>
@@ -176,63 +174,63 @@
                     </v-avatar>
                         <span v-if="formatDate(item.start_date).split('/')[1] == 1">
                             {{ formatDate(item.start_date).split('/')[0] }}
-                            / {{ $t('employee.january') }}
-                            / {{ formatDate(item.start_date).split('/')[2] }}
+                            /{{ $t('employee.january') }}
+                            /{{ formatDate(item.start_date).split('/')[2] }}
                         </span>
                         <span v-if="formatDate(item.start_date).split('/')[1] == 2">
                             {{ formatDate(item.start_date).split('/')[0] }}
-                            / {{ $t('employee.february') }}
-                            / {{ formatDate(item.start_date).split('/')[2] }}
+                            /{{ $t('employee.february') }}
+                            /{{ formatDate(item.start_date).split('/')[2] }}
                         </span>
                         <span v-if="formatDate(item.start_date).split('/')[1] == 3">
                             {{ formatDate(item.start_date).split('/')[0] }}
-                            / {{ $t('employee.march') }}
-                            / {{ formatDate(item.start_date).split('/')[2] }}
+                            /{{ $t('employee.march') }}
+                            /{{ formatDate(item.start_date).split('/')[2] }}
                         </span>
                         <span v-if="formatDate(item.start_date).split('/')[1] == 4">
                             {{ formatDate(item.start_date).split('/')[0] }}
-                            / {{ $t('employee.april') }}
-                            / {{ formatDate(item.start_date).split('/')[2] }}
+                            /{{ $t('employee.april') }}
+                            /{{ formatDate(item.start_date).split('/')[2] }}
                         </span>
                         <span v-if="formatDate(item.start_date).split('/')[1] == 5">
                             {{ formatDate(item.start_date).split('/')[0] }}
-                            / {{ $t('employee.may') }}
-                            / {{ formatDate(item.start_date).split('/')[2] }}
+                            /{{ $t('employee.may') }}
+                            /{{ formatDate(item.start_date).split('/')[2] }}
                         </span>
                         <span v-if="formatDate(item.start_date).split('/')[1] == 6">
                             {{ formatDate(item.start_date).split('/')[0] }}
-                            / {{ $t('employee.june') }}
-                            / {{ formatDate(item.start_date).split('/')[2] }}
+                            /{{ $t('employee.june') }}
+                            /{{ formatDate(item.start_date).split('/')[2] }}
                         </span>
                         <span v-if="formatDate(item.start_date).split('/')[1] == 7">
                             {{ formatDate(item.start_date).split('/')[0] }}
-                            / {{ $t('employee.july') }}
-                            / {{ formatDate(item.start_date).split('/')[2] }}
+                            /{{ $t('employee.july') }}
+                            /{{ formatDate(item.start_date).split('/')[2] }}
                         </span>
                         <span v-if="formatDate(item.start_date).split('/')[1] == 8">
                             {{ formatDate(item.start_date).split('/')[0] }}
-                            / {{ $t('employee.august') }}
-                            / {{ formatDate(item.start_date).split('/')[2] }}
+                            /{{ $t('employee.august') }}
+                            /{{ formatDate(item.start_date).split('/')[2] }}
                         </span>
                         <span v-if="formatDate(item.start_date).split('/')[1] == 9">
                             {{ formatDate(item.start_date).split('/')[0] }}
-                            / {{ $t('employee.september') }}
-                            / {{ formatDate(item.start_date).split('/')[2] }}
+                            /{{ $t('employee.september') }}
+                            /{{ formatDate(item.start_date).split('/')[2] }}
                         </span>
                         <span v-if="formatDate(item.start_date).split('/')[1] == 10">
                             {{ formatDate(item.start_date).split('/')[0] }}
-                            / {{ $t('employee.october') }}
-                            / {{ formatDate(item.start_date).split('/')[2] }}
+                            /{{ $t('employee.october') }}
+                            /{{ formatDate(item.start_date).split('/')[2] }}
                         </span>
                         <span v-if="formatDate(item.start_date).split('/')[1] == 11">
                             {{ formatDate(item.start_date).split('/')[0] }}
-                            / {{ $t('employee.november') }}
-                            / {{ formatDate(item.start_date).split('/')[2] }}
+                            /{{ $t('employee.november') }}
+                            /{{ formatDate(item.start_date).split('/')[2] }}
                         </span>
                          <span v-if="formatDate(item.start_date).split('/')[1] == 12">
                             {{ formatDate(item.start_date).split('/')[0] }}
-                            / {{ $t('employee.december') }}
-                            / {{ formatDate(item.start_date).split('/')[2] }}
+                            /{{ $t('employee.december') }}
+                            /{{ formatDate(item.start_date).split('/')[2] }}
                         </span>
                     </v-chip>
                 </template>
