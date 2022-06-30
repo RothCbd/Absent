@@ -450,13 +450,13 @@
                               >
                             </td>
                             <td class="text-lowercase" :class="getColor(data.day)+'--text'">
-                                <span v-if="data.day == 'Monday'">{{ $t('dashboard.monday') }}</span>
-                                <span v-if="data.day == 'Tuesday'">{{ $t('dashboard.tuesday') }}</span>
-                                <span v-if="data.day == 'Wednesday'">{{ $t('dashboard.wednesday') }}</span>
-                                <span v-if="data.day == 'Thursday'">{{ $t('dashboard.thursday') }}</span>
-                                <span v-if="data.day == 'Friday'">{{ $t('dashboard.friday') }}</span>
-                                <span v-if="data.day == 'Saturday'">{{ $t('dashboard.saturday') }}</span>
-                                <span v-if="data.day == 'Sunday'">{{ $t('dashboard.sunday') }}</span>
+                              <span v-if="data.day == 'Monday'">{{ $t('dashboard.monday') }}</span>
+                              <span v-if="data.day == 'Tuesday'">{{ $t('dashboard.tuesday') }}</span>
+                              <span v-if="data.day == 'Wednesday'">{{ $t('dashboard.wednesday') }}</span>
+                              <span v-if="data.day == 'Thursday'">{{ $t('dashboard.thursday') }}</span>
+                              <span v-if="data.day == 'Friday'">{{ $t('dashboard.friday') }}</span>
+                              <span v-if="data.day == 'Saturday'">{{ $t('dashboard.saturday') }}</span>
+                              <span v-if="data.day == 'Sunday'">{{ $t('dashboard.sunday') }}</span>
                             </td>
                             <td>
                               {{ formatDate(data.date) }}
@@ -512,98 +512,98 @@
 </template>
 
 <script>
-import moment from "moment";
-export default {
-  data() {
-    return {
-      expandedWeekly: [],
-      expandedMonthly: [],
-      expandedYearly: [],
-      skeletonLoading: false,
-      headers: [
-        { text: "Employee", value: "name", align: "start" },
-        { text: "Total", value: "absent_total" },
-      ],
-      weeklyAbsentData: [],
-      monthlyAbsentData: [],
-      absent: {
-        all: "",
-        weekCount: "",
-        monthly: "",
-        year: "",
-      },
-      employee: {
-        all: "",
-        senior: "",
-        junior: "",
-        positionsData: [],
-      },
-      user: {
-        all: "",
-        admin: "",
-        user: "",
-      },
-      table: {
-        weeklyAbsent: [],
-        monthlyAbsent: [],
-        yearlyAbsent: [],
-      },
-    };
-  },
-  mounted() {
-    this.getReport();
-  },
-
-  methods: {
-    formatDate(value) {
-      return moment(value).format("DD-MM-YYYY");
-    },
-
-    getColor(day) {
-        if (day == "Monday") return "orange";
-        else if (day == "Tuesday") return "purple";
-        else if (day == "Wednesday") return "light-green";
-        else if (day == "Thursday") return "green";
-        else if (day == "Friday") return "blue";
-        else if (day == "Saturday") return "pink";
-        else if (day == "Sunday") return "red";
-    },
-
-    getReport() {
-      axios
-        .get("/api/dashboard-data/", {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("access_token"),
+  import moment from "moment";
+  export default {
+      data() {
+          return {
+          expandedWeekly: [],
+          expandedMonthly: [],
+          expandedYearly: [],
+          skeletonLoading: false,
+          headers: [
+              { text: "Employee", value: "name", align: "start" },
+              { text: "Total", value: "absent_total" },
+          ],
+          weeklyAbsentData: [],
+          monthlyAbsentData: [],
+          absent: {
+              all: "",
+              weekCount: "",
+              monthly: "",
+              year: "",
           },
-        })
-        .then((response) => {
-            // ----------absent---------
-            this.absent.all = response.data.absent.absentCount;
-            this.absent.weekCount = response.data.absent.absentWeekCount;
-            this.absent.monthly = response.data.absent.absentMonthCount;
-            this.absent.year = response.data.absent.absentYearCount;
+          employee: {
+              all: "",
+              senior: "",
+              junior: "",
+              positionsData: [],
+          },
+          user: {
+              all: "",
+              admin: "",
+              user: "",
+          },
+          table: {
+              weeklyAbsent: [],
+              monthlyAbsent: [],
+              yearlyAbsent: [],
+          },
+          };
+      },
+      mounted() {
+          this.getReport();
+      },
 
-            // ----------employee---------
-            this.employee.all = response.data.employee.allEmployee;
-            this.employee.senior = response.data.employee.senior;
-            this.employee.junior = response.data.employee.junior;
+      methods: {
+          formatDate(value) {
+          return moment(value).format("DD-MM-YYYY");
+          },
 
-            this.employee.positionsData = response.data.employee.positions;
+          getColor(day) {
+              if (day == "Monday") return "orange";
+              else if (day == "Tuesday") return "purple";
+              else if (day == "Wednesday") return "light-green";
+              else if (day == "Thursday") return "green";
+              else if (day == "Friday") return "blue";
+              else if (day == "Saturday") return "pink";
+              else if (day == "Sunday") return "red";
+          },
 
-            // ----------User-------------
-            this.user.all = response.data.user.allUser;
-            this.user.admin = response.data.user.admin;
-            this.user.user = response.data.user.user;
+          getReport() {
+          axios
+              .get("/api/dashboard-data/", {
+              headers: {
+                  Authorization: "Bearer " + localStorage.getItem("access_token"),
+              },
+              })
+              .then((response) => {
+                  // ----------absent---------
+                  this.absent.all = response.data.absent.absentCount;
+                  this.absent.weekCount = response.data.absent.absentWeekCount;
+                  this.absent.monthly = response.data.absent.absentMonthCount;
+                  this.absent.year = response.data.absent.absentYearCount;
 
-            // ---------Table-------------
-            this.table.weeklyAbsent = response.data.absent.weeklyAbsents;
-            this.table.monthlyAbsent = response.data.absent.monthlyAbsents;
-            this.table.yearlyAbsent = response.data.absent.yearAbsents;
-        })
-        .catch((errors) => {
-            console.log(errors);
-        });
-    },
-  },
-};
+                  // ----------employee---------
+                  this.employee.all = response.data.employee.allEmployee;
+                  this.employee.senior = response.data.employee.senior;
+                  this.employee.junior = response.data.employee.junior;
+
+                  this.employee.positionsData = response.data.employee.positions;
+
+                  // ----------User-------------
+                  this.user.all = response.data.user.allUser;
+                  this.user.admin = response.data.user.admin;
+                  this.user.user = response.data.user.user;
+
+                  // ---------Table-------------
+                  this.table.weeklyAbsent = response.data.absent.weeklyAbsents;
+                  this.table.monthlyAbsent = response.data.absent.monthlyAbsents;
+                  this.table.yearlyAbsent = response.data.absent.yearAbsents;
+              })
+              .catch((errors) => {
+                  console.log(errors);
+              });
+          },
+      },
+  };
 </script>
